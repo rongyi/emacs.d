@@ -1,0 +1,2 @@
+* Emacs配置文件
+  计划从dot-files里独立出来
