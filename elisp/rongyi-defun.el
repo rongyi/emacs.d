@@ -180,6 +180,11 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
   (indent-according-to-mode))
 
 
+(defun ry/open-line-below ()
+  (interactive)
+  (move-end-of-line nil)
+  (newline-and-indent))
+
 (defun lint-code ()
   (interactive)
   (insert (format "// http://www.lintcode.com/zh-cn/problem/%s\n" (file-name-sans-extension (buffer-name)))))
@@ -236,5 +241,21 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
       (progn
         (indent-buffer)
         (message "Indented buffer")))))
+
+(defun ry/switch-to-scratch ()
+  (interactive)
+  (switch-to-buffer "*scratch*"))
+
+(after-load 'magit
+  (defun ry/edit-gitignore ()
+    (interactive)
+    (split-window-sensibly (selected-window))
+    (find-file (expand-file-name ".gitignore" (magit-toplevel)))))
+
+
+
+
+
+
 
 (provide 'rongyi-defun)
