@@ -1,3 +1,4 @@
 * Emacs配置文件
   计划从dot-files里独立出来
 ** TODO 使用use-package而不是自己造的轮子，进而需要对use-package的代码学习
+** TODO 加入diminish和spaceline来美化modeline
