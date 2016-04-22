@@ -169,104 +169,130 @@
   (evil-leader/set-key "g" 'magit-status)
   (global-set-key (kbd "<f2>") 'magit-status)
   (global-set-key (kbd "C-x g") 'magit-status)
-  (setq magit-commit-arguments '("--verbose"))
-  )
+  (setq magit-commit-arguments '("--verbose")))
 
-;; to be tested
-;;(require-install-nessary 'magit-find-file)
+;; spaceline: spacemacs's modeline
+(use-package spaceline
+  :ensure t
+  :config
+  (require 'spaceline-config)
+  (spaceline-spacemacs-theme))
 
 
-;; powerline
-(require-install-nessary 'powerline)
-(setq powerline-default-separator 'wave)
-(powerline-center-evil-theme)
+;; powerline, deprecated!
+;; (require-install-nessary 'powerline)
+;; (setq powerline-default-separator 'wave)
+;; (powerline-center-evil-theme)
 
-;; display time
-(setq display-time-24hr-format t)
-(display-time-mode t)
 
 ;; flycheck
-(require-install-nessary 'flycheck)
-(require-install-nessary 'flycheck-pos-tip)
-(add-hook 'after-init-hook #'global-flycheck-mode)
-(global-flycheck-mode t)
-
-(with-eval-after-load 'flycheck
+(use-package flycheck-pos-tip
+  :ensure t)
+(use-package flycheck
+  :ensure t
+  :diminish flycheck-mode
+  :config
+  (global-flycheck-mode t)
+  (flycheck-pos-tip-mode)
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   (setq flycheck-checkers (delq 'emacs-lisp-checkdoc flycheck-checkers))
   (setq flycheck-checkers (delq 'html-tidy flycheck-checkers))
-  (setq flycheck-standard-error-navigation nil))
+  (setq flycheck-standard-error-navigation nil)
+  ;; flycheck errors on a tooltip (doesnt work on console)
+  (when (display-graphic-p (selected-frame))
+    (with-eval-after-load 'flycheck
+      (custom-set-variables
+       '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))))
 
-;; flycheck errors on a tooltip (doesnt work on console)
-(when (display-graphic-p (selected-frame))
-  (with-eval-after-load 'flycheck
-    (custom-set-variables
-     '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))))
 
 
 ;; silver searcher
-(require-install-nessary 'ag)
-(evil-leader/set-key "s" 'ag)
+(use-package ag
+  :ensure t
+  :config
+  (evil-leader/set-key "s" 'ag))
 
 
-;; color variable
-(require-install-nessary 'color-identifiers-mode)
-(global-color-identifiers-mode)
+;; color variable: highlights each source code identifier uniquely based on its name
+(use-package color-identifiers-mode
+  :ensure t
+  :config
+  (global-color-identifiers-mode)
+  :diminish color-identifiers-mode)
 
 ;; rainbow delimeters
-(require-install-nessary 'rainbow-delimiters)
-(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+(use-package rainbow-delimiters
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+  :diminish rainbow-delimiters-mode)
 
 ;; smartparen
-
-(require-install-nessary 'smartparens)
-(require 'smartparens-config)
-(add-hook 'prog-mode-hook #'smartparens-mode)
+(use-package smartparens
+  :ensure t
+  :config
+  (require 'smartparens-config)
+  (add-hook 'prog-mode-hook #'smartparens-mode))
 
 ;; company
-(require-install-nessary 'company)
-(require-install-nessary 'company-statistics)
-(add-hook 'after-init-hook 'global-company-mode)
-(add-hook 'after-init-hook 'company-statistics-mode)
-(setq company-idle-delay 0
-      company-minimum-prefix-length 2
-      company-require-match nil
-      company-dabbrev-ignore-case nil
-      company-dabbrev-downcase nil
-      company-require-match nil
-      company-show-numbers t
-      company-transformers '(company-sort-by-occurrence)
-      company-global-modes '(not term-mode))
 
-;; cancel company explicitly
-(define-key company-active-map (kbd "C-g") 'company-abort)
+(use-package company
+  :ensure t
+  :config
+  (add-hook 'after-init-hook 'global-company-mode)
+  (add-hook 'after-init-hook 'company-statistics-mode)
+  (setq company-idle-delay 0
+        company-minimum-prefix-length 2
+        company-require-match nil
+        company-dabbrev-ignore-case nil
+        company-dabbrev-downcase nil
+        company-require-match nil
+        company-show-numbers t
+        company-transformers '(company-sort-by-occurrence)
+        company-global-modes '(not term-mode))
+
+  ;; cancel company explicitly
+  (define-key company-active-map (kbd "C-g") 'company-abort)
+  :diminish company-mode)
+
+(use-package company-statistics
+  :ensure t
+  :diminish company-statistics-mode)
+
 
 ;; python auto complete
-(require-install-nessary 'company-anaconda)
-(add-to-list 'company-backends 'company-anaconda)
-(add-hook 'python-mode-hook 'anaconda-mode)
-(add-hook 'python-mode-hook 'eldoc-mode)
-(setq
- python-shell-interpreter "python"
- python-shell-interpreter-args "")
-;; js
+(use-package company-anaconda
+  :ensure t
+  :config
+  (require-install-nessary 'company-anaconda)
+  (add-to-list 'company-backends 'company-anaconda)
+  (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'python-mode-hook 'eldoc-mode)
+  (setq
+   python-shell-interpreter "python"
+   python-shell-interpreter-args ""))
 
-(require-install-nessary 'js2-mode)
-(require-install-nessary 'company-tern)
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(add-hook 'js-mode-hook 'js2-minor-mode)
-(add-to-list 'interpreter-mode-alist '("node" . js2-mode))
-(add-hook 'js-mode-hook (lambda () (tern-mode t)))
-(add-to-list 'company-backends 'company-tern)
-(setq company-tern-property-marker "")
-(setq company-tern-meta-as-single-line t)
-(after-load 'js2-mode
+;; js
+(use-package company-tern
+  :ensure t)
+
+(use-package js2-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+  (add-hook 'js-mode-hook 'js2-minor-mode)
+  (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+  (add-hook 'js-mode-hook (lambda () (tern-mode t)))
+  (add-to-list 'company-backends 'company-tern)
+  (setq company-tern-property-marker "")
+  (setq company-tern-meta-as-single-line t)
   (setq js2-highlight-level 3
         js2-basic-offset 2
-        js2-pretty-multiline-declarations t))
-(require-install-nessary 'json-mode)
+        js2-pretty-multiline-declarations t)
+  :diminish js2-mode "JS")
 
-
+(use-package json-mode
+  :ensure t)
 
 ;; ido mode
 (after-load 'ido
