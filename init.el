@@ -121,38 +121,57 @@
   )
 
 ;; avy
-(require-install-nessary 'avy)
-(evil-leader/set-key "f" 'avy-goto-word-or-subword-1)
+(use-package avy
+  :ensure t
+  :config
+  (evil-leader/set-key "f" 'avy-goto-word-or-subword-1)
+  )
 
 ;; expand-region
-(require-install-nessary 'expand-region)
-(global-set-key (kbd "C-=") 'er/expand-region)
-;; helm
-(require-install-nessary 'helm)
-(require-install-nessary 'helm-config)
-(require-install-nessary 'helm-misc)
-(require-install-nessary 'helm-locate)
-(require-install-nessary 'projectile)
-(setq helm-quick-update t)
-(setq helm-bookmark-show-location t)
-(setq helm-buffers-fuzzy-matching t)
-;;(global-set-key (kbd "M-x") 'helm-M-x)
-(setq helm-buffers-fuzzy-matching t)
-(setq helm-split-window-default-side (quote other))
-(setq helm-split-window-in-side-p nil)
-(setq helm-display-function 'helm-default-display-buffer)
-(setq helm-adaptive-history-file (expand-file-name
-          "helm-adapative-history"
-          user-emacs-directory))
+(use-package expand-region
+  :ensure t
+  :config
+  (global-set-key (kbd "C-=") 'er/expand-region)
+  )
 
-(evil-leader/set-key "e" 'helm-semantic-or-imenu)
+;; helm
+(use-package helm
+  :ensure t
+  :config
+  (require 'helm-config)
+  (require 'helm-misc)
+  (require 'helm-locate)
+
+  (setq helm-quick-update t)
+  (setq helm-bookmark-show-location t)
+  (setq helm-buffers-fuzzy-matching t)
+  ;;(global-set-key (kbd "M-x") 'helm-M-x)
+  (setq helm-buffers-fuzzy-matching t)
+  (setq helm-split-window-default-side (quote other))
+  (setq helm-split-window-in-side-p nil)
+  (setq helm-display-function 'helm-default-display-buffer)
+  (setq helm-adaptive-history-file (expand-file-name
+                                    "helm-adapative-history"
+                                    user-emacs-directory))
+
+  (evil-leader/set-key "e" 'helm-semantic-or-imenu)
+  )
+
+;; projectile
+(use-package projectile
+  :ensure t)
 
 ;; magit
-(require-install-nessary 'magit)
-(evil-leader/set-key "g" 'magit-status)
-(global-set-key (kbd "<f2>") 'magit-status)
-(global-set-key (kbd "C-x g") 'magit-status)
-(setq magit-commit-arguments '("--verbose"))
+
+(use-package magit
+  :ensure t
+  :config
+  (evil-leader/set-key "g" 'magit-status)
+  (global-set-key (kbd "<f2>") 'magit-status)
+  (global-set-key (kbd "C-x g") 'magit-status)
+  (setq magit-commit-arguments '("--verbose"))
+  )
+
 ;; to be tested
 ;;(require-install-nessary 'magit-find-file)
 
