@@ -457,3 +457,9 @@
 (add-hook 'shell-mode-hook (lambda ()
                              (company-mode -1)
                              (yas-minor-mode -1)))
+
+;; diminish more minor mode
+(diminish 'global-auto-revert-mode)
+(diminish 'global-whitespace-mode)
+(diminish 'subword-mode)
+(diminish 'eldoc-mode)

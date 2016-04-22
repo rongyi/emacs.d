@@ -73,6 +73,7 @@
 (setq ring-bell-function 'ignore)
 ;; Show me the new saved file if the contents change on disk when editing.
 (global-auto-revert-mode 1)
+(diminish 'global-auto-revert-mode)
 
 ;; Automatically save buffers before launching M-x compile and friends,
 ;; instead of asking you if you want to save.
