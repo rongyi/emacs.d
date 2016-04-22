@@ -159,5 +159,71 @@
 ;; Make sure script files are excutable after save
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
+;; display time
+(setq display-time-24hr-format t)
+(display-time-mode t)
+
+
+;; ido mode
+(after-load 'ido
+  (ido-mode t)
+  (ido-everywhere t))
+(global-set-key (kbd "C-x C-f") 'ido-find-file)
+(require-install-nessary 'ido-ubiquitous)
+(ido-ubiquitous-mode 1)
+(require-install-nessary 'ido-vertical-mode)
+(ido-vertical-mode)
+(require-install-nessary 'flx-ido)
+(setq gc-cons-threshold 20000000)
+(flx-ido-mode 1)
+
+(add-hook 'ido-setup-hook (lambda ()
+                            (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
+                            (define-key ido-completion-map (kbd "C-p") 'ido-prev-match)))
+
+;; eldoc-mode
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+
+;; org-mode setting
+(setq org-startup-folded nil
+      org-src-fontify-natively t
+      org-src-tab-acts-natively t)
+
+;; set shell coding
+(defadvice ansi-term (after ry/advise-ansi-term-coding-system activate)
+  (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix))
+
+;; close buffer when quit shell
+(defadvice term-sentinel (around ry/advice-term-sentinel (proc msg) activate)
+  (if (memq (process-status proc) '(signal exit))
+      (let ((buffer (process-buffer proc)))
+        ad-do-it
+        (kill-buffer buffer))
+    ad-do-it))
+
+;; ediff option
+
+(setq ediff-split-window-function 'split-window-horizontally)
+(setq ediff-diff-options "-w")
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+;; export shell path
+(require-install-nessary 'exec-path-from-shell)
+(when (and (eq system-type 'darwin) (display-graphic-p))
+  (require-install-nessary 'exec-path-from-shell)
+  (setq exec-path-from-shell-variables '("PATH"  "MANPATH" "SHELL" "GOPATH"))
+  (exec-path-from-shell-initialize))
+
+
+;; smex
+(require-install-nessary 'smex)
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+(setq-default smex-key-advice-ignore-menu-bar t)
+;; change cache save place
+(setq smex-save-file (expand-file-name ".smex-items" user-emacs-directory))
+
 
 (provide 'rongyi-basic)

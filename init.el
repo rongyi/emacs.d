@@ -25,8 +25,9 @@
                          ("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
 
-;; Our settings
+;; RongYi settings
 (require 'rongyi-defun)
+
 (require 'rongyi-basic)
 
 ;; Bootstrap use-package
@@ -294,91 +295,36 @@
 (use-package json-mode
   :ensure t)
 
-;; ido mode
-(after-load 'ido
-  (ido-mode t)
-  (ido-everywhere t))
-(global-set-key (kbd "C-x C-f") 'ido-find-file)
-(require-install-nessary 'ido-ubiquitous)
-(ido-ubiquitous-mode 1)
-(require-install-nessary 'ido-vertical-mode)
-(ido-vertical-mode)
-(require-install-nessary 'flx-ido)
-(setq gc-cons-threshold 20000000)
-(flx-ido-mode 1)
+;; org ui candy
+(use-package org-bullets
+  :ensure t
+  :init
+  (add-hook 'org-mode-hook (lambda ()
+                             (org-bullets-mode 1))))
 
-(add-hook 'ido-setup-hook (lambda ()
-                            (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
-                            (define-key ido-completion-map (kbd "C-p") 'ido-prev-match)))
-
-
-
-;; eldoc-mode
-(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
-
-;; org-mode setting
-(setq org-startup-folded nil
-      org-src-fontify-natively t
-      org-src-tab-acts-natively t)
-(require-install-nessary 'org-bullets)
-(add-hook 'org-mode-hook (lambda ()
-                           (org-bullets-mode 1)))
-
-;; set shell coding
-(defadvice ansi-term (after ry/advise-ansi-term-coding-system activate)
-  (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix))
-
-;; close buffer when quit shell
-(defadvice term-sentinel (around ry/advice-term-sentinel (proc msg) activate)
-  (if (memq (process-status proc) '(signal exit))
-      (let ((buffer (process-buffer proc)))
-        ad-do-it
-        (kill-buffer buffer))
-    ad-do-it))
-
-;; ediff option
-
-(setq ediff-split-window-function 'split-window-horizontally)
-(setq ediff-diff-options "-w")
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
-
-;; export shell path
-(require-install-nessary 'exec-path-from-shell)
-(when (and (eq system-type 'darwin) (display-graphic-p))
-  (require-install-nessary 'exec-path-from-shell)
-  (setq exec-path-from-shell-variables '("PATH"  "MANPATH" "SHELL" "GOPATH"))
-  (exec-path-from-shell-initialize))
-
-
-;; smex
-(require-install-nessary 'smex)
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-(setq-default smex-key-advice-ignore-menu-bar t)
-;; change cache save place
-(setq smex-save-file (expand-file-name ".smex-items" user-emacs-directory))
 
 ;; close unnessary buffer automaticly
-(require-install-nessary 'popwin)
-
-(after-load 'popwin
+(use-package popwin
+  :ensure t
+  :init
   (add-to-list 'popwin:special-display-config `"*ag search*")
   (add-to-list 'popwin:special-display-config `("*magit-process*" :noselect t))
   (add-to-list 'popwin:special-display-config `"*Flycheck errors*")
   (add-to-list 'popwin:special-display-config `"*Occur*")
   (add-to-list 'popwin:special-display-config `("*Compile-Log*" :noselect t))
   (add-to-list 'popwin:special-display-config `("*Paradox Report*" :noselect t))
-  (add-to-list 'popwin:special-display-config `("\\*godoc" :regexp t)))
-(popwin-mode 1)
+  (add-to-list 'popwin:special-display-config `("\\*godoc" :regexp t))
+  :config
+  (popwin-mode 1))
 
 
-(when (window-system)
-  (require-install-nessary 'git-gutter-fringe))
-(global-git-gutter-mode +1)
-(setq-default indicate-buffer-boundaries 'left)
-(setq-default indicate-empty-lines +1)
+(use-package git-gutter-fringe
+  :ensure t
+  :config
+  (when (window-system)
+    (global-git-gutter-mode +1))
+  (setq-default indicate-buffer-boundaries 'left)
+  (setq-default indicate-empty-lines +1))
 
 ;; ethan-wspace
 (require-install-nessary 'ethan-wspace)
