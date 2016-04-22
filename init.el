@@ -25,10 +25,6 @@
                          ("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
 
-;; RongYi settings
-(require 'rongyi-defun)
-
-(require 'rongyi-basic)
 
 ;; Bootstrap use-package
 (unless (package-installed-p 'use-package)
@@ -38,6 +34,11 @@
 (eval-when-compile (require 'use-package))
 (require 'diminish)
 (require 'bind-key)
+
+;; RongYi settings
+(require 'rongyi-defun)
+
+(require 'rongyi-basic)
 
 
 
@@ -270,7 +271,8 @@
   :ensure t
   :config
   (require 'smartparens-config)
-  (add-hook 'prog-mode-hook #'smartparens-mode))
+  (add-hook 'prog-mode-hook #'smartparens-mode)
+  :diminish smartparens-mode)
 
 ;; company
 
