@@ -253,9 +253,4 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
     (find-file (expand-file-name ".gitignore" (magit-toplevel)))))
 
 
-
-
-
-
-
 (provide 'rongyi-defun)

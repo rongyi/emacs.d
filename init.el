@@ -1,5 +1,7 @@
 ;; init file
 
+;; debugging
+(setq message-log-max 100000)
 ;; create dir and add it to load path
 (defconst ry/emacs-directory (concat (getenv "HOME") "/.emacs.d/"))
 (defun ry/emacs-subdirectory (d)
@@ -14,248 +16,109 @@
 
 (add-to-list 'load-path (ry/emacs-subdirectory "elisp"))
 
-(require 'rongyi-defun)
-
-;; install evil mode
 
 
-;; install package
+;; package initialization
+(require 'package)
 (setq package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
                          ("org" . "http://orgmode.org/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")))
-
-(require 'package)
 (package-initialize)
 
-;; basic
-(setq inhibit-startup-message t)
-(setq initial-scratch-message "happy hacking, ry")
-(setq inhibit-startup-echo-area-message "rongyi")
-;; custom to a seprate file
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+;; Our settings
+(require 'rongyi-defun)
+(require 'rongyi-basic)
 
-;; no backup file
-(setq make-backup-files nil)
-;; remember the cursor position
-(setq save-place-file (expand-file-name "cursor.save" user-emacs-directory))
-(setq-default save-place t)
-(require 'saveplace)
-;; smooth scrolling
-(setq scroll-margin 5
-      scroll-conservatively 9999
-      scroll-step 1
-      scroll-preserve-screen-position 1
-      redisplay-dont-pause t)
-;; mouse scroll
-(setq mouse-wheel-follow-mouse 't)
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+;; Bootstrap use-package
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
-;; full screen if needed
-;;(toggle-frame-fullscreen)
-(toggle-frame-maximized)
+(eval-when-compile (require 'use-package))
+(require 'diminish)
+(require 'bind-key)
 
-(scroll-bar-mode 0)
-(when (fboundp 'menu-bar-mode)
-  (menu-bar-mode -1))
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
-;; yes-or-no-p ==> y-or-n
-(defalias 'yes-or-no-p 'y-or-no-p)
-;; auto indent
-(define-key global-map (kbd "RET") 'newline-and-indent)
-(setq ad-redefinition-action 'accept)
-;; no tab using 2spaces for tab
-(setq-default
- indent-tabs-mode nil
- tab-width 2
- c-basic-offset 2)
 
-;; break long lines at word boundaries
-(visual-line-mode 1)
 
-;; Enable the mouse in terminal mode.
-(xterm-mouse-mode 1)
+(use-package evil
+  :init
+  (setq evil-want-C-i-jump nil)
+  :ensure t
+  :config
 
-;; syntax highlighting
-(global-font-lock-mode t)
-(setq font-lock-maximum-decoration t)
-;; line mode
-(line-number-mode 1)
-(column-number-mode 1)
-;; show the modifier combination I just typed almost immediately
-(setq echo-keystrokes 0.1)
+  (define-key evil-insert-state-map (kbd "M-.") 'insert-pointer-access)
+  (define-key evil-insert-state-map "\C-c" '(lambda ()
+                                              (interactive)
+                                              (save-excursion
+                                                (evil-normal-state)
+                                                (when (fboundp 'company-abort)
+                                                  (company-abort))
+                                                )))
+  (define-key evil-visual-state-map "\C-c" 'evil-normal-state)
+  (define-key evil-normal-state-map "\C-e" 'evil-end-of-line)
+  (define-key evil-normal-state-map "\C-a" 'evil-beginning-of-line)
+  (define-key evil-insert-state-map "\C-a" 'evil-beginning-of-line)
+  (define-key evil-insert-state-map "\C-e" 'end-of-line)
+  (define-key evil-insert-state-map "\C-s" 'save-buffer)
+  (define-key evil-insert-state-map "\C-k" 'kill-line)
+  (define-key evil-normal-state-map "\C-s" 'save-buffer)
+  (define-key evil-visual-state-map "\C-e" 'evil-end-of-line)
+  (define-key evil-motion-state-map "\C-e" 'evil-end-of-line)
+  (define-key evil-normal-state-map "\C-f" 'evil-scroll-page-down)
+  (define-key evil-insert-state-map "\C-f" 'forward-char)
+  (define-key evil-insert-state-map "\C-f" 'evil-forward-char)
+  (define-key evil-normal-state-map "\C-b" 'evil-scroll-page-up)
+  (define-key evil-insert-state-map "\C-b" 'backward-char)
+  (define-key evil-visual-state-map "\C-b" 'evil-backward-char)
+  (define-key evil-normal-state-map "\C-d" 'evil-delete-char)
+  (define-key evil-insert-state-map "\C-d" 'evil-delete-char)
+  (define-key evil-visual-state-map "\C-d" 'evil-delete-char)
+  (define-key evil-normal-state-map "\C-n" 'evil-next-line)
+  (define-key evil-insert-state-map "\C-n" 'evil-next-line)
+  (define-key evil-visual-state-map "\C-n" 'evil-next-line)
+  (define-key evil-normal-state-map "\C-p" 'evil-previous-line)
+  (define-key evil-insert-state-map "\C-p" 'evil-previous-line)
+  (define-key evil-visual-state-map "\C-p" 'evil-previous-line)
+  (define-key evil-normal-state-map "\C-w" 'evil-delete)
+  (define-key evil-insert-state-map "\C-w" 'evil-delete)
+  (define-key evil-visual-state-map "\C-w" 'evil-delete)
 
-;; UTF-8 everything!
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
-;; Treat clipboard input as UTF-8 string first; compound text next, etc.
-(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+  ;; make j == gj, visual line
+  (setq evil-cross-lines t)
+  (setq evil-want-visual-char-semi-exclusive t)
+  (setq evil-move-cursor-back nil)
+  (setq evil-emacs-state-cursor '("red" box))
+  (setq evil-normal-state-cursor '("DarkGoldenrod2" box))
+  (setq evil-visual-state-cursor '("gray" box))
+  (setq evil-insert-state-cursor '("chartreuse3" bar))
+  (setq evil-replace-state-cursor '("red" bar))
+  (setq evil-operator-state-cursor '("red" hollow))
 
-;; Flash the frame to represent a bell.
-(setq visible-bell t)
-;; nevermind that's annoying
-(setq ring-bell-function 'ignore)
-;; Show me the new saved file if the contents change on disk when editing.
-(global-auto-revert-mode 1)
+  ;; int git commit message or org mode, we'll using evil when we needed
+  (evil-set-initial-state 'text-mode 'emacs)
+  (evil-set-initial-state 'org-mode 'emacs)
+  (evil-set-initial-state 'anaconda-mode-view-mode 'emacs)
+  (evil-set-initial-state 'shell-mode 'emacs)
+  (evil-mode 1)
 
-;; Automatically save buffers before launching M-x compile and friends,
-;; instead of asking you if you want to save.
-(setq compilation-ask-about-save nil)
-
-;; Make the selection work like most people expect.
-(delete-selection-mode t)
-(transient-mark-mode 1)
-
-;; show current function in modeline
-(which-function-mode)
-;; show column numbers in modline
-(setq column-number-mode t)
-
-;; use ibuffer for list buffer
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-;; http://emacsredux.com/blog/2013/05/31/highlight-lines-that-exceed-a-certain-length-limit/
-;; (require 'whitespace)
-;; (setq whitespace-line-column 80)
-;; (setq whitespace-style '(face lines-tail))
-
-;; (add-hook 'prog-mode-hook 'whitespace-mode)
-;; highlight the word under the point
-;;(add-hook 'prog-mode-hook 'idle-highlight-mode)
-(add-hook 'prog-mode-hook 'hl-line-mode)
-;; highlight current line number
-(require-install-nessary 'hlinum)
-(hlinum-activate)
-;; highlight matching braces
-(show-paren-mode 1)
-;; make copy and paste work properly under X Windows
-(when (eq system-type "gnu/linux")
-  (setq x-select-enable-clipboard t))
-
-(setq truncate-partial-width-windows nil)
-
-;; highlight the entire expression
-(setq show-paren-style 'expression)
-(mouse-avoidance-mode 'exile)
-
-;; This isn't a typewriter (even if it is a terminal); one space after sentences,
-;; please.
-(setq sentence-end-double-space nil)
-;; font
-(set-frame-font "Source Code Pro for Powerline 10")
-(add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline 10"))
-(add-hook 'after-make-frame-functions
-          (lambda (new-frame)
-            (set-fontset-font "fontset-default" 'han '("方正清刻本悦宋简体" . "unicode-bmp"))
-            ))
-(set-fontset-font "fontset-default" 'han '("方正清刻本悦宋简体" . "unicode-bmp"))
-
-;; hippie expand
-(global-set-key (kbd "M-/") 'hippie-expand)
-
-(setq hippie-expand-try-functions-list
-      '(try-expand-dabbrev
-        try-expand-dabbrev-all-buffers
-        try-expand-dabbrev-from-kill
-        try-complete-file-name-partially
-        try-complete-file-name
-        try-expand-all-abbrevs
-        try-expand-list
-        try-expand-line
-        try-complete-lisp-symbol-partially
-        try-complete-lisp-symbol))
-
-(load-theme 'leuven)
-
-(when (eq system-type 'darwin) ;; mac specific settings
-  (setq mac-option-modifier 'alt)
-  (setq mac-command-modifier 'meta)
+  :diminish evil-mode
   )
 
-(setq whitespace-style '(tailing))
-(global-whitespace-mode 1)
+(use-package evil-anzu
+  :ensure t)
 
-;; subword-mode in prog-mode-hook
-(add-hook 'prog-mode-hook 'subword-mode)
-;; format linum
-(setq linum-format "%4d \u2502")
-
-;; Make sure script files are excutable after save
-(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
-
-
-;; evil setting
-(require-install-nessary 'evil)
-(require-install-nessary 'evil-anzu)
-
-(eval-after-load 'evil
-  '(progn
-     (define-key evil-insert-state-map (kbd "M-.") 'insert-pointer-access)
-     (define-key evil-insert-state-map "\C-c" '(lambda ()
-                                                 (interactive)
-                                                 (save-excursion
-                                                   (evil-normal-state)
-                                                   (when (fboundp 'company-abort)
-                                                     (company-abort))
-                                                   )))
-     (define-key evil-visual-state-map "\C-c" 'evil-normal-state)
-     (define-key evil-normal-state-map "\C-e" 'evil-end-of-line)
-     (define-key evil-normal-state-map "\C-a" 'evil-beginning-of-line)
-     (define-key evil-insert-state-map "\C-a" 'evil-beginning-of-line)
-     (define-key evil-insert-state-map "\C-e" 'end-of-line)
-     (define-key evil-insert-state-map "\C-s" 'save-buffer)
-     (define-key evil-insert-state-map "\C-k" 'kill-line)
-     (define-key evil-normal-state-map "\C-s" 'save-buffer)
-     (define-key evil-visual-state-map "\C-e" 'evil-end-of-line)
-     (define-key evil-motion-state-map "\C-e" 'evil-end-of-line)
-     (define-key evil-normal-state-map "\C-f" 'evil-scroll-page-down)
-     (define-key evil-insert-state-map "\C-f" 'forward-char)
-     (define-key evil-insert-state-map "\C-f" 'evil-forward-char)
-     (define-key evil-normal-state-map "\C-b" 'evil-scroll-page-up)
-     (define-key evil-insert-state-map "\C-b" 'backward-char)
-     (define-key evil-visual-state-map "\C-b" 'evil-backward-char)
-     (define-key evil-normal-state-map "\C-d" 'evil-delete-char)
-     (define-key evil-insert-state-map "\C-d" 'evil-delete-char)
-     (define-key evil-visual-state-map "\C-d" 'evil-delete-char)
-     (define-key evil-normal-state-map "\C-n" 'evil-next-line)
-     (define-key evil-insert-state-map "\C-n" 'evil-next-line)
-     (define-key evil-visual-state-map "\C-n" 'evil-next-line)
-     (define-key evil-normal-state-map "\C-p" 'evil-previous-line)
-     (define-key evil-insert-state-map "\C-p" 'evil-previous-line)
-     (define-key evil-visual-state-map "\C-p" 'evil-previous-line)
-     (define-key evil-normal-state-map "\C-w" 'evil-delete)
-     (define-key evil-insert-state-map "\C-w" 'evil-delete)
-     (define-key evil-visual-state-map "\C-w" 'evil-delete)
-     (require 'evil-anzu)
-     ;; make j == gj, visual line
-     (setq evil-cross-lines t)
-     (setq evil-want-visual-char-semi-exclusive t)
-     (setq evil-move-cursor-back nil)
-     (setq evil-emacs-state-cursor '("red" box))
-     (setq evil-normal-state-cursor '("DarkGoldenrod2" box))
-     (setq evil-visual-state-cursor '("gray" box))
-     (setq evil-insert-state-cursor '("chartreuse3" bar))
-     (setq evil-replace-state-cursor '("red" bar))
-     (setq evil-operator-state-cursor '("red" hollow))))
-
-(evil-mode 1)
-
-;; int git commit message or org mode, we'll using evil when we needed
-(evil-set-initial-state 'text-mode 'emacs)
-(evil-set-initial-state 'org-mode 'emacs)
-(evil-set-initial-state 'anaconda-mode-view-mode 'emacs)
-(evil-set-initial-state 'shell-mode 'emacs)
 
 ;; evil leader
-(require-install-nessary 'evil-leader)
-(setq evil-leader/in-all-states 1)
-(global-evil-leader-mode)
-(evil-leader/set-leader ",")
-(evil-leader/set-key
-  "l" 'linum-mode
-  "w" 'save-buffer)
+(use-package evil-leader
+  :ensure t
+  :config
+  (setq evil-leader/in-all-states 1)
+  (global-evil-leader-mode)
+  (evil-leader/set-leader ",")
+  (evil-leader/set-key
+    "l" 'linum-mode
+    "w" 'save-buffer)
+  )
 
 ;; avy
 (require-install-nessary 'avy)
@@ -497,9 +360,9 @@
                              (other-window 1))))
 
 ;; snippet
-(require-install-nessary 'yasnippet)
-(yas-global-mode 1)
-(define-key yas-minor-mode-map (kbd "M-s-/") 'yas-expand)
+;; (require-install-nessary 'yasnippet)
+;; (yas-global-mode 1)
+;; (define-key yas-minor-mode-map (kbd "M-s-/") 'yas-expand)
 
 
 (evil-leader/set-key "c SPC" 'comment-or-uncomment-line-or-region)
