@@ -225,5 +225,37 @@
 ;; change cache save place
 (setq smex-save-file (expand-file-name ".smex-items" user-emacs-directory))
 
+;; make header file c++mode, for current job
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
+;; highlight TODO
+(add-hook 'prog-mode-hook (lambda ()
+                            (font-lock-add-keywords nil
+                                                    '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
+(modify-syntax-entry ?_ "w")
+
+(global-set-key (kbd "C-x C-=") 'ry/diff-buffer-file-changes)
+
+
+;; bind to C-M-l, just like in xemacs:
+(global-set-key (kbd "C-M-l") 'switch-to-other-buffer)
+
+
+(global-set-key [remap move-beginning-of-line] 'smarter-move-beginning-of-line)
+
+(global-set-key (kbd "C-+") 'surround)
+
+(setq inferior-lisp-program "/usr/bin/clisp")
+
+(global-set-key (kbd "C-x f") 'toggle-frame-maximized)
+
+
+;; add more for tab
+(setq tab-always-indent 'complete)
+
+(add-hook 'before-save-hook 'whitespace-cleanup)
+
+(global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
+
 
 (provide 'rongyi-basic)

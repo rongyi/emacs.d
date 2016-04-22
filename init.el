@@ -83,6 +83,7 @@
   (define-key evil-normal-state-map "\C-w" 'evil-delete)
   (define-key evil-insert-state-map "\C-w" 'evil-delete)
   (define-key evil-visual-state-map "\C-w" 'evil-delete)
+  (define-key evil-insert-state-map (kbd "C-o") 'ry/open-line-above)
 
   ;; make j == gj, visual line
   (setq evil-cross-lines t)
@@ -118,8 +119,8 @@
   (evil-leader/set-leader ",")
   (evil-leader/set-key
     "l" 'linum-mode
-    "w" 'save-buffer)
-  )
+    "w" 'save-buffer
+    "c SPC" 'comment-or-uncomment-line-or-region))
 
 ;; avy
 (use-package avy
@@ -199,12 +200,48 @@
   (setq flycheck-checkers (delq 'emacs-lisp-checkdoc flycheck-checkers))
   (setq flycheck-checkers (delq 'html-tidy flycheck-checkers))
   (setq flycheck-standard-error-navigation nil)
+
+  ;; Custom fringe indicator
+  (when (fboundp 'define-fringe-bitmap)
+    (define-fringe-bitmap 'my-flycheck-fringe-indicator
+      (vector #b00000000
+              #b00000000
+              #b00000000
+              #b00000000
+              #b00000000
+              #b00000000
+              #b00000000
+              #b00011100
+              #b00111110
+              #b00111110
+              #b00111110
+              #b00011100
+              #b00000000
+              #b00000000
+              #b00000000
+              #b00000000
+              #b01111111)))
+
+  (flycheck-define-error-level 'error
+    :overlay-category 'flycheck-error-overlay
+    :fringe-bitmap 'my-flycheck-fringe-indicator
+    :fringe-face 'flycheck-fringe-error)
+
+  (flycheck-define-error-level 'warning
+    :overlay-category 'flycheck-warning-overlay
+    :fringe-bitmap 'my-flycheck-fringe-indicator
+    :fringe-face 'flycheck-fringe-warning)
+
+  (flycheck-define-error-level 'info
+    :overlay-category 'flycheck-info-overlay
+    :fringe-bitmap 'my-flycheck-fringe-indicator
+    :fringe-face 'flycheck-fringe-info)
+
   ;; flycheck errors on a tooltip (doesnt work on console)
   (when (display-graphic-p (selected-frame))
     (with-eval-after-load 'flycheck
       (custom-set-variables
        '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))))
-
 
 
 ;; silver searcher
@@ -306,7 +343,7 @@
 ;; close unnessary buffer automaticly
 (use-package popwin
   :ensure t
-  :init
+  :config
   (add-to-list 'popwin:special-display-config `"*ag search*")
   (add-to-list 'popwin:special-display-config `("*magit-process*" :noselect t))
   (add-to-list 'popwin:special-display-config `"*Flycheck errors*")
@@ -314,7 +351,6 @@
   (add-to-list 'popwin:special-display-config `("*Compile-Log*" :noselect t))
   (add-to-list 'popwin:special-display-config `("*Paradox Report*" :noselect t))
   (add-to-list 'popwin:special-display-config `("\\*godoc" :regexp t))
-  :config
   (popwin-mode 1))
 
 
@@ -326,140 +362,96 @@
   (setq-default indicate-buffer-boundaries 'left)
   (setq-default indicate-empty-lines +1))
 
-;; ethan-wspace
-(require-install-nessary 'ethan-wspace)
-(setq mode-require-final-newline nil
-      require-final-newline nil)
-(global-ethan-wspace-mode 1)
-(evil-leader/set-key
-  "SPC" 'ethan-wspace-clean-all)
+;; ethan-wspace: OCD about whitespace
+(use-package ethan-wspace
+  :ensure t
+  :config
+  (setq mode-require-final-newline nil
+        require-final-newline nil)
+  (global-ethan-wspace-mode 1)
+  (evil-leader/set-key
+    "SPC" 'ethan-wspace-clean-all)
+  :diminish ethan-wspace-mode)
 
 ;; Enhance C-x o when more than two window are open
-(require-install-nessary 'switch-window)
-(require-install-nessary 'ace-window)
-;; the key "combo" is fast than the least used C-x o
-;; so we decide to make a change with swap hot key
-(global-set-key (kbd "C-x C-o") 'ace-window)
-(evil-leader/set-key "w" 'ace-window)
-;; it seems like we dont need swap window frequently
-(global-set-key (kbd "C-x o") 'ace-window)
-(evil-leader/set-key "K" (lambda ()
-                           (interactive)
-                           (save-excursion
-                             (other-window 1)
-                             (quit-window)
-                             (other-window 1))))
+(use-package ace-window
+  :ensure t
+  :config
+  ;; the key "combo" is fast than the least used C-x o
+  ;; so we decide to make a change with swap hot key
+  (global-set-key (kbd "C-x C-o") 'ace-window)
+  (evil-leader/set-key "w" 'ace-window)
+  ;; it seems like we dont need swap window frequently
+  (global-set-key (kbd "C-x o") 'ace-window)
+  (evil-leader/set-key "K" (lambda ()
+                             (interactive)
+                             (save-excursion
+                               (other-window 1)
+                               (quit-window)
+                               (other-window 1))))
+  :diminish ace-window-mode)
 
 ;; snippet
-;; (require-install-nessary 'yasnippet)
-;; (yas-global-mode 1)
-;; (define-key yas-minor-mode-map (kbd "M-s-/") 'yas-expand)
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode 1)
+  (define-key yas-minor-mode-map (kbd "M-s-/") 'yas-expand)
+  :diminish (yas-minor-mode . " Ⓨ"))
 
+;; dminish undo-tree and eldoc-mode
+(use-package undo-tree
+  :ensure t
+  :diminish undo-tree-mode)
 
-(evil-leader/set-key "c SPC" 'comment-or-uncomment-line-or-region)
 ;; ycmd for emacs
-(require-install-nessary 'ycmd)
-(add-hook 'c++-mode-hook 'ycmd-mode)
-(set-variable 'ycmd-server-command '("python" "/home/ry/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
-(set-variable 'ycmd-global-config "/home/ry/.emacs.d/ycm_extra_conf.py")
-(set-variable 'ycmd-extra-conf-whitelist '("/home/ry/tunnel-agent/agentplug"))
+(use-package ycmd
+  :ensure t
+  :config
+  (add-hook 'c++-mode-hook 'ycmd-mode)
+  (set-variable 'ycmd-server-command '("python" "/home/ry/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
+  (set-variable 'ycmd-global-config "/home/ry/.emacs.d/ycm_extra_conf.py")
+  (set-variable 'ycmd-extra-conf-whitelist '("/home/ry/tunnel-agent/agentplug")))
 
-(require-install-nessary 'company-ycmd)
-(company-ycmd-setup)
-(require-install-nessary 'flycheck-ycmd)
-(flycheck-ycmd-setup)
+(use-package company-ycmd
+  :ensure t
+  :config
+  (company-ycmd-setup))
 
-;; make header file c++mode
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-
-;; Custom fringe indicator
-(when (fboundp 'define-fringe-bitmap)
-  (define-fringe-bitmap 'my-flycheck-fringe-indicator
-    (vector #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00011100
-            #b00111110
-            #b00111110
-            #b00111110
-            #b00011100
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b01111111)))
-
-(flycheck-define-error-level 'error
-  :overlay-category 'flycheck-error-overlay
-  :fringe-bitmap 'my-flycheck-fringe-indicator
-  :fringe-face 'flycheck-fringe-error)
-
-(flycheck-define-error-level 'warning
-  :overlay-category 'flycheck-warning-overlay
-  :fringe-bitmap 'my-flycheck-fringe-indicator
-  :fringe-face 'flycheck-fringe-warning)
-
-(flycheck-define-error-level 'info
-  :overlay-category 'flycheck-info-overlay
-  :fringe-bitmap 'my-flycheck-fringe-indicator
-  :fringe-face 'flycheck-fringe-info)
+(use-package flycheck-ycmd
+  :ensure t
+  :config
+  (flycheck-ycmd-setup))
 
 
-
-;; highlight TODO
-(add-hook 'prog-mode-hook (lambda ()
-                            (font-lock-add-keywords nil
-                                                    '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
-(modify-syntax-entry ?_ "w")
-
-(global-set-key (kbd "C-x C-=") 'ry/diff-buffer-file-changes)
-
-
-;; bind to C-M-l, just like in xemacs:
-(global-set-key (kbd "C-M-l") 'switch-to-other-buffer)
-
-
-(global-set-key [remap move-beginning-of-line] 'smarter-move-beginning-of-line)
-
-(global-set-key (kbd "C-+") 'surround)
-
-(setq inferior-lisp-program "/usr/bin/clisp")
-
-(global-set-key (kbd "C-x f") 'toggle-frame-maximized)
-
-(define-key evil-insert-state-map (kbd "C-o") 'ry/open-line-above)
 
 ;; golang config
-(require-install-nessary 'go-mode)
-(add-hook 'before-save-hook 'gofmt-before-save)
+(use-package go-mode
+  :ensure t
+  :config
+  (add-hook 'before-save-hook 'gofmt-before-save))
+
 ;; go auto complete
-(require-install-nessary 'company-go)
-(add-hook 'go-mode-hook (lambda ()
+(use-package company-go
+  :ensure t
+  :config
   (set (make-local-variable 'company-backends) '(company-go))
-  (company-mode)))
-;; the same key as show python function doc in anaconda mode
-(define-key go-mode-map (kbd "M-?") 'godoc-at-point)
-(require-install-nessary 'go-eldoc)
-(add-hook 'go-mode-hook 'go-eldoc-setup)
-(define-key go-mode-map (kbd "M-=") (lambda ()
-                                      (interactive)
-                                      (insert ":=")))
-(define-key go-mode-map (kbd "M-<") (lambda ()
-                                      (interactive)
-                                      (insert "<-")))
+  (company-mode)
+  ;; the same key as show python function doc in anaconda mode
+  (define-key go-mode-map (kbd "M-?") 'godoc-at-point)
+  (require-install-nessary 'go-eldoc)
+  (add-hook 'go-mode-hook 'go-eldoc-setup)
+  (define-key go-mode-map (kbd "M-=") (lambda ()
+                                        (interactive)
+                                        (insert ":=")))
+  (define-key go-mode-map (kbd "M-<") (lambda ()
+                                        (interactive)
+                                        (insert "<-"))))
+
+
+
 (define-key shell-mode-map (kbd "C-n") 'comint-next-input)
 (define-key shell-mode-map (kbd "C-p") 'comint-previous-input)
 (add-hook 'shell-mode-hook (lambda ()
                              (company-mode -1)
                              (yas-minor-mode -1)))
-
-;; add more for tab
-(setq tab-always-indent 'complete)
-
-(add-hook 'before-save-hook 'whitespace-cleanup)
-
-(global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
