@@ -73,6 +73,8 @@
 (setq ring-bell-function 'ignore)
 ;; Show me the new saved file if the contents change on disk when editing.
 (global-auto-revert-mode 1)
+;; no blinking cursor
+(blink-cursor-mode -1)
 
 ;; Automatically save buffers before launching M-x compile and friends,
 ;; instead of asking you if you want to save.
@@ -104,14 +106,19 @@
 (hlinum-activate)
 ;; highlight matching braces
 (show-paren-mode 1)
+;; highlight the entire expression
+(setq show-paren-style 'expression)
+;; highlight style
+(custom-set-faces
+ '(show-paren-match ((t (:background "azure2")))))
+
 ;; make copy and paste work properly under X Windows
 (when (eq system-type "gnu/linux")
   (setq x-select-enable-clipboard t))
 
 (setq truncate-partial-width-windows nil)
 
-;; highlight the entire expression
-(setq show-paren-style 'expression)
+
 (mouse-avoidance-mode 'exile)
 
 ;; This isn't a typewriter (even if it is a terminal); one space after sentences,
@@ -256,6 +263,7 @@
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
+
 
 
 (provide 'rongyi-basic)

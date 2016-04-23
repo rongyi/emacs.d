@@ -361,7 +361,8 @@
   (when (window-system)
     (global-git-gutter-mode +1))
   (setq-default indicate-buffer-boundaries 'left)
-  (setq-default indicate-empty-lines +1))
+  (setq-default indicate-empty-lines +1)
+  :diminish git-gutter-mode)
 
 ;; ethan-wspace: OCD about whitespace
 (use-package ethan-wspace
@@ -456,6 +457,41 @@
 (add-hook 'shell-mode-hook (lambda ()
                              (company-mode -1)
                              (yas-minor-mode -1)))
+
+
+(use-package which-func                 ; Current function name
+  :init (which-function-mode)
+  :config
+  (setq which-func-unknown "⊥" ; The default is really boring…
+        which-func-format
+        `((:propertize (" ➤ " which-func-current)
+                       local-map ,which-func-keymap
+                       face which-func
+                       mouse-face mode-line-highlight
+                       help-echo "mouse-1: go to beginning\n\
+mouse-2: toggle rest visibility\n\
+mouse-3: go to end"))))
+
+
+(use-package beacon                     ; Highlight cursor position in buffer
+  :ensure t
+  :init (beacon-mode 1)
+  :diminish beacon-mode)
+
+
+;; Package manager and init file
+(use-package paradox                    ; Better package menu
+  :ensure t
+  :config
+  (setq paradox-execute-asynchronously nil ; No async update, please
+        paradox-spinner-type 'moon      ; Fancy spinner
+        ;; Show all possible counts
+        paradox-display-download-count t
+        paradox-display-star-count t
+        ;; Hide download button, and wiki packages
+        paradox-use-homepage-buttons nil ; Can type v instead
+        paradox-hide-wiki-packages t))
+
 
 ;; diminish more minor mode
 (diminish 'global-auto-revert-mode)
