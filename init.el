@@ -173,11 +173,15 @@
   (global-set-key (kbd "C-x g") 'magit-status)
   (setq magit-commit-arguments '("--verbose")))
 
+;; nyan cat
+(use-package nyan-mode
+  :ensure t)
 ;; spaceline: spacemacs's modeline
-(use-package spaceline
-  :ensure t
+(use-package spaceline-config
+  :ensure spaceline
+  :after nyan-mode
   :config
-  (require 'spaceline-config)
+  (nyan-mode)
   (spaceline-spacemacs-theme))
 
 
@@ -296,7 +300,13 @@
 
 (use-package company-statistics
   :ensure t
+  :after company
   :diminish company-statistics-mode)
+
+(use-package company-quickhelp
+  :ensure t
+  :after company
+  :init (company-quickhelp-mode))
 
 
 ;; python auto complete
@@ -492,6 +502,66 @@ mouse-3: go to end"))))
         paradox-use-homepage-buttons nil ; Can type v instead
         paradox-hide-wiki-packages t))
 
+(use-package uniquify                   ; Make buffer names unique
+  :config (setq uniquify-buffer-name-style 'forward))
+
+(use-package windmove                   ; Move between windows with Shift+Arrow, just like my tmux conf
+  :bind (("M-h"  . windmove-left)
+         ("M-l" . windmove-right)
+         ("M-k"    . windmove-up)
+         ("M-j"  . windmove-down)))
+
+(use-package winner                     ; Undo and redo window configurations
+  :init (winner-mode))
+
+
+(use-package golden-ratio               ; Automatically resize windows
+  :ensure t
+  :init
+  (defun rongyi-toggle-golden-ratio ()
+    (interactive)
+    (if (bound-and-true-p golden-ratio-mode)
+        (progn
+          (golden-ratio-mode -1)
+          (balance-windows))
+      (golden-ratio-mode)
+      (golden-ratio)))
+  :bind (("C-c =" . rongyi-toggle-golden-ratio))
+  :config
+  (setq golden-ratio-extra-commands '(windmove-up
+                                      windmove-down
+                                      windmove-left
+                                      windmove-right
+                                      ace-window
+                                      ace-delete-window
+                                      ace-select-window
+                                      ace-swap-window
+                                      ace-maximize-window)
+        ;; Exclude a couple of special modes from golden ratio, namely
+        ;; Flycheck's error list, calc
+        golden-ratio-exclude-modes '(flycheck-error-list-mode
+                                     calc-mode
+                                     dired-mode
+                                     ediff-mode
+                                     )
+        ;; Exclude a couple of special buffers from golden ratio, namely Helm,
+        ;; WhichKey, NeoTree, etc.
+        golden-ratio-exclude-buffer-regexp
+        `(,(rx bos "*" (any "h" "H") "elm*" eos)
+          ,(rx bos "*which-key*" eos)
+          ,(rx bos "*NeoTree*" eos)))
+  :diminish (golden-ratio-mode . "ⓖ"))
+
+
+(use-package focus-autosave-mode        ; Save buffers when focus is lost
+  :ensure t
+  :init (focus-autosave-mode)
+  :diminish focus-autosave-mode)
+
+(use-package hl-todo                    ; Highlight TODOs in buffers
+  :ensure t
+  :defer t
+  :init (global-hl-todo-mode))
 
 ;; diminish more minor mode
 (diminish 'global-auto-revert-mode)
