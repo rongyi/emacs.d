@@ -161,7 +161,13 @@
 
 ;; projectile
 (use-package projectile
-  :ensure t)
+  :ensure t
+  :init (projectile-global-mode 1)
+  :commands projectile-ag
+  :config
+  (setq projectile-completion-system 'ido)
+  (setq projectile-indexing-method 'native) ; force the use of native indexing in operating systems other than Windows
+  (evil-leader/set-key "p" 'projectile-find-file))
 
 ;; magit
 
@@ -252,7 +258,12 @@
 (use-package ag
   :ensure t
   :config
-  (evil-leader/set-key "s" 'ag))
+  (evil-leader/set-key "s" 'ag)
+  (setq ag-reuse-buffers t
+        ag-highlight-search t
+        ag-project-root-function (lambda (d)
+                                   (let ((default-directory d))
+                                     (projectile-project-root)))))
 
 
 ;; color variable: highlights each source code identifier uniquely based on its name
@@ -506,6 +517,7 @@ mouse-3: go to end"))))
   :config (setq uniquify-buffer-name-style 'forward))
 
 (use-package windmove                   ; Move between windows with Shift+Arrow, just like my tmux conf
+  :ensure t
   :bind (("M-h"  . windmove-left)
          ("M-l" . windmove-right)
          ("M-k"    . windmove-up)
