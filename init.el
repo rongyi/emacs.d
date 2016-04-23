@@ -575,6 +575,45 @@ mouse-3: go to end"))))
   :defer t
   :init (global-hl-todo-mode))
 
+
+;; steal from github.com/howardabrams/dot-files.git
+(use-package fancy-narrow
+  :ensure t
+  :config
+  (defun ry/highlight-block ()
+    "Highlights a 'block' in a buffer defined by the first blank
+          line before and after the current cursor position. Uses the
+          'fancy-narrow' mode to high-light the block."
+    (interactive)
+    (let (cur beg end)
+      (setq cur (point))
+      (setq end (or (re-search-forward  "^\s*$" nil t) (point-max)))
+      (goto-char cur)
+      (setq beg (or (re-search-backward "^\s*$" nil t) (point-min)))
+      (fancy-narrow-to-region beg end)
+      (goto-char cur)))
+
+  (defun ry/highlight-section (num)
+    "If some of the buffer is highlighted with the `fancy-narrow'
+          mode, then un-highlight it by calling `fancy-widen'.
+
+          If region is active, call `fancy-narrow-to-region'.
+
+          If NUM is 0, highlight the current block (delimited by blank
+          lines). If NUM is positive or negative, highlight that number
+          of lines.  Otherwise, called `fancy-narrow-to-defun', to
+          highlight current function."
+    (interactive "p")
+    (cond
+     ((fancy-narrow-active-p)  (fancy-widen))
+     ((region-active-p)        (fancy-narrow-to-region (region-beginning) (region-end)))
+     ((= num 0)                (ha/highlight-block))
+     ((= num 1)                (fancy-narrow-to-defun))
+     (t                        (progn (ha/expand-region num)
+                                      (fancy-narrow-to-region (region-beginning) (region-end))))))
+
+  :bind ("C-M-+" . ry/highlight-section))
+
 ;; diminish more minor mode
 (diminish 'global-auto-revert-mode)
 (diminish 'global-whitespace-mode)
