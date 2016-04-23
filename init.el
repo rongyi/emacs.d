@@ -104,8 +104,7 @@
   (evil-set-initial-state 'shell-mode 'emacs)
   (evil-mode 1)
 
-  :diminish evil-mode
-  )
+  :diminish evil-mode)
 
 (use-package evil-anzu
   :ensure t)
@@ -293,7 +292,7 @@
 
   ;; cancel company explicitly
   (define-key company-active-map (kbd "C-g") 'company-abort)
-  :diminish company-mode)
+  :diminish company-mode " ⓐ")
 
 (use-package company-statistics
   :ensure t

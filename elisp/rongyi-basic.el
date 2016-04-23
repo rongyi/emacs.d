@@ -73,7 +73,6 @@
 (setq ring-bell-function 'ignore)
 ;; Show me the new saved file if the contents change on disk when editing.
 (global-auto-revert-mode 1)
-(diminish 'global-auto-revert-mode)
 
 ;; Automatically save buffers before launching M-x compile and friends,
 ;; instead of asking you if you want to save.
@@ -151,11 +150,9 @@
 
 (setq whitespace-style '(tailing))
 (global-whitespace-mode 1)
-(diminish 'global-whitespace-mode)
 
 ;; subword-mode in prog-mode-hook
 (add-hook 'prog-mode-hook 'subword-mode)
-(diminish 'subword-mode)
 ;; format linum
 (setq linum-format "%4d \u2502")
 
@@ -187,7 +184,6 @@
 ;; eldoc-mode
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
-(diminish 'eldoc-mode)
 
 ;; org-mode setting
 (setq org-startup-folded nil
