@@ -253,4 +253,13 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
     (find-file (expand-file-name ".gitignore" (magit-toplevel)))))
 
 
+(defun ry/find-file-as-root ()
+  "Edit a file as root"
+  (interactive)
+  (let ((file (ido-read-file-name "Edit as root:")))
+    (unless (file-writable-p file)
+      (setq file (concat "/sudo:root@localhost:" file)))
+    (find-file file)))
+
+
 (provide 'rongyi-defun)
