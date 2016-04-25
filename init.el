@@ -614,6 +614,18 @@ mouse-3: go to end"))))
 
   :bind ("C-M-+" . ry/highlight-section))
 
+
+;; pretty lambda
+(use-package lisp-mode
+  :init
+  (defconst lisp--prettify-symbols-alist
+    '(("lambda"  . ?λ)
+      ("."       . ?•)))
+  :config
+  (add-hook 'emacs-lisp-mode-hook 'global-prettify-symbols-mode)
+  (add-hook 'emacs-lisp-mode-hook 'activate-aggressive-indent))
+
+
 ;; diminish more minor mode
 (diminish 'global-auto-revert-mode)
 (diminish 'global-whitespace-mode)

@@ -238,7 +238,7 @@
 ;; highlight TODO
 (add-hook 'prog-mode-hook (lambda ()
                             (font-lock-add-keywords nil
-                                                    '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
+                                                    '(("\\<\\(FIX\\|FIXME\\|TODO\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)))))
 (modify-syntax-entry ?_ "w")
 
 (global-set-key (kbd "C-x C-=") 'ry/diff-buffer-file-changes)
