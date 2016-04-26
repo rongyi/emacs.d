@@ -7,7 +7,8 @@
     beacon光标定位
 *** DONE https://github.com/howardabrams/dot-files.git
     surround函数很赞
-*** TODO https://github.com/bodil/ohai-emacs.git
+*** DONE https://github.com/bodil/ohai-emacs.git
+    漂亮女生还会emacs，难怪这个repo star那么高
 *** TODO https://github.com/abo-abo/oremacs.git
 *** TODO https://github.com/joedicastro/dotfiles.git
 ** DONE emacs package: ctags-update, 能否配置成Vim一样的键映射

@@ -263,5 +263,8 @@
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
 
 
+;; When not in a terminal, configure a few window system specific things.
+(when window-system
+  (setq frame-title-format '(buffer-file-name "%f" ("%b"))))
 
 (provide 'rongyi-basic)

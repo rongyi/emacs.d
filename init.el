@@ -618,6 +618,17 @@ mouse-3: go to end"))))
   :ensure t
   :diminish aggressive-indent-mode)
 
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode)
+  :diminish which-key-mode)
+
+(use-package dired+
+  :config
+  (set-face-foreground 'diredp-file-name nil))
+
+
 
 ;; diminish more minor mode
 (diminish 'global-auto-revert-mode)
