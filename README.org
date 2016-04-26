@@ -8,4 +8,6 @@
 *** DONE https://github.com/howardabrams/dot-files.git
     surround函数很赞
 *** TODO https://github.com/bodil/ohai-emacs.git
+*** TODO https://github.com/abo-abo/oremacs.git
+*** TODO https://github.com/joedicastro/dotfiles.git
 ** DONE emacs package: ctags-update, 能否配置成Vim一样的键映射
