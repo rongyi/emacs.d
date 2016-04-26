@@ -629,6 +629,18 @@ mouse-3: go to end"))))
   (set-face-foreground 'diredp-file-name nil))
 
 
+;; start a server
+(use-package server
+  :config
+  (or (server-running-p) (server-start)))
+
+;; slime for lisp
+(use-package slime
+    :commands slime
+    :init
+    (require 'slime-autoloads)
+    (setq slime-contribs '(slime-fancy))
+    (setq inferior-lisp-program "/usr/bin/clisp"))
 
 ;; diminish more minor mode
 (diminish 'global-auto-revert-mode)

@@ -250,8 +250,6 @@
 
 (global-set-key (kbd "C-+") 'surround)
 
-(setq inferior-lisp-program "/usr/bin/clisp")
-
 (global-set-key (kbd "C-x f") 'toggle-frame-maximized)
 
 
