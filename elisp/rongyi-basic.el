@@ -28,11 +28,9 @@
 ;;(toggle-frame-fullscreen)
 (toggle-frame-maximized)
 
-(scroll-bar-mode 0)
-(when (fboundp 'menu-bar-mode)
-  (menu-bar-mode -1))
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
+(dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
+  (when (fboundp mode)
+    (funcall mode -1)))
 ;; yes-or-no-p ==> y-or-n
 (defalias 'yes-or-no-p 'y-or-no-p)
 ;; auto indent
@@ -125,8 +123,8 @@
 ;; please.
 (setq sentence-end-double-space nil)
 ;; font
-(set-frame-font "Source Code Pro for Powerline 10")
-(add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline 10"))
+(set-frame-font "Source Code Pro for Powerline 12")
+(add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline 12"))
 (add-hook 'after-make-frame-functions
           (lambda (new-frame)
             (set-fontset-font "fontset-default" 'han '("方正清刻本悦宋简体" . "unicode-bmp"))
@@ -161,7 +159,7 @@
 ;; subword-mode in prog-mode-hook
 (add-hook 'prog-mode-hook 'subword-mode)
 ;; format linum
-(setq linum-format "%4d \u2502")
+(setq linum-format (if (not window-system) "%4d " "%4d"))
 
 ;; Make sure script files are excutable after save
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)

@@ -14,7 +14,7 @@
       (message "Making directory: %s" dir)
       (make-directory dir))))
 
-(add-to-list 'load-path (ry/emacs-subdirectory "elisp"))
+(add-to-list 'load-path (ry/emacs-subdirectory "elisp" "backup"))
 
 
 
@@ -120,21 +120,20 @@
   (evil-leader/set-key
     "l" 'linum-mode
     "w" 'save-buffer
+    "q" 'kill-this-buffer
     "c SPC" 'comment-or-uncomment-line-or-region))
 
 ;; avy
 (use-package avy
   :ensure t
   :config
-  (evil-leader/set-key "f" 'avy-goto-word-or-subword-1)
-  )
+  (evil-leader/set-key "f" 'avy-goto-word-or-subword-1))
 
 ;; expand-region
 (use-package expand-region
   :ensure t
   :config
-  (global-set-key (kbd "C-=") 'er/expand-region)
-  )
+  (global-set-key (kbd "C-=") 'er/expand-region))
 
 ;; helm
 (use-package helm
@@ -156,8 +155,7 @@
                                     "helm-adapative-history"
                                     user-emacs-directory))
 
-  (evil-leader/set-key "e" 'helm-semantic-or-imenu)
-  )
+  (evil-leader/set-key "e" 'helm-semantic-or-imenu))
 
 ;; projectile
 (use-package projectile
