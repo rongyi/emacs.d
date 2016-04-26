@@ -7,14 +7,14 @@
 (defun ry/emacs-subdirectory (d)
   (expand-file-name d ry/emacs-directory))
 
-(let* ((subdirs '("elisp"))
+(let* ((subdirs '("elisp" "backup"))
        (fulldirs (mapcar 'ry/emacs-subdirectory subdirs)))
   (dolist (dir fulldirs)
     (when (not (file-exists-p dir))
       (message "Making directory: %s" dir)
       (make-directory dir))))
 
-(add-to-list 'load-path (ry/emacs-subdirectory "elisp" "backup"))
+(add-to-list 'load-path (ry/emacs-subdirectory "elisp"))
 
 
 
@@ -165,7 +165,8 @@
   :config
   (setq projectile-completion-system 'ido)
   (setq projectile-indexing-method 'native) ; force the use of native indexing in operating systems other than Windows
-  (evil-leader/set-key "p" 'projectile-find-file))
+  (evil-leader/set-key "p" 'projectile-find-file)
+  :diminish projectile-mode)
 
 ;; magit
 
@@ -613,15 +614,9 @@ mouse-3: go to end"))))
   :bind ("C-M-+" . ry/highlight-section))
 
 
-;; pretty lambda
-(use-package lisp-mode
-  :init
-  (defconst lisp--prettify-symbols-alist
-    '(("lambda"  . ?λ)
-      ("."       . ?•)))
-  :config
-  (add-hook 'emacs-lisp-mode-hook 'global-prettify-symbols-mode)
-  (add-hook 'emacs-lisp-mode-hook 'activate-aggressive-indent))
+(use-package aggressive-indent
+  :ensure t
+  :diminish aggressive-indent-mode)
 
 
 ;; diminish more minor mode
