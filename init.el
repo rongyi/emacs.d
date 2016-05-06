@@ -642,6 +642,14 @@ mouse-3: go to end"))))
     (setq slime-contribs '(slime-fancy))
     (setq inferior-lisp-program "/usr/bin/clisp"))
 
+;; ggtags for reading kernel code
+(use-package ggtags
+  :config
+  (add-hook 'c-mode-common-hook
+    (lambda ()
+      (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
+        (ggtags-mode 1)))))
+
 ;; diminish more minor mode
 (diminish 'global-auto-revert-mode)
 (diminish 'global-whitespace-mode)
