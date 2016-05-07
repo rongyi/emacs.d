@@ -32,7 +32,7 @@
   (when (fboundp mode)
     (funcall mode -1)))
 ;; yes-or-no-p ==> y-or-n
-(defalias 'yes-or-no-p 'y-or-no-p)
+;; (fset 'yes-or-no-p 'y-or-no-p)
 ;; auto indent
 (define-key global-map (kbd "RET") 'newline-and-indent)
 (setq ad-redefinition-action 'accept)
@@ -123,8 +123,8 @@
 ;; please.
 (setq sentence-end-double-space nil)
 ;; font
-(set-frame-font "Source Code Pro for Powerline 12")
-(add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline 12"))
+(set-frame-font "Source Code Pro for Powerline 10")
+(add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline 10"))
 (add-hook 'after-make-frame-functions
           (lambda (new-frame)
             (set-fontset-font "fontset-default" 'han '("方正清刻本悦宋简体" . "unicode-bmp"))
@@ -237,6 +237,7 @@
 (add-hook 'prog-mode-hook (lambda ()
                             (font-lock-add-keywords nil
                                                     '(("\\<\\(FIX\\|FIXME\\|TODO\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)))))
+
 (modify-syntax-entry ?_ "w")
 
 (global-set-key (kbd "C-x C-=") 'ry/diff-buffer-file-changes)
@@ -264,5 +265,14 @@
 ;; When not in a terminal, configure a few window system specific things.
 (when window-system
   (setq frame-title-format '(buffer-file-name "%f" ("%b"))))
+
+(custom-set-faces
+   '(header-line
+     ((default
+        :inherit mode-line)
+      (((class color grayscale) (background light))
+       :background "black" :foreground "grey20" :box nil)
+      )))
+
 
 (provide 'rongyi-basic)

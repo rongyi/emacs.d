@@ -49,42 +49,44 @@
   :config
 
   (define-key evil-insert-state-map (kbd "M-.") 'insert-pointer-access)
-  (define-key evil-insert-state-map "\C-c" '(lambda ()
-                                              (interactive)
-                                              (save-excursion
-                                                (evil-normal-state)
-                                                (when (fboundp 'company-abort)
-                                                  (company-abort))
-                                                )))
-  (define-key evil-visual-state-map "\C-c" 'evil-normal-state)
-  (define-key evil-normal-state-map "\C-e" 'evil-end-of-line)
-  (define-key evil-normal-state-map "\C-a" 'evil-beginning-of-line)
-  (define-key evil-insert-state-map "\C-a" 'evil-beginning-of-line)
-  (define-key evil-insert-state-map "\C-e" 'end-of-line)
-  (define-key evil-insert-state-map "\C-s" 'save-buffer)
-  (define-key evil-insert-state-map "\C-k" 'kill-line)
-  (define-key evil-normal-state-map "\C-s" 'save-buffer)
-  (define-key evil-visual-state-map "\C-e" 'evil-end-of-line)
-  (define-key evil-motion-state-map "\C-e" 'evil-end-of-line)
-  (define-key evil-normal-state-map "\C-f" 'evil-scroll-page-down)
-  (define-key evil-insert-state-map "\C-f" 'forward-char)
-  (define-key evil-insert-state-map "\C-f" 'evil-forward-char)
-  (define-key evil-normal-state-map "\C-b" 'evil-scroll-page-up)
-  (define-key evil-insert-state-map "\C-b" 'backward-char)
-  (define-key evil-visual-state-map "\C-b" 'evil-backward-char)
-  (define-key evil-normal-state-map "\C-d" 'evil-delete-char)
-  (define-key evil-insert-state-map "\C-d" 'evil-delete-char)
-  (define-key evil-visual-state-map "\C-d" 'evil-delete-char)
-  (define-key evil-normal-state-map "\C-n" 'evil-next-line)
-  (define-key evil-insert-state-map "\C-n" 'evil-next-line)
-  (define-key evil-visual-state-map "\C-n" 'evil-next-line)
-  (define-key evil-normal-state-map "\C-p" 'evil-previous-line)
-  (define-key evil-insert-state-map "\C-p" 'evil-previous-line)
-  (define-key evil-visual-state-map "\C-p" 'evil-previous-line)
-  (define-key evil-normal-state-map "\C-w" 'evil-delete)
-  (define-key evil-insert-state-map "\C-w" 'evil-delete)
-  (define-key evil-visual-state-map "\C-w" 'evil-delete)
+  (define-key evil-insert-state-map (kbd "C-c") '(lambda ()
+                                                   (interactive)
+                                                   (save-excursion
+                                                     (evil-normal-state)
+                                                     (when (fboundp 'company-abort)
+                                                       (company-abort))
+                                                     )))
+  (define-key evil-visual-state-map (kbd "C-c") 'evil-normal-state)
+  (define-key evil-normal-state-map (kbd "C-e") 'evil-end-of-line)
+  (define-key evil-normal-state-map (kbd "C-a") 'evil-beginning-of-line)
+  (define-key evil-insert-state-map (kbd "C-a") 'evil-beginning-of-line)
+  (define-key evil-insert-state-map (kbd "C-e") 'end-of-line)
+  (define-key evil-insert-state-map (kbd "C-s") 'save-buffer)
+  (define-key evil-insert-state-map (kbd "C-k") 'kill-line)
+  (define-key evil-normal-state-map (kbd "C-s") 'save-buffer)
+  (define-key evil-visual-state-map (kbd "C-e") 'evil-end-of-line)
+  (define-key evil-motion-state-map (kbd "C-e") 'evil-end-of-line)
+  (define-key evil-normal-state-map (kbd "C-f") 'evil-scroll-page-down)
+  (define-key evil-insert-state-map (kbd "C-f") 'forward-char)
+  (define-key evil-insert-state-map (kbd "C-f") 'evil-forward-char)
+  (define-key evil-normal-state-map (kbd "C-b") 'evil-scroll-page-up)
+  (define-key evil-insert-state-map (kbd "C-b") 'backward-char)
+  (define-key evil-visual-state-map (kbd "C-b") 'evil-backward-char)
+  (define-key evil-normal-state-map (kbd "C-d") 'evil-delete-char)
+  (define-key evil-insert-state-map (kbd "C-d") 'evil-delete-char)
+  (define-key evil-visual-state-map (kbd "C-d") 'evil-delete-char)
+  (define-key evil-normal-state-map (kbd "C-n") 'evil-next-line)
+  (define-key evil-insert-state-map (kbd "C-n") 'evil-next-line)
+  (define-key evil-visual-state-map (kbd "C-n") 'evil-next-line)
+  (define-key evil-normal-state-map (kbd "C-p") 'evil-previous-line)
+  (define-key evil-insert-state-map (kbd "C-p") 'evil-previous-line)
+  (define-key evil-visual-state-map (kbd "C-p") 'evil-previous-line)
+  (define-key evil-normal-state-map (kbd "C-w") 'evil-delete)
+  (define-key evil-insert-state-map (kbd "C-w") 'evil-delete)
+  (define-key evil-visual-state-map (kbd "C-w") 'evil-delete)
   (define-key evil-insert-state-map (kbd "C-o") 'ry/open-line-above)
+  (define-key evil-normal-state-map (kbd "C-]") 'ggtags-find-tag-dwim)
+  (define-key evil-normal-state-map (kbd "C-t") 'pop-tag-mark)
 
   ;; make j == gj, visual line
   (setq evil-cross-lines t)
@@ -110,24 +112,10 @@
   :ensure t)
 
 
-;; evil leader
-(use-package evil-leader
-  :ensure t
-  :config
-  (setq evil-leader/in-all-states 1)
-  (global-evil-leader-mode)
-  (evil-leader/set-leader ",")
-  (evil-leader/set-key
-    "l" 'linum-mode
-    "w" 'save-buffer
-    "q" 'kill-this-buffer
-    "c SPC" 'comment-or-uncomment-line-or-region))
 
 ;; avy
 (use-package avy
-  :ensure t
-  :config
-  (evil-leader/set-key "f" 'avy-goto-word-or-subword-1))
+  :ensure t)
 
 ;; expand-region
 (use-package expand-region
@@ -147,15 +135,12 @@
   (setq helm-bookmark-show-location t)
   (setq helm-buffers-fuzzy-matching t)
   ;;(global-set-key (kbd "M-x") 'helm-M-x)
-  (setq helm-buffers-fuzzy-matching t)
-  (setq helm-split-window-default-side (quote other))
+  (setq helm-split-window-default-side 'other)
   (setq helm-split-window-in-side-p nil)
   (setq helm-display-function 'helm-default-display-buffer)
   (setq helm-adaptive-history-file (expand-file-name
                                     "helm-adapative-history"
-                                    user-emacs-directory))
-
-  (evil-leader/set-key "e" 'helm-semantic-or-imenu))
+                                    user-emacs-directory)))
 
 ;; projectile
 (use-package projectile
@@ -165,7 +150,6 @@
   :config
   (setq projectile-completion-system 'ido)
   (setq projectile-indexing-method 'native) ; force the use of native indexing in operating systems other than Windows
-  (evil-leader/set-key "p" 'projectile-find-file)
   :diminish projectile-mode)
 
 ;; magit
@@ -173,7 +157,6 @@
 (use-package magit
   :ensure t
   :config
-  (evil-leader/set-key "g" 'magit-status)
   (global-set-key (kbd "<f2>") 'magit-status)
   (global-set-key (kbd "C-x g") 'magit-status)
   (setq magit-commit-arguments '("--verbose")))
@@ -257,7 +240,6 @@
 (use-package ag
   :ensure t
   :config
-  (evil-leader/set-key "s" 'ag)
   (setq ag-reuse-buffers t
         ag-highlight-search t
         ag-project-root-function (lambda (d)
@@ -391,8 +373,6 @@
   (setq mode-require-final-newline nil
         require-final-newline nil)
   (global-ethan-wspace-mode 1)
-  (evil-leader/set-key
-    "SPC" 'ethan-wspace-clean-all)
   :diminish ethan-wspace-mode)
 
 ;; Enhance C-x o when more than two window are open
@@ -402,15 +382,8 @@
   ;; the key "combo" is fast than the least used C-x o
   ;; so we decide to make a change with swap hot key
   (global-set-key (kbd "C-x C-o") 'ace-window)
-  (evil-leader/set-key "w" 'ace-window)
   ;; it seems like we dont need swap window frequently
   (global-set-key (kbd "C-x o") 'ace-window)
-  (evil-leader/set-key "K" (lambda ()
-                             (interactive)
-                             (save-excursion
-                               (other-window 1)
-                               (quit-window)
-                               (other-window 1))))
   :diminish ace-window-mode)
 
 ;; snippet
@@ -490,7 +463,8 @@
                        mouse-face mode-line-highlight
                        help-echo "mouse-1: go to beginning\n\
 mouse-2: toggle rest visibility\n\
-mouse-3: go to end"))))
+mouse-3: go to end")))
+  (setq-default header-line-format '((which-func-mode ("" which-func-format " ")))))
 
 
 (use-package beacon                     ; Highlight cursor position in buffer
@@ -636,19 +610,52 @@ mouse-3: go to end"))))
 
 ;; slime for lisp
 (use-package slime
-    :commands slime
-    :init
-    (require 'slime-autoloads)
-    (setq slime-contribs '(slime-fancy))
-    (setq inferior-lisp-program "/usr/bin/clisp"))
+  :commands slime
+  :init
+  (require 'slime-autoloads)
+  (setq slime-contribs '(slime-fancy))
+  (setq inferior-lisp-program "/usr/bin/clisp"))
 
 ;; ggtags for reading kernel code
 (use-package ggtags
   :config
   (add-hook 'c-mode-common-hook
-    (lambda ()
-      (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
-        (ggtags-mode 1)))))
+            (lambda ()
+              (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
+                (ggtags-mode 1)))))
+
+;; rainbow mode to see color
+(use-package rainbow-mode
+  :ensure t
+  :diminish rainbow-mode)
+
+;; when everything is set, we make our evil leader bindings
+(use-package evil-leader
+  :ensure t
+  :config
+  (setq evil-leader/in-all-states 1)
+  (global-evil-leader-mode)
+  (evil-leader/set-leader ",")
+  (evil-leader/set-key
+    "l" 'linum-mode
+    "w" 'save-buffer
+    "q" 'kill-this-buffer
+    "c SPC" 'comment-or-uncomment-line-or-region
+    "b" 'bookmark-bmenu-list
+    "f" 'avy-goto-word-or-subword-1
+    "e" 'helm-semantic-or-imenu
+    "p" 'projectile-find-file
+    "g" 'magit-status
+    "s" 'ag
+    "SPC" 'ethan-wspace-clean-all
+    "w" 'ace-window
+    "K" (lambda ()
+          (interactive)
+          (save-excursion
+            (other-window 1)
+            (quit-window)
+            (other-window 1)))
+    "i" 'find-user-init-file))
 
 ;; diminish more minor mode
 (diminish 'global-auto-revert-mode)
