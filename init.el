@@ -133,7 +133,18 @@
 
   (setq helm-quick-update t)
   (setq helm-bookmark-show-location t)
-  (setq helm-buffers-fuzzy-matching t)
+
+  (setq helm-buffers-fuzzy-matching           t
+        helm-completion-in-region-fuzzy-match t
+        helm-file-cache-fuzzy-match           t
+        helm-imenu-fuzzy-match                t
+        helm-mode-fuzzy-match                 t
+        helm-locate-fuzzy-match               t
+        helm-quick-update                     t
+        helm-recentf-fuzzy-match              t
+        helm-semantic-fuzzy-match             t)
+
+
   ;;(global-set-key (kbd "M-x") 'helm-M-x)
   (setq helm-split-window-default-side 'other)
   (setq helm-split-window-in-side-p nil)
@@ -141,6 +152,7 @@
   (setq helm-adaptive-history-file (expand-file-name
                                     "helm-adapative-history"
                                     user-emacs-directory)))
+
 
 ;; projectile
 (use-package projectile
@@ -470,6 +482,8 @@ mouse-3: go to end")))
 (use-package beacon                     ; Highlight cursor position in buffer
   :ensure t
   :init (beacon-mode 1)
+  :config
+  (setq beacon-color "#81f7f3")
   :diminish beacon-mode)
 
 
