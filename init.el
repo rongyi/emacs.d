@@ -61,9 +61,7 @@
   (define-key evil-normal-state-map (kbd "C-a") 'evil-beginning-of-line)
   (define-key evil-insert-state-map (kbd "C-a") 'evil-beginning-of-line)
   (define-key evil-insert-state-map (kbd "C-e") 'end-of-line)
-  (define-key evil-insert-state-map (kbd "C-s") 'save-buffer)
   (define-key evil-insert-state-map (kbd "C-k") 'kill-line)
-  (define-key evil-normal-state-map (kbd "C-s") 'save-buffer)
   (define-key evil-visual-state-map (kbd "C-e") 'evil-end-of-line)
   (define-key evil-motion-state-map (kbd "C-e") 'evil-end-of-line)
   (define-key evil-normal-state-map (kbd "C-f") 'evil-scroll-page-down)
@@ -636,12 +634,18 @@ mouse-3: go to end")))
   (add-hook 'c-mode-common-hook
             (lambda ()
               (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
-                (ggtags-mode 1)))))
+                (ggtags-mode 1))))
+  :diminish ggtags-mode)
 
 ;; rainbow mode to see color
 (use-package rainbow-mode
   :ensure t
   :diminish rainbow-mode)
+
+(use-package swiper
+  :ensure t
+  :config
+  (global-set-key (kbd "C-s") 'swiper))
 
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
