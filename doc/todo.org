@@ -3,7 +3,7 @@
 ** DONE 使用use-package而不是自己造的轮子，进而需要对use-package的代码学习
 ** DONE 加入diminish和spaceline来美化modeline
 ** DONE emacs package: ctags-update, 能否配置成Vim一样的键映射
-** TODO 阅读自己关注的一些repo和follow的人的emacs配置，学习elisp [7/7]
+** TODO 阅读自己关注的一些repo和follow的人的emacs配置，学习elisp [8/8]
 *** DONE https://github.com/lunaryorn/.emacs.d.git
     beacon光标定位
 *** DONE https://github.com/howardabrams/dot-files.git
@@ -34,4 +34,9 @@
     7. Emacs ignore Unix philosophy: doing only one thing and doing it well.
        Emacs is the perfect glue between different text-based applications.
        It does not blindly subscribe to the Unix philosophy.
-    8.
+*** DONE [[http://www.emacs-doctor.com/learn-emacs-lisp-in-15-minutes.html][Learn Emacs Lisp in 15 min]]
+
+*** quote
+    #+BEGIN_QUOTE
+    using another person's configuration would have hindered my progress.
+    #+END_QUOTE
