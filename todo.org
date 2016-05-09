@@ -3,7 +3,7 @@
 ** DONE 使用use-package而不是自己造的轮子，进而需要对use-package的代码学习
 ** DONE 加入diminish和spaceline来美化modeline
 ** DONE emacs package: ctags-update, 能否配置成Vim一样的键映射
-** TODO 阅读自己关注的一些repo和follow的人的emacs配置，学习elisp [6/6]
+** TODO 阅读自己关注的一些repo和follow的人的emacs配置，学习elisp [7/7]
 *** DONE https://github.com/lunaryorn/.emacs.d.git
     beacon光标定位
 *** DONE https://github.com/howardabrams/dot-files.git
@@ -16,3 +16,18 @@
     也是一个高速进化中的个人配置文件，可以过段时间再看下。
 *** DONE http://tuhdo.github.io/
     C++配置，ggtag的使用学习到了。
+*** DONE [[http://elephly.net/posts/2016-02-14-ilovefs-emacs.html][Why Emacs?]]
+    1. yes, an operating system indeed!
+    2. it is a platform to run applications. Applications in
+       brower are written in JS. Applications in Emacs are written
+       in EmacsLisp.
+    3. Emacs is an environment for text  buffers with a language that
+       can be used to maniplulate and interact with text buffers.
+    4. I do not start Emacs to edit a file; I'm living in Emacs.
+    5. Small solid core (written in C) and a delicious mantle of sweet
+       emacs lisp.
+    6. It's like a tailor-made shirt in that it fits you exactly (if you
+       take some time to take your measurements)
+    7. Emacs ignore Unix philosophy: doing only one thing and doing it well.
+       Emacs is the perfect glue between different text-based applications.
+       It does not blindly subscribe to the Unix philosophy.
