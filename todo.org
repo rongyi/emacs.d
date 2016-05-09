@@ -17,6 +17,9 @@
 *** DONE http://tuhdo.github.io/
     C++配置，ggtag的使用学习到了。
 *** DONE [[http://elephly.net/posts/2016-02-14-ilovefs-emacs.html][Why Emacs?]]
+    :PROPERTIES:
+    :ORDERED:  t
+    :END:
     1. yes, an operating system indeed!
     2. it is a platform to run applications. Applications in
        brower are written in JS. Applications in Emacs are written
@@ -31,3 +34,4 @@
     7. Emacs ignore Unix philosophy: doing only one thing and doing it well.
        Emacs is the perfect glue between different text-based applications.
        It does not blindly subscribe to the Unix philosophy.
+    8.
