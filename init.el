@@ -647,6 +647,9 @@ mouse-3: go to end")))
   :config
   (global-set-key (kbd "C-s") 'swiper))
 
+(use-package helm-gtags
+  :ensure t)
+
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
   :ensure t
@@ -665,6 +668,7 @@ mouse-3: go to end")))
     "p" 'projectile-find-file
     "g" 'magit-status
     "s" 'ag
+    "t" 'helm-gtags-select
     "SPC" 'ethan-wspace-clean-all
     "w" 'ace-window
     "K" (lambda ()
