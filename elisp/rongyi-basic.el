@@ -127,9 +127,9 @@
 (add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline 10"))
 (add-hook 'after-make-frame-functions
           (lambda (new-frame)
-            (set-fontset-font "fontset-default" 'han '("方正清刻本悦宋简体" . "unicode-bmp"))
+            (set-fontset-font "fontset-default" 'han '("Microsoft JhengHei" . "unicode-bmp"))
             ))
-(set-fontset-font "fontset-default" 'han '("方正清刻本悦宋简体" . "unicode-bmp"))
+(set-fontset-font "fontset-default" 'han '("Microsoft JhengHei" . "unicode-bmp"))
 
 ;; hippie expand
 (global-set-key (kbd "M-/") 'hippie-expand)
