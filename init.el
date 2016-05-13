@@ -667,7 +667,7 @@ mouse-3: go to end")))
     "e" 'helm-semantic-or-imenu
     "p" 'projectile-find-file
     "g" 'magit-status
-    "s" 'ag
+    "s" 'ag-project
     "t" 'helm-gtags-select
     "SPC" 'ethan-wspace-clean-all
     "w" 'ace-window
