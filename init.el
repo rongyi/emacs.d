@@ -436,16 +436,20 @@
   :config
   (add-hook 'before-save-hook 'gofmt-before-save))
 
+(use-package go-eldoc
+  :ensure t
+  :config
+  (add-hook 'go-mode-hook 'go-eldoc-setup))
+
 ;; go auto complete
 (use-package company-go
   :ensure t
   :config
-  (set (make-local-variable 'company-backends) '(company-go))
-  (company-mode)
+  (add-hook 'go-mode-hook (lambda ()
+                          (set (make-local-variable 'company-backends) '(company-go))
+                          (company-mode)))
   ;; the same key as show python function doc in anaconda mode
   (define-key go-mode-map (kbd "M-?") 'godoc-at-point)
-  (require-install-nessary 'go-eldoc)
-  (add-hook 'go-mode-hook 'go-eldoc-setup)
   (define-key go-mode-map (kbd "M-=") (lambda ()
                                         (interactive)
                                         (insert ":=")))
