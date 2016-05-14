@@ -434,7 +434,17 @@
 (use-package go-mode
   :ensure t
   :config
-  (add-hook 'before-save-hook 'gofmt-before-save))
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  (defun ry/go-test()
+    "test"
+    (interactive)
+    (let ((file (buffer-file-name)))
+      (visit-term-buffer)
+      (insert (format "go run %s" file))
+      (comint-send-input)
+      (other-window -1)))
+
+  (define-key go-mode-map (kbd "C-c C-c") 'ry/go-test))
 
 (use-package go-eldoc
   :ensure t
@@ -446,8 +456,8 @@
   :ensure t
   :config
   (add-hook 'go-mode-hook (lambda ()
-                          (set (make-local-variable 'company-backends) '(company-go))
-                          (company-mode)))
+                            (set (make-local-variable 'company-backends) '(company-go))
+                            (company-mode)))
   ;; the same key as show python function doc in anaconda mode
   (define-key go-mode-map (kbd "M-?") 'godoc-at-point)
   (define-key go-mode-map (kbd "M-=") (lambda ()
