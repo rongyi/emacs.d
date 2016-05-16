@@ -274,5 +274,7 @@
        :background "black" :foreground "grey20" :box nil)
       )))
 
+(electric-pair-mode 1)
+
 
 (provide 'rongyi-basic)
