@@ -284,6 +284,12 @@
 
 ;; company
 
+(use-package company-flx
+  :ensure t
+  :init
+  (with-eval-after-load 'company
+    (company-flx-mode +1)))
+
 (use-package company
   :ensure t
   :config
@@ -298,6 +304,7 @@
         company-show-numbers t
         company-transformers '(company-sort-by-occurrence)
         company-global-modes '(not term-mode))
+  (add-to-list 'company-backends 'company-capf)
 
   ;; cancel company explicitly
   (define-key company-active-map (kbd "C-g") 'company-abort)
@@ -458,9 +465,7 @@
 (use-package company-go
   :ensure t
   :config
-  (add-hook 'go-mode-hook (lambda ()
-                            (set (make-local-variable 'company-backends) '(company-go))
-                            (company-mode)))
+  (add-to-list 'company-backends 'company-go)
   ;; the same key as show python function doc in anaconda mode
   (define-key go-mode-map (kbd "M-?") 'godoc-at-point)
   (define-key go-mode-map (kbd "M-=") (lambda ()
