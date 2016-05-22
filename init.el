@@ -683,6 +683,7 @@ mouse-3: go to end")))
   (global-evil-leader-mode)
   (evil-leader/set-leader ",")
   (evil-leader/set-key
+    "," 'goto-last-change               ; normaly its ``m' , this is a workaround for my new keyboard
     "l" 'linum-mode
     "w" 'save-buffer
     "q" 'kill-this-buffer
