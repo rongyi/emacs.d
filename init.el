@@ -85,6 +85,9 @@
   (define-key evil-insert-state-map (kbd "C-o") 'ry/open-line-above)
   (define-key evil-normal-state-map (kbd "C-]") 'ggtags-find-tag-dwim)
   (define-key evil-normal-state-map (kbd "C-t") 'pop-tag-mark)
+  ;; pain in the ass
+  (define-key evil-normal-state-map (kbd "K") (lambda ()
+                                                (interactive)))
 
   ;; make j == gj, visual line
   (setq evil-cross-lines t)
@@ -663,6 +666,14 @@ mouse-3: go to end")))
 
 (use-package helm-gtags
   :ensure t)
+
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (when (eq system-type 'darwin)
+    (setq exec-path-from-shell-variables '("PATH"  "MANPATH" "SHELL" "GOPATH" "GOROOT"))
+    (exec-path-from-shell-initialize)
+    (exec-path-from-shell-copy-envs '("PATH" "GOROOT" "GOPATH" "SHELL"))))
 
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader

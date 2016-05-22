@@ -131,6 +131,16 @@
             ))
 (set-fontset-font "fontset-default" 'han '("Microsoft JhengHei" . "unicode-bmp"))
 
+;; my poor child, your mac air is so small
+(when (eq system-type 'darwin)
+  (set-frame-font "Source Code Pro for Powerline 12")
+  (add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline 12"))
+  (add-hook 'after-make-frame-functions
+            (lambda (new-frame)
+              (set-fontset-font "fontset-default" 'han '("Microsoft JhengHei" . "unicode-bmp"))
+              ))
+  (set-fontset-font "fontset-default" 'han '("Microsoft JhengHei" . "unicode-bmp")))
+
 ;; hippie expand
 (global-set-key (kbd "M-/") 'hippie-expand)
 
@@ -207,19 +217,14 @@
         (kill-buffer buffer))
     ad-do-it))
 
+;; shell
+(when (eq system-type 'darwin)
+  (setq explicit-shell-file-name "/bin/zsh"))
 ;; ediff option
 
 (setq ediff-split-window-function 'split-window-horizontally)
 (setq ediff-diff-options "-w")
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-
-;; export shell path
-(require-install-nessary 'exec-path-from-shell)
-(when (and (eq system-type 'darwin) (display-graphic-p))
-  (require-install-nessary 'exec-path-from-shell)
-  (setq exec-path-from-shell-variables '("PATH"  "MANPATH" "SHELL" "GOPATH"))
-  (exec-path-from-shell-initialize))
-
 
 ;; smex
 (require-install-nessary 'smex)
@@ -267,12 +272,12 @@
   (setq frame-title-format '(buffer-file-name "%f" ("%b"))))
 
 (custom-set-faces
-   '(header-line
-     ((default
-        :inherit mode-line)
-      (((class color grayscale) (background light))
-       :background "black" :foreground "grey20" :box nil)
-      )))
+ '(header-line
+   ((default
+      :inherit mode-line)
+    (((class color grayscale) (background light))
+     :background "black" :foreground "grey20" :box nil)
+    )))
 
 (electric-pair-mode 1)
 
