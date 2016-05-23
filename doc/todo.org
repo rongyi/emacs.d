@@ -40,3 +40,6 @@
     #+BEGIN_QUOTE
     using another person's configuration would have hindered my progress.
     #+END_QUOTE
+
+*** [[http://blog.aaronbieber.com/2015/01/17/learning-to-love-emacs.html][Learning to love emacs]]
+    文章作者使用Vim15年左右后来转的Emacs，一些理由很有说服性。
