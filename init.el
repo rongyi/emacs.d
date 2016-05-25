@@ -182,6 +182,7 @@
   :ensure spaceline
   :after nyan-mode
   :config
+  (setq powerline-default-separator 'slant)
   (nyan-mode)
   (spaceline-spacemacs-theme))
 
