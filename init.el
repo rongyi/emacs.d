@@ -284,11 +284,11 @@
 
 ;; company
 
-(use-package company-flx
-  :ensure t
-  :init
-  (with-eval-after-load 'company
-    (company-flx-mode +1)))
+;; (use-package company-flx
+;;   :ensure t
+;;   :init
+;;   (with-eval-after-load 'company
+;;     (company-flx-mode +1)))
 
 (use-package company
   :ensure t
