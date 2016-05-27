@@ -681,6 +681,16 @@ mouse-3: go to end")))
     (exec-path-from-shell-initialize)
     (exec-path-from-shell-copy-envs '("PATH" "GOROOT" "GOPATH" "SHELL"))))
 
+
+(use-package dumb-jump
+  :ensure t
+  :config
+  (dumb-jump-mode)
+  ;; Vim habit
+  (define-key dumb-jump-mode-map (kbd "C-]") 'dumb-jump-go)
+  (define-key dumb-jump-mode-map (kbd "C-t") 'dumb-jump-back)
+  :diminish dumb-jump-mode)
+
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
   :ensure t
