@@ -156,7 +156,7 @@
         try-complete-lisp-symbol-partially
         try-complete-lisp-symbol))
 
-(load-theme 'leuven)
+;; (load-theme 'leuven)
 
 (when (eq system-type 'darwin) ;; mac specific settings
   (setq mac-option-modifier 'alt)
@@ -281,5 +281,8 @@
 
 (electric-pair-mode 1)
 
+;; take whatever we want to fit the 'combo'
+(global-set-key [(control return)] 'newline-for-code)
+(global-set-key (kbd "M-RET") 'newline-for-code)
 
 (provide 'rongyi-basic)

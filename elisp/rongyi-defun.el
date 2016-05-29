@@ -104,7 +104,7 @@ directory to make multiple eshell windows easier."
   (interactive)
   (move-end-of-line 1)
   (newline-and-indent))
-(global-set-key (kbd "M-RET") 'newline-for-code)
+
 
 
 (defun smarter-move-beginning-of-line (arg)

@@ -86,8 +86,7 @@
   (define-key evil-normal-state-map (kbd "C-]") 'ggtags-find-tag-dwim)
   (define-key evil-normal-state-map (kbd "C-t") 'pop-tag-mark)
   ;; pain in the ass
-  (define-key evil-normal-state-map (kbd "K") (lambda ()
-                                                (interactive)))
+  (define-key evil-normal-state-map (kbd "K") nil)
 
   ;; make j == gj, visual line
   (setq evil-cross-lines t)
@@ -309,6 +308,8 @@
 
   ;; cancel company explicitly
   (define-key company-active-map (kbd "C-g") 'company-abort)
+  (define-key company-active-map (kbd "C-n") 'company-select-next)
+  (define-key company-active-map (kbd "C-p") 'company-select-previous)
   :diminish company-mode " ⓐ")
 
 (use-package company-statistics
@@ -690,6 +691,11 @@ mouse-3: go to end")))
   (define-key dumb-jump-mode-map (kbd "C-]") 'dumb-jump-go)
   (define-key dumb-jump-mode-map (kbd "C-t") 'dumb-jump-back)
   :diminish dumb-jump-mode)
+
+(use-package spacemacs-theme
+  :ensure t
+  :init
+  (load-theme 'spacemacs-dark t))
 
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
