@@ -324,10 +324,14 @@
 
 
 ;; python auto complete
+
+(use-package anaconda-mode
+  :ensure t
+  :diminish anaconda-mode)
+
 (use-package company-anaconda
   :ensure t
   :config
-  (require-install-nessary 'company-anaconda)
   (add-to-list 'company-backends 'company-anaconda)
   (add-hook 'python-mode-hook 'anaconda-mode)
   (add-hook 'python-mode-hook 'eldoc-mode)
@@ -686,10 +690,10 @@ mouse-3: go to end")))
 (use-package dumb-jump
   :ensure t
   :config
-  (dumb-jump-mode)
   ;; Vim habit
-  (define-key dumb-jump-mode-map (kbd "C-]") 'dumb-jump-go)
-  (define-key dumb-jump-mode-map (kbd "C-t") 'dumb-jump-back)
+  (global-set-key (kbd "C-M-]") 'dumb-jump-go)
+  (global-set-key (kbd "C-M-t") 'dumb-jump-back)
+  (dumb-jump-mode)
   :diminish dumb-jump-mode)
 
 (use-package spacemacs-theme
