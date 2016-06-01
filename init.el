@@ -170,7 +170,7 @@
   :ensure t
   :config
   (global-set-key (kbd "<f2>") 'magit-status)
-  (global-set-key (kbd "C-x g") 'magit-status)
+  (global-set-key (kbd "C-M-g") 'magit-status)
   (setq magit-commit-arguments '("--verbose")))
 
 ;; nyan cat
@@ -691,8 +691,10 @@ mouse-3: go to end")))
   :ensure t
   :config
   ;; Vim habit
-  (global-set-key (kbd "C-M-]") 'dumb-jump-go)
-  (global-set-key (kbd "C-M-t") 'dumb-jump-back)
+  (define-key dumb-jump-mode-map (kbd "C-M-g") nil)
+  (define-key dumb-jump-mode-map (kbd "C-M-p") nil)
+  (global-set-key (kbd "C-}") 'dumb-jump-go)
+  (global-set-key (kbd "C-{") 'dumb-jump-back)
   (dumb-jump-mode)
   :diminish dumb-jump-mode)
 
