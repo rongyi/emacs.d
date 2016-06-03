@@ -456,11 +456,12 @@
     (interactive)
     (let ((file (buffer-file-name)))
       (visit-term-buffer)
-      (insert (format "go run %s" file))
+      (insert (format "go build %s" file))
       (comint-send-input)
       (other-window -1)))
 
-  (define-key go-mode-map (kbd "C-c C-c") 'ry/go-test))
+  (define-key go-mode-map (kbd "C-c C-c") 'ry/go-test)
+  (setq godoc-at-point-function 'godoc-gogetdoc))
 
 (use-package go-eldoc
   :ensure t
@@ -650,6 +651,7 @@ mouse-3: go to end")))
 
 ;; slime for lisp
 (use-package slime
+  :ensure t
   :commands slime
   :init
   (require 'slime-autoloads)
@@ -698,10 +700,10 @@ mouse-3: go to end")))
   (dumb-jump-mode)
   :diminish dumb-jump-mode)
 
-(use-package spacemacs-theme
+(use-package monokai-theme
   :ensure t
   :init
-  (load-theme 'spacemacs-dark t))
+  (load-theme 'monokai t))
 
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
