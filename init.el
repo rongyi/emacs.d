@@ -310,6 +310,8 @@
   (define-key company-active-map (kbd "C-g") 'company-abort)
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
+  (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
+  (define-key company-active-map [tab] 'company-complete-common-or-cycle)
   :diminish company-mode " ⓐ")
 
 (use-package company-statistics
@@ -320,7 +322,9 @@
 (use-package company-quickhelp
   :ensure t
   :after company
-  :init (company-quickhelp-mode))
+  :config
+  (company-quickhelp-mode)
+  (setq company-quickhelp-delay 1))
 
 
 ;; python auto complete
@@ -450,7 +454,8 @@
 (use-package go-mode
   :ensure t
   :config
-  (add-hook 'before-save-hook 'gofmt-before-save)
+  ;; (add-hook 'before-save-hook 'gofmt-before-save)
+  (define-key go-mode-map (kbd "C-c C-f") 'gofmt)
   (defun ry/go-test()
     "test"
     (interactive)
@@ -481,6 +486,9 @@
   (define-key go-mode-map (kbd "M-<") (lambda ()
                                         (interactive)
                                         (insert "<-"))))
+;; goline
+(use-package golint
+  :ensure t)
 
 
 
@@ -700,10 +708,15 @@ mouse-3: go to end")))
   (dumb-jump-mode)
   :diminish dumb-jump-mode)
 
-(use-package monokai-theme
+;; themes
+;; (use-package color-theme-sanityinc-solarized
+;;   :ensure t
+;;   :config
+;;   (load-theme 'sanityinc-solarized-light t))
+(use-package moe-theme
   :ensure t
-  :init
-  (load-theme 'monokai t))
+  :config
+  (moe-light))
 
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
@@ -719,7 +732,7 @@ mouse-3: go to end")))
     "q" 'kill-this-buffer
     "c SPC" 'comment-or-uncomment-line-or-region
     "b" 'bookmark-bmenu-list
-    "f" 'avy-goto-word-or-subword-1
+    "f" 'avy-goto-char
     "e" 'helm-semantic-or-imenu
     "p" 'projectile-find-file
     "g" 'magit-status
