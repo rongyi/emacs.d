@@ -124,7 +124,7 @@
 (setq sentence-end-double-space nil)
 ;; font
 (set-frame-font "Source Code Pro for Powerline 10")
-(add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline 12"))
+(add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline 10"))
 (add-hook 'after-make-frame-functions
           (lambda (new-frame)
             (set-fontset-font "fontset-default" 'han '("Microsoft JhengHei" . "unicode-bmp"))

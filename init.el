@@ -456,14 +456,15 @@
   :config
   ;; (add-hook 'before-save-hook 'gofmt-before-save)
   (define-key go-mode-map (kbd "C-c C-f") 'gofmt)
-  (defun ry/go-test()
+  (defun ry/go-test(prefix)
     "test"
-    (interactive)
+    (interactive "p")
     (let ((file (buffer-file-name)))
       (visit-term-buffer)
       (insert (format "go build %s" file))
       (comint-send-input)
-      (other-window -1)))
+      (when (> prefix 1)
+        (other-window -1))))
 
   (define-key go-mode-map (kbd "C-c C-c") 'ry/go-test)
   (setq godoc-at-point-function 'godoc-gogetdoc))
