@@ -285,4 +285,8 @@
 (global-set-key [(control return)] 'newline-for-code)
 (global-set-key (kbd "M-RET") 'newline-for-code)
 
+;; disable eletric pair in minibuffer
+(add-hook 'minibuffer-inactive-mode-hook (lambda ()
+                                           (electric-pair-mode -1)))
+
 (provide 'rongyi-basic)
