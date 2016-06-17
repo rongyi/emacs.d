@@ -449,7 +449,6 @@
   (flycheck-ycmd-setup))
 
 
-
 ;; golang config
 (use-package go-mode
   :ensure t
@@ -457,11 +456,11 @@
   ;; (add-hook 'before-save-hook 'gofmt-before-save)
   (define-key go-mode-map (kbd "C-c C-f") 'gofmt)
   (defun ry/go-test(prefix)
-    "test"
+    "a shortcut to run go demo when learning golang"
     (interactive "p")
     (let ((file (buffer-file-name)))
       (visit-term-buffer)
-      (insert (format "go build %s" file))
+      (insert (format "cd %s && go build %s" default-directory file))
       (comint-send-input)
       (when (> prefix 1)
         (other-window -1))))
