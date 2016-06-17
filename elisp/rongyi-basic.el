@@ -282,6 +282,7 @@
 (electric-pair-mode 1)
 
 ;; but disable electric-pair-mode in minibuffer
+;; http://emacs.stackexchange.com/questions/5981/how-to-make-electric-pair-mode-buffer-local/5990#5990
 (defvar ry-electic-pair-modes '(prog-mode org-mode text-mode))
 
 (defun ry-inhibit-electric-pair-mode (char)
