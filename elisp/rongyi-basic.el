@@ -281,12 +281,18 @@
 
 (electric-pair-mode 1)
 
+;; but disable electric-pair-mode in minibuffer
+(defvar ry-electic-pair-modes '(prog-mode org-mode text-mode))
+
+(defun ry-inhibit-electric-pair-mode (char)
+  (not (member major-mode ry-electic-pair-modes)))
+
+(setq electric-pair-inhibit-predicate #'ry-inhibit-electric-pair-mode)
+
 ;; take whatever we want to fit the 'combo'
 (global-set-key [(control return)] 'newline-for-code)
 (global-set-key (kbd "M-RET") 'newline-for-code)
 
-;; disable eletric pair in minibuffer
-(add-hook 'minibuffer-inactive-mode-hook (lambda ()
-                                           (electric-pair-mode -1)))
+
 
 (provide 'rongyi-basic)
