@@ -3,7 +3,7 @@
 ** DONE 使用use-package而不是自己造的轮子，进而需要对use-package的代码学习
 ** DONE 加入diminish和spaceline来美化modeline
 ** DONE emacs package: ctags-update, 能否配置成Vim一样的键映射
-** TODO 阅读自己关注的一些repo和follow的人的emacs配置，学习elisp [8/8]
+** TODO 阅读自己关注的一些repo和follow的人的emacs配置，学习elisp [10/10]
 *** DONE https://github.com/lunaryorn/.emacs.d.git
     beacon光标定位
 *** DONE https://github.com/howardabrams/dot-files.git
@@ -41,5 +41,8 @@
     using another person's configuration would have hindered my progress.
     #+END_QUOTE
 
-*** [[http://blog.aaronbieber.com/2015/01/17/learning-to-love-emacs.html][Learning to love emacs]]
+*** DONE [[http://blog.aaronbieber.com/2015/01/17/learning-to-love-emacs.html][Learning to love emacs]]
     文章作者使用Vim15年左右后来转的Emacs，一些理由很有说服性。
+
+*** DONE [[https://github.com/caiorss/Emacs-Elisp-Programming][Lisp Programming]]
+    后面的list可以有空常看看。
