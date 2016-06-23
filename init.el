@@ -718,6 +718,14 @@ mouse-3: go to end")))
   :config
   (moe-light))
 
+(use-package highlight-symbol
+  :ensure t
+  :config
+  (setq highlight-symbol-idle-delay 0.5)
+  (add-hook 'prog-mode-hook (lambda ()
+                              (highlight-symbol-mode)))
+  :diminish highlight-symbol-mode)
+
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
   :ensure t
