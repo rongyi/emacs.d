@@ -726,6 +726,21 @@ mouse-3: go to end")))
                               (highlight-symbol-mode)))
   :diminish highlight-symbol-mode)
 
+;; manual switch on/off
+(use-package focus
+  :ensure t)
+
+;; just like swiper
+(use-package helm-swoop
+  :ensure t)
+
+;; using in Python mode when needed
+(use-package highlight-indentation
+  :ensure t)
+(use-package demo-it
+  :ensure t)
+
+
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
   :ensure t

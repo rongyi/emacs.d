@@ -69,6 +69,8 @@
 (setq visible-bell t)
 ;; nevermind that's annoying
 (setq ring-bell-function 'ignore)
+;; refresh buffer fast
+(setq auto-revert-interval 1)
 ;; Show me the new saved file if the contents change on disk when editing.
 (global-auto-revert-mode 1)
 ;; no blinking cursor
@@ -294,6 +296,12 @@
 (global-set-key [(control return)] 'newline-for-code)
 (global-set-key (kbd "M-RET") 'newline-for-code)
 
+(setq-default indicate-empty-lines +1)
+
+;; open json file in json mode
+(add-to-list 'auto-mode-alist '("\\.json\\'\\|\\.jshintrc\\'" . js-mode))
+
+(setq js-indent-level 2)
 
 
 (provide 'rongyi-basic)
