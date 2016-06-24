@@ -306,5 +306,7 @@
 (after-load 'org
   (require 'ox-md nil t))
 
+(global-set-key (kbd "C-x t") 'ry/toggle-transparency)
+
 
 (provide 'rongyi-basic)

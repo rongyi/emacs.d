@@ -262,7 +262,7 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
     (find-file file)))
 
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
-(defun rename-file-and-buffer (new-name)
+(defun ry/rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
   (let ((name (buffer-name))
@@ -278,6 +278,17 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
           (set-buffer-modified-p nil))))))
 
 
-
+(defun ry/toggle-transparency ()
+  "Toggle between transparent or opaque display."
+  (interactive)
+  (let* ((frame (selected-frame))
+         (alpha (frame-parameter frame 'alpha))
+         (dotfile-setting (cons 45
+                                100)))
+    (set-frame-parameter
+     frame 'alpha
+     (if (not (equal alpha dotfile-setting))
+         dotfile-setting
+       '(100 . 100)))))
 
 (provide 'rongyi-defun)
