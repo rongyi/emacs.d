@@ -752,6 +752,23 @@ mouse-3: go to end")))
   (window-numbering-mode 1)
   :diminish window-numbering-mode)
 
+;; have some visual effect for copy & paste
+(use-package volatile-highlights
+  :ensure t
+  :config
+  (vhl/define-extension 'evil 'evil-paste-after 'evil-paste-before
+                        'evil-paste-pop 'evil-move)
+  (vhl/install-extension 'evil)
+  :diminish volatile-highlights-mode)
+
+(use-package visual-regexp
+  :ensure t)
+
+(use-package iedit
+  :ensure t
+  :config
+  (global-set-key (kbd "C-:") 'iedit-mode))
+
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
   :ensure t
