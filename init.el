@@ -183,6 +183,7 @@
   :config
   (setq powerline-default-separator 'slant)
   (nyan-mode)
+  (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
   (spaceline-spacemacs-theme))
 
 
@@ -518,7 +519,7 @@ mouse-3: go to end")))
   :ensure t
   :init (beacon-mode 1)
   :config
-  (setq beacon-color "#81f7f3")
+  (setq beacon-color "red")
   :diminish beacon-mode)
 
 
@@ -712,11 +713,16 @@ mouse-3: go to end")))
 ;; (use-package color-theme-sanityinc-solarized
 ;;   :ensure t
 ;;   :config
-;;   (load-theme 'sanityinc-solarized-light t))
+;;   (load-theme 'sanityinc-solarized-dark t))
+;; (use-package color-theme-sanityinc-tomorrow
+;;   :ensure t
+;;   :config
+;;   (load-theme 'sanityinc-tomorrow-eighties t))
 (use-package moe-theme
   :ensure t
   :config
-  (moe-light))
+  (moe-dark))
+;; (load-theme 'leuven t)
 
 (use-package highlight-symbol
   :ensure t
@@ -740,6 +746,11 @@ mouse-3: go to end")))
 (use-package demo-it
   :ensure t)
 
+(use-package window-numbering
+  :ensure t
+  :config
+  (window-numbering-mode 1)
+  :diminish window-numbering-mode)
 
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
