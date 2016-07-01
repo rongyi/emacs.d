@@ -246,12 +246,6 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
   (interactive)
   (switch-to-buffer "*scratch*"))
 
-(after-load 'magit
-  (defun ry/edit-gitignore ()
-    (interactive)
-    (split-window-sensibly (selected-window))
-    (find-file (expand-file-name ".gitignore" (magit-toplevel)))))
-
 
 (defun ry/find-file-as-root ()
   "Edit a file as root"
@@ -290,5 +284,125 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
      (if (not (equal alpha dotfile-setting))
          dotfile-setting
        '(100 . 100)))))
+
+(defun ry/emacs-reload ()
+  (interactive)
+  (load-file user-init-file)
+  (message ".emacs reloaded successfully"))
+
+
+(defun ry/eval-current-form ()
+  "Looks for the current def* or set* command then evaluates, unlike `eval-defun', does not go to topmost function"
+  (interactive)
+  (save-excursion
+    (search-backward-regexp "(def\\|(set")
+    (forward-list)
+    (call-interactively 'eval-last-sexp)))
+
+(defun ry/eval-and-replace ()
+  "Replace the preceding sexp with its value."
+  (interactive)
+  (backward-kill-sexp)
+  (condition-case nil
+      (prin1 (eval (read (current-kill 0)))
+             (current-buffer))
+    (error (message "Invalid expression")
+           (insert (current-kill 0)))))
+
+;; from https://gist.github.com/3402786
+(defun ry/toggle-maximize-buffer ()
+  "Maximize buffer"
+  (interactive)
+  (if (and (= 1 (length (window-list)))
+           (assoc ?_ register-alist))
+      (jump-to-register ?_)
+    (progn
+      (window-configuration-to-register ?_)
+      (delete-other-windows))))
+
+;; from magnars
+(defun ry/delete-current-buffer-file ()
+  "Removes file connected to current buffer and kills buffer."
+  (interactive)
+  (let ((filename (buffer-file-name))
+        (buffer (current-buffer))
+        (name (buffer-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (ido-kill-buffer)
+      (when (yes-or-no-p "Are you sure you want to delete this file? ")
+        (delete-file filename t)
+        (kill-buffer buffer)
+        (message "File '%s' successfully removed" filename)))))
+
+;; from magnars
+(defun ry/sudo-edit (&optional arg)
+  (interactive "p")
+  (let ((fname (if (or arg (not buffer-file-name)) (read-file-name "File: ") buffer-file-name)))
+    (find-file
+     (cond ((string-match-p "^/ssh:" fname)
+            (with-temp-buffer
+              (insert fname)
+              (search-backward ":")
+              (let ((last-match-end nil)
+                    (last-ssh-hostname nil))
+                (while (string-match "@\\\([^:|]+\\\)" fname last-match-end)
+                  (setq last-ssh-hostname (or (match-string 1 fname) last-ssh-hostname))
+                  (setq last-match-end (match-end 0)))
+                (insert (format "|sudo:%s" (or last-ssh-hostname "localhost"))))
+              (buffer-string)))
+           (t (concat "/sudo:root@localhost:" fname))))))
+
+
+;; from http://dfan.org/blog/2009/02/19/emacs-dedicated-windows/
+(defun ry/toggle-current-window-dedication ()
+  "Toggle dedication state of a window."
+ (interactive)
+ (let* ((window    (selected-window))
+        (dedicated (window-dedicated-p window)))
+   (set-window-dedicated-p window (not dedicated))
+   (message "Window %sdedicated to %s"
+            (if dedicated "no longer " "")
+            (buffer-name))))
+
+
+;; http://camdez.com/blog/2013/11/14/emacs-show-buffer-file-name/
+(defun ry/show-and-copy-buffer-filename ()
+  "Show the full path to the current file in the minibuffer."
+  (interactive)
+  ;; list-buffers-directory is the variable set in dired buffers
+  (let ((file-name (or (buffer-file-name) list-buffers-directory)))
+    (if file-name
+        (message (kill-new file-name))
+      (error "Buffer not visiting a file"))))
+
+(defun ry/split-window-vertically-and-switch ()
+  (interactive)
+  (split-window-vertically)
+  (other-window 1))
+
+(defun ry/split-window-horizontally-and-switch ()
+  (interactive)
+  (split-window-horizontally)
+  (other-window 1))
+
+;; http://stackoverflow.com/a/10216338/4869
+(defun ry/copy-whole-buffer-to-clipboard ()
+  "Copy entire buffer to clipboard"
+  (interactive)
+  (clipboard-kill-ring-save (point-min) (point-max)))
+
+(defun ry/copy-clipboard-to-whole-buffer ()
+  "Copy clipboard and replace buffer"
+  (interactive)
+  (delete-region (point-min) (point-max))
+  (clipboard-yank)
+  (deactivate-mark))
+
+(defun ry/sort-lines ()
+  "Sort lines in region or current buffer"
+  (interactive)
+  (let ((beg (if (region-active-p) (region-beginning) (point-min)))
+        (end (if (region-active-p) (region-end) (point-max))))
+    (sort-lines nil beg end)))
 
 (provide 'rongyi-defun)

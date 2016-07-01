@@ -4,7 +4,9 @@
 (setq message-log-max 100000)
 ;; create dir and add it to load path
 (defconst ry/emacs-directory (concat (getenv "HOME") "/.emacs.d/"))
+
 (defun ry/emacs-subdirectory (d)
+  "expand emacs subdir under ~/.emacs.d"
   (expand-file-name d ry/emacs-directory))
 
 (let* ((subdirs '("elisp" "backup"))
@@ -169,6 +171,12 @@
 (use-package magit
   :ensure t
   :config
+
+  (defun ry/edit-gitignore ()
+    (interactive)
+    (split-window-sensibly (selected-window))
+    (find-file (expand-file-name ".gitignore" (magit-toplevel))))
+
   (global-set-key (kbd "<f2>") 'magit-status)
   (global-set-key (kbd "C-M-g") 'magit-status)
   (setq magit-commit-arguments '("--verbose")))
@@ -181,9 +189,16 @@
   :ensure spaceline
   :after nyan-mode
   :config
-  (setq powerline-default-separator 'slant)
+  (defun ry/compute-powerline-height ()
+    "Return an adjusted powerline height."
+    (let ((scale 1.1))
+      (truncate (* scale (frame-char-height)))))
+  (setq-default powerline-height (ry/compute-powerline-height))
+
+  (setq powerline-default-separator 'wave)
   (nyan-mode)
   (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
+  (setq spaceline-window-numbers-unicode t)
   (spaceline-spacemacs-theme))
 
 
@@ -279,6 +294,13 @@
 (use-package smartparens
   :ensure t
   :config
+
+  (defun ry/split-and-new-line ()
+    "Split a quoted string or s-expression and insert a new line with
+auto-indent."
+    (interactive)
+    (sp-split-sexp 1)
+    (sp-newline))
   (require 'smartparens-config)
   (add-hook 'prog-mode-hook #'smartparens-mode)
   :diminish smartparens-mode)
@@ -768,6 +790,33 @@ mouse-3: go to end")))
   :ensure t
   :config
   (global-set-key (kbd "C-:") 'iedit-mode))
+
+(use-package highlight-parentheses
+  :ensure t
+  :config
+  (highlight-parentheses-mode)
+  :diminish highlight-paren-mode)
+
+
+(use-package highlight-numbers
+  :defer t
+  :init
+  (progn
+    (add-hook 'prog-mode-hook 'highlight-numbers-mode)))
+
+
+
+;; (use-package evil-search-highlight-persist
+;;   :config
+;;   (global-evil-search-highlight-persist)
+;;   (defun ry/adaptive-evil-highlight-persist-face ()
+;;     (set-face-attribute 'evil-search-highlight-persist-highlight-face nil
+;;                         :inherit 'region
+;;                         :background nil
+;;                         :foreground nil))
+;;   (ry/adaptive-evil-highlight-persist-face))
+
+
 
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
