@@ -164,6 +164,7 @@
   :config
   (setq projectile-completion-system 'ido)
   (setq projectile-indexing-method 'native) ; force the use of native indexing in operating systems other than Windows
+  (setq projectile-enable-caching t)
   :diminish projectile-mode)
 
 ;; magit
@@ -805,16 +806,12 @@ mouse-3: go to end")))
     (add-hook 'prog-mode-hook 'highlight-numbers-mode)))
 
 
+(use-package recentf
+  :ensure t
+  :config
+  (recentf-mode 1))
 
-;; (use-package evil-search-highlight-persist
-;;   :config
-;;   (global-evil-search-highlight-persist)
-;;   (defun ry/adaptive-evil-highlight-persist-face ()
-;;     (set-face-attribute 'evil-search-highlight-persist-highlight-face nil
-;;                         :inherit 'region
-;;                         :background nil
-;;                         :foreground nil))
-;;   (ry/adaptive-evil-highlight-persist-face))
+
 
 
 

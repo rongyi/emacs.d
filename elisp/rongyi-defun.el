@@ -405,4 +405,22 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
         (end (if (region-active-p) (region-end) (point-max))))
     (sort-lines nil beg end)))
 
+
+(defvar user-home-directory (concat (expand-file-name "~") "/"))
+
+(defun ry/shorter-file-name (file-name)
+  (s-chop-prefix user-home-directory file-name))
+
+(defun ry/recentf--file-cons (file-name)
+  (cons (shorter-file-name file-name) file-name))
+
+(defun ry/recentf-ido-find-file ()
+  "Find a recent file using ido."
+  (interactive)
+  (let* ((recent-files (mapcar 'recentf--file-cons recentf-list))
+         (files (mapcar 'car recent-files))
+         (file (completing-read "Choose recent file: " files)))
+    (find-file (cdr (assoc file recent-files)))))
+
+
 (provide 'rongyi-defun)

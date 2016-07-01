@@ -307,6 +307,7 @@
   (require 'ox-md nil t))
 
 (global-set-key (kbd "C-x t") 'ry/toggle-transparency)
+(global-set-key (kbd "C-x r e") 'ry/recentf-ido-find-file)
 
 
 (provide 'rongyi-basic)
