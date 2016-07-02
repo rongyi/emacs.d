@@ -412,12 +412,12 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
   (s-chop-prefix user-home-directory file-name))
 
 (defun ry/recentf--file-cons (file-name)
-  (cons (shorter-file-name file-name) file-name))
+  (cons (ry/shorter-file-name file-name) file-name))
 
 (defun ry/recentf-ido-find-file ()
   "Find a recent file using ido."
   (interactive)
-  (let* ((recent-files (mapcar 'recentf--file-cons recentf-list))
+  (let* ((recent-files (mapcar 'ry/recentf--file-cons recentf-list))
          (files (mapcar 'car recent-files))
          (file (completing-read "Choose recent file: " files)))
     (find-file (cdr (assoc file recent-files)))))

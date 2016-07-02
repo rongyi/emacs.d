@@ -168,7 +168,6 @@
   :diminish projectile-mode)
 
 ;; magit
-
 (use-package magit
   :ensure t
   :config
@@ -523,6 +522,7 @@ auto-indent."
                              (yas-minor-mode -1)))
 
 
+;; from lunaryorn
 (use-package which-func                 ; Current function name
   :init (which-function-mode)
   :config
@@ -669,6 +669,20 @@ mouse-3: go to end")))
   :ensure t
   :config
   (which-key-mode)
+  (setq which-key-idle-delay 0.4
+        which-key-sort-order 'which-key-prefix-then-key-order
+        which-key-key-replacement-alist
+        '(("<\\([[:alnum:]-]+\\)>" . "\\1")
+          ("up"                    . "↑")
+          ("right"                 . "→")
+          ("down"                  . "↓")
+          ("left"                  . "←")
+          ("DEL"                   . "⌫")
+          ("deletechar"            . "⌦")
+          ("RET"                   . "⏎"))
+        )
+  (which-key-declare-prefixes
+    "C-c w" "windows/frames")
   :diminish which-key-mode)
 
 (use-package dired+
@@ -809,11 +823,50 @@ mouse-3: go to end")))
 (use-package recentf
   :ensure t
   :config
-  (recentf-mode 1))
+  (recentf-mode 1)
+  :diminish recentf-mode)
+
+(use-package stripe-buffer              ; Add stripes to a buffer
+  :ensure t
+  :init (add-hook 'dired-mode-hook #'stripe-buffer-mode))
 
 
+(use-package helm-descbinds             ; Describe key bindings with Helm
+  :ensure t
+  :init (helm-descbinds-mode))
 
+(use-package ibuffer-vc                 ; Group buffers by VC project and status
+  :ensure t
+  :init (add-hook 'ibuffer-hook
+                  (lambda ()
+                    (ibuffer-vc-set-filter-groups-by-vc-root)
+                    (unless (eq ibuffer-sorting-mode 'alphabetic)
+                      (ibuffer-do-sort-by-alphabetic)))))
 
+(use-package ibuffer                    ; Better buffer list
+  :bind (([remap list-buffers] . ibuffer))
+  ;; Show VC Status in ibuffer
+  :after ibuffer-vc
+  :config
+  (setq ibuffer-formats
+        '((mark modified read-only vc-status-mini " "
+                (name 18 18 :left :elide)
+                " "
+                (size 9 -1 :right)
+                " "
+                (mode 16 16 :left :elide)
+                " "
+                (vc-status 16 16 :left)
+                " "
+                filename-and-process)
+          (mark modified read-only " "
+                (name 18 18 :left :elide)
+                " "
+                (size 9 -1 :right)
+                " "
+                (mode 16 16 :left :elide)
+                " " filename-and-process)
+          (mark " " (name 16 -1) " " filename))))
 
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader

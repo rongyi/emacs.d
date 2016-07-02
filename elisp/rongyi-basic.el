@@ -258,7 +258,6 @@
 
 (global-set-key (kbd "C-+") 'surround)
 
-(global-set-key (kbd "C-x f") 'toggle-frame-maximized)
 
 
 ;; add more for tab
@@ -306,8 +305,15 @@
 (after-load 'org
   (require 'ox-md nil t))
 
-(global-set-key (kbd "C-x t") 'ry/toggle-transparency)
 (global-set-key (kbd "C-x r e") 'ry/recentf-ido-find-file)
 
+;; put window command together
+(global-set-key (kbd "C-c w t") 'ry/toggle-transparency)
+(global-set-key (kbd "C-c w f") 'toggle-frame-maximized)
+(global-set-key (kbd "C-c w m") 'ry/toggle-maximize-buffer)
+(global-set-key (kbd "C-c w =") 'balance-windows)
+(global-set-key (kbd "C-c w k") 'delete-window)
+(global-set-key (kbd "C-c w \\") 'split-window-right)
+(global-set-key (kbd "C-c w -") 'split-window-below)
 
 (provide 'rongyi-basic)
