@@ -72,7 +72,7 @@
 ;; refresh buffer fast
 (setq auto-revert-interval 1)
 ;; Show me the new saved file if the contents change on disk when editing.
-(global-auto-revert-mode 1)
+;; (global-auto-revert-mode 1)
 ;; no blinking cursor
 (blink-cursor-mode -1)
 
@@ -305,7 +305,10 @@
 (after-load 'org
   (require 'ox-md nil t))
 
-(global-set-key (kbd "C-x r e") 'ry/recentf-ido-find-file)
+;; file related
+(global-set-key (kbd "C-c f e") 'ry/recentf-ido-find-file)
+;; use bind-key from here
+(bind-key "C-c f w" 'browse-url)
 
 ;; put window command together
 (global-set-key (kbd "C-c w t") 'ry/toggle-transparency)

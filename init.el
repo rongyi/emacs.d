@@ -328,6 +328,7 @@ auto-indent."
         company-transformers '(company-sort-by-occurrence)
         company-global-modes '(not term-mode))
   (add-to-list 'company-backends 'company-capf)
+  (add-to-list 'company-backends 'company-files)
 
   ;; cancel company explicitly
   (define-key company-active-map (kbd "C-g") 'company-abort)
@@ -682,7 +683,8 @@ mouse-3: go to end")))
           ("RET"                   . "⏎"))
         )
   (which-key-declare-prefixes
-    "C-c w" "windows/frames")
+    "C-c w" "windows/frames"
+    "C-c f" "files")
   :diminish which-key-mode)
 
 (use-package dired+
@@ -820,11 +822,38 @@ mouse-3: go to end")))
     (add-hook 'prog-mode-hook 'highlight-numbers-mode)))
 
 
+(use-package ignoramus                  ; Ignore uninteresting files everywhere
+  :ensure t
+  :config
+  ;; Ignore some additional directories and file extensions
+  (dolist (name '(".cask"
+                  ".vagrant"
+                  ".ensime_cache" ".ensime"
+                  ".stack-work"))
+    ;; Ignore some additional directories
+    (add-to-list 'ignoramus-file-basename-exact-names name))
+
+  (dolist (ext '(".fls" ".out" ; LaTeX
+                 ))
+    (add-to-list 'ignoramus-file-endings ext))
+
+  (ignoramus-setup))
+
 (use-package recentf
   :ensure t
   :config
-  (recentf-mode 1)
-  :diminish recentf-mode)
+  (setq recentf-max-saved-items 200
+        recentf-max-menu-items 15
+        ;; Cleanup recent files only when Emacs is idle, but not when the mode
+        ;; is enabled, because that unnecessarily slows down Emacs. My Emacs
+        ;; idles often enough to have the recent files list clean up regularly
+        recentf-auto-cleanup 300
+        recentf-exclude (list "/\\.git/.*\\'" ; Git contents
+                              "/elpa/.*\\'" ; Package files
+                              "/itsalltext/" ; It's all text temp files
+                              ;; And all other kinds of boring files
+                              #'ignoramus-boring-p))
+  (recentf-mode 1))
 
 (use-package stripe-buffer              ; Add stripes to a buffer
   :ensure t
@@ -868,6 +897,48 @@ mouse-3: go to end")))
                 " " filename-and-process)
           (mark " " (name 16 -1) " " filename))))
 
+
+
+(use-package desktop                    ; Save buffers, windows and frames
+  :disabled t
+  :config
+  ;; Save desktops a minute after Emacs was idle.
+  (setq desktop-auto-save-timeout 60)
+
+  (dolist (mode '(magit-mode magit-log-mode))
+    (add-to-list 'desktop-modes-not-to-save mode))
+  (add-to-list 'desktop-files-not-to-save (rx bos "COMMIT_EDITMSG"))
+  (desktop-save-mode))
+
+(use-package helm-files                 ; Manage files with Helm
+  :ensure helm
+  :defer t
+  :bind (("C-c f f" . helm-for-files)
+         ("C-c f r" . helm-recentf))
+  :config
+  (setq helm-recentf-fuzzy-match t
+        ;; Use recentf to manage file name history
+        helm-ff-file-name-history-use-recentf t
+        ;; Find libraries from `require', etc.
+        helm-ff-search-library-in-sexp t)
+  (when (eq system-type 'darwin)
+    ;; Replace locate with spotlight for `helm-for-files'
+    (setq helm-for-files-preferred-list
+          (append (delq 'helm-source-locate
+                        helm-for-files-preferred-list)
+                  '(helm-source-mac-spotlight)))))
+
+(use-package autorevert                 ; Auto-revert buffers of changed files
+  :init (global-auto-revert-mode)
+  :config
+  (setq auto-revert-verbose nil         ; Shut up, please!
+        ;; Revert Dired buffers, too
+        global-auto-revert-non-file-buffers t)
+
+  (when (eq system-type 'darwin)
+    ;; File notifications aren't supported on OS X
+    (setq auto-revert-use-notify nil))
+  :diminish (auto-revert-mode . " Ⓐ"))
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
   :ensure t
@@ -903,3 +974,4 @@ mouse-3: go to end")))
 (diminish 'global-whitespace-mode)
 (diminish 'subword-mode)
 (diminish 'eldoc-mode)
+(diminish 'subword-mode)
