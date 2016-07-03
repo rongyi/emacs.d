@@ -117,7 +117,11 @@
 
 ;; avy
 (use-package avy
-  :ensure t)
+  :ensure t
+  :bind (("C-c j w" . avy-goto-word-1)
+         ("C-c j l" . avy-goto-line)
+         ("C-c j b" . avy-pop-mark)
+         ("C-c j j" . avy-goto-char-2)))
 
 ;; expand-region
 (use-package expand-region
@@ -411,8 +415,9 @@ auto-indent."
   (popwin-mode 1))
 
 
+;; gutter is ugly, use diff-hl instead
 (use-package git-gutter-fringe
-  :ensure t
+  :ensure nil
   :config
   (when (window-system)
     (global-git-gutter-mode +1))
@@ -684,6 +689,7 @@ mouse-3: go to end")))
         )
   (which-key-declare-prefixes
     "C-c w" "windows/frames"
+    "C-c j" "jump"
     "C-c f" "files")
   :diminish which-key-mode)
 
@@ -704,7 +710,9 @@ mouse-3: go to end")))
   :init
   (require 'slime-autoloads)
   (setq slime-contribs '(slime-fancy))
-  (setq inferior-lisp-program "/usr/bin/clisp"))
+  (if (equal system-type 'darwin)
+      (setq inferior-lisp-program "/usr/local/bin/clisp")
+    (setq inferior-lisp-program "/usr/bin/clisp")))
 
 ;; ggtags for reading kernel code
 (use-package ggtags
@@ -939,6 +947,22 @@ mouse-3: go to end")))
     ;; File notifications aren't supported on OS X
     (setq auto-revert-use-notify nil))
   :diminish (auto-revert-mode . " Ⓐ"))
+
+(use-package diff-hl                    ; Highlight hunks in fringe
+  :ensure t
+  :defer t
+  :init
+  ;; Highlight changes to the current file in the fringe
+  (global-diff-hl-mode)
+  ;; Highlight changed files in the fringe of Dired
+  (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
+
+  ;; Fall back to the display margin, if the fringe is unavailable
+  (unless (display-graphic-p)
+    (diff-hl-margin-mode))
+  ;; Refresh diff-hl after Magit operations
+  (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))
+
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
   :ensure t

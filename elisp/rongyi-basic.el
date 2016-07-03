@@ -309,6 +309,8 @@
 (global-set-key (kbd "C-c f e") 'ry/recentf-ido-find-file)
 ;; use bind-key from here
 (bind-key "C-c f w" 'browse-url)
+(bind-key "C-c f d" 'ry/delete-current-buffer-file)
+(bind-key "C-c f m" 'ry/rename-file-and-buffer)
 
 ;; put window command together
 (global-set-key (kbd "C-c w t") 'ry/toggle-transparency)
@@ -318,5 +320,7 @@
 (global-set-key (kbd "C-c w k") 'delete-window)
 (global-set-key (kbd "C-c w \\") 'split-window-right)
 (global-set-key (kbd "C-c w -") 'split-window-below)
+(bind-key "C-c w d" 'ry/toggle-current-window-dedication)
+
 
 (provide 'rongyi-basic)
