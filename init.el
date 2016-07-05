@@ -487,9 +487,10 @@ auto-indent."
   (defun ry/go-test(prefix)
     "a shortcut to run go demo when learning golang"
     (interactive "p")
-    (let ((file (buffer-file-name)))
+    (let* ((file (buffer-file-name))
+           (path (file-name-directory file)))
       (visit-term-buffer)
-      (insert (format "cd %s && go build %s" default-directory file))
+      (insert (format "cd %s && go build %s" path file))
       (comint-send-input)
       (when (> prefix 1)
         (other-window -1))))

@@ -277,7 +277,7 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
   (interactive)
   (let* ((frame (selected-frame))
          (alpha (frame-parameter frame 'alpha))
-         (dotfile-setting (cons 45
+         (dotfile-setting (cons 50
                                 100)))
     (set-frame-parameter
      frame 'alpha
