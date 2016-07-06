@@ -493,7 +493,8 @@ auto-indent."
       (insert (format "cd %s && go build %s" path file))
       (comint-send-input)
       (when (> prefix 1)
-        (other-window -1))))
+        (other-window -1))
+      (message "current file builded.")))
 
   (define-key go-mode-map (kbd "C-c C-c") 'ry/go-test)
   (setq godoc-at-point-function 'godoc-gogetdoc))

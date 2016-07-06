@@ -210,12 +210,18 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
 (defun visit-term-buffer ()
   "Create or visit a terminal buffer"
   (interactive)
-  (if (not (get-buffer "*shell*"))
-      (progn
-        (split-window-sensibly (selected-window))
-        (other-window 1)
-        (shell (getenv "SHELL")))
-    (switch-to-buffer-other-window "*shell*")))
+  (let ((shell-name (getenv "SHELL"))
+        (height (/ (window-total-height) 3)))
+    (if (not (get-buffer-window shell-name))
+        (progn
+          (split-window-vertically (- height))
+          (other-window 1)
+          (if (not (get-buffer shell-name))
+              (shell shell-name)
+            (switch-to-buffer shell-name)))
+      (if (equal (buffer-name (window-buffer)) shell-name)
+          (message "You already in a shell buffer!")
+        (switch-to-buffer-other-window shell-name)))))
 
 ;; indent utility
 (defun indent-defun()
@@ -277,7 +283,7 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
   (interactive)
   (let* ((frame (selected-frame))
          (alpha (frame-parameter frame 'alpha))
-         (dotfile-setting (cons 50
+         (dotfile-setting (cons 60
                                 100)))
     (set-frame-parameter
      frame 'alpha
@@ -356,13 +362,13 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
 ;; from http://dfan.org/blog/2009/02/19/emacs-dedicated-windows/
 (defun ry/toggle-current-window-dedication ()
   "Toggle dedication state of a window."
- (interactive)
- (let* ((window    (selected-window))
-        (dedicated (window-dedicated-p window)))
-   (set-window-dedicated-p window (not dedicated))
-   (message "Window %sdedicated to %s"
-            (if dedicated "no longer " "")
-            (buffer-name))))
+  (interactive)
+  (let* ((window    (selected-window))
+         (dedicated (window-dedicated-p window)))
+    (set-window-dedicated-p window (not dedicated))
+    (message "Window %sdedicated to %s"
+             (if dedicated "no longer " "")
+             (buffer-name))))
 
 
 ;; http://camdez.com/blog/2013/11/14/emacs-show-buffer-file-name/
