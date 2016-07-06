@@ -825,7 +825,7 @@ mouse-3: go to end")))
 
 
 (use-package highlight-numbers
-  :defer t
+  :ensure t
   :init
   (progn
     (add-hook 'prog-mode-hook 'highlight-numbers-mode)))
