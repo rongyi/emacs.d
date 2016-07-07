@@ -223,6 +223,16 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
           (message "You already in a shell buffer!")
         (switch-to-buffer-other-window shell-name)))))
 
+(defun visit-term-buffer-with-current-dir ()
+  "Simple wrapper for visit-term-buffer,
+after visit also cd to the current buffer's dir"
+  (interactive)
+  (let ((file-name (buffer-file-name)))
+    (visit-term-buffer)
+    (when file-name
+      (insert (file-name-directory file-name))
+      (comint-send-input))))
+
 ;; indent utility
 (defun indent-defun()
   "Ident the current defun"
