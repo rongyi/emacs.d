@@ -311,6 +311,7 @@
 (bind-key "C-c f w" 'browse-url)
 (bind-key "C-c f d" 'ry/delete-current-buffer-file)
 (bind-key "C-c f m" 'ry/rename-file-and-buffer)
+(bind-key "C-c f c" 'ry/kill-other-buffers)
 
 ;; put window command together
 (global-set-key (kbd "C-c w t") 'ry/toggle-transparency)
@@ -321,6 +322,8 @@
 (global-set-key (kbd "C-c w \\") 'split-window-right)
 (global-set-key (kbd "C-c w -") 'split-window-below)
 (bind-key "C-c w d" 'ry/toggle-current-window-dedication)
+
+
 (bind-key "C-M-y" 'visit-term-buffer-with-current-dir)
 
 

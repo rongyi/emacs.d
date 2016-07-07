@@ -439,4 +439,16 @@ after visit also cd to the current buffer's dir"
     (find-file (cdr (assoc file recent-files)))))
 
 
+;; http://stackoverflow.com/questions/3417438/closing-all-other-buffers-in-emacs
+(defun ry/opened-file-buffer-or-magit-p (buffer)
+  "return true if this buffer is a opened file or a magit buffer"
+  (or (buffer-file-name buffer) (string-prefix-p "*magit" (buffer-name buffer))))
+
+(defun ry/kill-other-buffers ()
+    "Kill all other buffers(with file opened)."
+    (interactive)
+    (mapc 'kill-buffer
+          (delq (current-buffer)
+                (remove-if-not 'ry/opened-file-buffer-or-magit-p (buffer-list)))))
+
 (provide 'rongyi-defun)

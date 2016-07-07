@@ -692,7 +692,9 @@ mouse-3: go to end")))
   (which-key-declare-prefixes
     "C-c w" "windows/frames"
     "C-c j" "jump"
-    "C-c f" "files")
+    "C-c f" "files/buffers"
+    "C-c !" "flycheck"
+    "C-c &" "yasnippet")
   :diminish which-key-mode)
 
 (use-package dired+
