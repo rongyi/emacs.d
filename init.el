@@ -957,6 +957,10 @@ mouse-3: go to end")))
   ;; Refresh diff-hl after Magit operations
   (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))
 
+(use-package smart-comment
+  :ensure t
+  :bind ("M-;" . smart-comment))
+
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
   :ensure t

@@ -439,6 +439,22 @@ after visit also cd to the current buffer's dir"
     (find-file (cdr (assoc file recent-files)))))
 
 
+;; from howard abrams
+(defun filter (condp lst)
+  "Emacs Lisp doesn’t come with a ‘filter’ function to keep
+    elements that satisfy a conditional and excise the elements that
+    do not satisfy it. One can use ‘mapcar’ to iterate over a list
+    with a conditional, and then use ‘delq’ to remove the ‘nil’
+    values."
+  (delq nil
+        (mapcar (lambda (x) (and (funcall condp x) x)) lst)))
+
+(defun reject (condp lst)
+  "reverse of filter"
+  (delq nil
+        (mapcar (lambda (x) (and (not (funcall condp x )) x))
+                lst)))
+
 ;; http://stackoverflow.com/questions/3417438/closing-all-other-buffers-in-emacs
 (defun ry/opened-file-buffer-or-magit-p (buffer)
   "return true if this buffer is a opened file or a magit buffer"
@@ -451,5 +467,10 @@ after visit also cd to the current buffer's dir"
     (mapc 'kill-buffer
           (delq (current-buffer)
                 (remove-if-not 'ry/opened-file-buffer-or-magit-p (buffer-list)))))
+
+(defun save-all ()
+  "Saves all dirty buffers without asking for confirmation."
+  (interactive)
+  (save-some-buffers t))
 
 (provide 'rongyi-defun)

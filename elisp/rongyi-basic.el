@@ -319,8 +319,8 @@
 (global-set-key (kbd "C-c w -") 'split-window-below)
 (bind-key "C-c w d" 'ry/toggle-current-window-dedication)
 
-
 (bind-key "C-M-y" 'visit-term-buffer-with-current-dir)
+(add-hook 'focus-out-hook 'save-all)
 
 
 (provide 'rongyi-basic)
