@@ -447,6 +447,7 @@ after visit also cd to the current buffer's dir"
 (defun ry/kill-other-buffers ()
     "Kill all other buffers(with file opened)."
     (interactive)
+    (save-some-buffers t)
     (mapc 'kill-buffer
           (delq (current-buffer)
                 (remove-if-not 'ry/opened-file-buffer-or-magit-p (buffer-list)))))

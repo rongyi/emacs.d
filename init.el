@@ -415,16 +415,6 @@ auto-indent."
   (popwin-mode 1))
 
 
-;; gutter is ugly, use diff-hl instead
-(use-package git-gutter-fringe
-  :ensure nil
-  :config
-  (when (window-system)
-    (global-git-gutter-mode +1))
-  (setq-default indicate-buffer-boundaries 'left)
-  (setq-default indicate-empty-lines +1)
-  :diminish git-gutter-mode)
-
 ;; ethan-wspace: OCD about whitespace
 (use-package ethan-wspace
   :ensure t

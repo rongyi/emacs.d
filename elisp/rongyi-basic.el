@@ -125,23 +125,19 @@
 ;; please.
 (setq sentence-end-double-space nil)
 ;; font
-(set-frame-font "Source Code Pro for Powerline 10")
-(add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline 10"))
+
+(defvar ry/font-family
+  (if (eq system-type 'darwin)
+      "Hasklig 12"                      ; small mac air need big font
+    "Hasklig 10"))
+(set-frame-font ry/font-family)
+(add-to-list 'default-frame-alist '(font . ry/font-family))
+
 (add-hook 'after-make-frame-functions
           (lambda (new-frame)
             (set-fontset-font "fontset-default" 'han '("Microsoft JhengHei" . "unicode-bmp"))
             ))
 (set-fontset-font "fontset-default" 'han '("Microsoft JhengHei" . "unicode-bmp"))
-
-;; my poor child, your mac air is so small
-(when (eq system-type 'darwin)
-  (set-frame-font "Source Code Pro for Powerline 12")
-  (add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline 12"))
-  (add-hook 'after-make-frame-functions
-            (lambda (new-frame)
-              (set-fontset-font "fontset-default" 'han '("Microsoft JhengHei" . "unicode-bmp"))
-              ))
-  (set-fontset-font "fontset-default" 'han '("Microsoft JhengHei" . "unicode-bmp")))
 
 ;; hippie expand
 (global-set-key (kbd "M-/") 'hippie-expand)
