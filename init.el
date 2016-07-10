@@ -298,7 +298,6 @@
 (use-package smartparens
   :ensure t
   :config
-
   (defun ry/split-and-new-line ()
     "Split a quoted string or s-expression and insert a new line with
 auto-indent."
@@ -306,7 +305,12 @@ auto-indent."
     (sp-split-sexp 1)
     (sp-newline))
   (require 'smartparens-config)
-  (add-hook 'prog-mode-hook #'smartparens-mode)
+  (add-hook 'prog-mode-hook 'smartparens-mode)
+  (sp-use-smartparens-bindings)
+  ;; ubuntu's workspace key is <C-M-left> <C-M-right>
+  ;; and we dont want to change that
+  (define-key smartparens-mode-map (kbd "C-S-<left>") 'sp-backward-slurp-sexp)
+  (define-key smartparens-mode-map (kbd "C-S-<right>") 'sp-backward-barf-sexp)
   :diminish smartparens-mode)
 
 ;; company
@@ -697,6 +701,9 @@ mouse-3: go to end")))
   :config
   (or (server-running-p) (server-start)))
 
+;; slime company
+(use-package slime-company
+  :ensure t)
 ;; slime for lisp
 (use-package slime
   :ensure t
@@ -706,7 +713,8 @@ mouse-3: go to end")))
   (setq slime-contribs '(slime-fancy))
   (if (equal system-type 'darwin)
       (setq inferior-lisp-program "/usr/local/bin/clisp")
-    (setq inferior-lisp-program "/usr/bin/clisp")))
+    (setq inferior-lisp-program "/usr/bin/clisp"))
+  (slime-setup '(slime-fancy slime-company)))
 
 ;; ggtags for reading kernel code
 (use-package ggtags

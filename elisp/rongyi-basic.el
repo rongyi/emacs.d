@@ -32,7 +32,7 @@
   (when (fboundp mode)
     (funcall mode -1)))
 ;; yes-or-no-p ==> y-or-n
-;; (fset 'yes-or-no-p 'y-or-no-p)
+(defalias 'yes-or-no-p 'y-or-no-p)
 ;; auto indent
 (define-key global-map (kbd "RET") 'newline-and-indent)
 (setq ad-redefinition-action 'accept)
@@ -126,12 +126,8 @@
 (setq sentence-end-double-space nil)
 ;; font
 
-(defvar ry/font-family
-  (if (eq system-type 'darwin)
-      "Hasklig 12"                      ; small mac air need big font
-    "Hasklig 10"))
-(set-frame-font ry/font-family)
-(add-to-list 'default-frame-alist '(font . ry/font-family))
+(set-frame-font "Hasklig 12")
+(add-to-list 'default-frame-alist '(font . "Hasklig 12"))
 
 (add-hook 'after-make-frame-functions
           (lambda (new-frame)

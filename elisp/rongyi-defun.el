@@ -315,6 +315,7 @@ after visit also cd to the current buffer's dir"
     (forward-list)
     (call-interactively 'eval-last-sexp)))
 
+;; from bodil's emacs.d
 (defun ry/eval-and-replace ()
   "Replace the preceding sexp with its value."
   (interactive)
