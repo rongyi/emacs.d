@@ -124,6 +124,7 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
       (move-beginning-of-line 1))))
 
 
+;; from howard abram
 (defun surround (start end txt)
   "Wraps the specified region (or the current 'symbol / word'
      with some textual markers that this function requests from the
@@ -169,6 +170,18 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
       (goto-char (point-max))
       (insert (cadr s-pair))
       (widen))))
+
+(defun surround-text (txt)
+  (if (region-active-p)
+      (surround (region-beginning) (region-end) txt)
+    (surround nil nil txt)))
+
+(defun surround-text-with (surr-str)
+  "Returns an interactive function that when called, will surround the region (or word) with the SURR-STR string."
+  (lexical-let ((text surr-str))
+    (lambda ()
+      (interactive)
+      (surround-text text))))
 
 ;; steal from prelude
 (defun ry/open-line-above ()
@@ -456,22 +469,26 @@ after visit also cd to the current buffer's dir"
         (mapcar (lambda (x) (and (not (funcall condp x )) x))
                 lst)))
 
-;; http://stackoverflow.com/questions/3417438/closing-all-other-buffers-in-emacs
 (defun ry/opened-file-buffer-or-magit-p (buffer)
   "return true if this buffer is a opened file or a magit buffer"
   (or (buffer-file-name buffer) (string-prefix-p "*magit" (buffer-name buffer))))
 
+;; http://stackoverflow.com/questions/3417438/closing-all-other-buffers-in-emacs
 (defun ry/kill-other-buffers ()
-    "Kill all other buffers(with file opened)."
-    (interactive)
-    (save-some-buffers t)
-    (mapc 'kill-buffer
-          (delq (current-buffer)
-                (remove-if-not 'ry/opened-file-buffer-or-magit-p (buffer-list)))))
+  "Kill all other buffers(with file opened)."
+  (interactive)
+  (save-some-buffers t)
+  (mapc 'kill-buffer
+        (delq (current-buffer)
+              (remove-if-not 'ry/opened-file-buffer-or-magit-p (buffer-list)))))
 
 (defun save-all ()
   "Saves all dirty buffers without asking for confirmation."
   (interactive)
   (save-some-buffers t))
+
+(defun beautify-json (beg end)
+  (interactive "r")
+  (shell-command-on-region beg end "python -mjson.tool" (current-buffer) 'replace))
 
 (provide 'rongyi-defun)

@@ -32,7 +32,7 @@
   (when (fboundp mode)
     (funcall mode -1)))
 ;; yes-or-no-p ==> y-or-n
-(defalias 'yes-or-no-p 'y-or-no-p)
+;; (defalias 'yes-or-no-p 'y-or-no-p)
 ;; auto indent
 (define-key global-map (kbd "RET") 'newline-and-indent)
 (setq ad-redefinition-action 'accept)
@@ -41,6 +41,9 @@
  indent-tabs-mode nil
  tab-width 2
  c-basic-offset 2)
+
+;; auto save
+(add-hook 'focus-out-hook 'save-all)
 
 ;; break long lines at word boundaries
 (visual-line-mode 1)
@@ -126,8 +129,8 @@
 (setq sentence-end-double-space nil)
 ;; font
 
-(set-frame-font "Hasklig 12")
-(add-to-list 'default-frame-alist '(font . "Hasklig 12"))
+(set-frame-font "Hasklig 10")
+(add-to-list 'default-frame-alist '(font . "Hasklig 10"))
 
 (add-hook 'after-make-frame-functions
           (lambda (new-frame)
@@ -316,7 +319,7 @@
 (bind-key "C-c w d" 'ry/toggle-current-window-dedication)
 
 (bind-key "C-M-y" 'visit-term-buffer-with-current-dir)
-(add-hook 'focus-out-hook 'save-all)
-
+(bind-key "C-(" (surround-text-with "("))
+(bind-key "C-\"" (surround-text-with "\""))
 
 (provide 'rongyi-basic)
