@@ -299,7 +299,8 @@
 
 (after-load 'org
   (require 'ox-md nil t))
-
+;; using cl
+(require 'cl)
 ;; file related
 (global-set-key (kbd "C-c f e") 'ry/recentf-ido-find-file)
 ;; use bind-key from here

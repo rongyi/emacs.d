@@ -730,11 +730,6 @@ mouse-3: go to end")))
   :ensure t
   :diminish rainbow-mode)
 
-(use-package swiper
-  :ensure t
-  :config
-  (global-set-key (kbd "C-s") 'swiper))
-
 (use-package helm-gtags
   :ensure t)
 
