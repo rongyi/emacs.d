@@ -85,8 +85,8 @@
   (define-key evil-insert-state-map (kbd "C-w") 'evil-delete)
   (define-key evil-visual-state-map (kbd "C-w") 'evil-delete)
   (define-key evil-insert-state-map (kbd "C-o") 'ry/open-line-above)
-  (define-key evil-normal-state-map (kbd "C-]") 'ggtags-find-tag-dwim)
-  (define-key evil-normal-state-map (kbd "C-t") 'pop-tag-mark)
+  (define-key evil-normal-state-map (kbd "C-]") 'helm-gtags-dwim)
+  (define-key evil-normal-state-map (kbd "C-t") 'helm-gtags-pop-stack)
   ;; pain in the ass
   (define-key evil-normal-state-map (kbd "K") nil)
 
@@ -410,7 +410,7 @@ auto-indent."
   :ensure t
   :config
   (add-to-list 'popwin:special-display-config `"*ag search*")
-  (add-to-list 'popwin:special-display-config `("*magit-process*" :noselect t))
+  (add-to-list 'popwin:special-display-config `("*magit-*" :noselect t))
   (add-to-list 'popwin:special-display-config `"*Flycheck errors*")
   (add-to-list 'popwin:special-display-config `"*Occur*")
   (add-to-list 'popwin:special-display-config `("*Compile-Log*" :noselect t))
@@ -718,6 +718,7 @@ mouse-3: go to end")))
 
 ;; ggtags for reading kernel code
 (use-package ggtags
+  :ensure t
   :config
   (add-hook 'c-mode-common-hook
             (lambda ()
