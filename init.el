@@ -123,7 +123,10 @@
   :bind (("C-c j w" . avy-goto-word-1)
          ("C-c j l" . avy-goto-line)
          ("C-c j b" . avy-pop-mark)
-         ("C-c j j" . avy-goto-char-2)))
+         ("C-c j j" . avy-goto-char-2))
+  :config
+  (set-face-attribute 'avy-lead-face nil :foreground "gold" :weight 'bold :background nil)
+  (set-face-attribute 'avy-lead-face-0 nil :foreground "deep sky blue" :weight 'bold :background nil))
 
 ;; expand-region
 (use-package expand-region
@@ -418,6 +421,7 @@ auto-indent."
   (add-to-list 'popwin:special-display-config `("*Compile-Log*" :noselect t))
   (add-to-list 'popwin:special-display-config `("*Paradox Report*" :noselect t))
   (add-to-list 'popwin:special-display-config `("\\*godoc" :regexp t))
+  (add-to-list 'popwin:special-display-config `("*Messages*" :noselect nil))
   (popwin-mode 1))
 
 
@@ -439,6 +443,9 @@ auto-indent."
   (global-set-key (kbd "C-x C-o") 'ace-window)
   ;; it seems like we dont need swap window frequently
   (global-set-key (kbd "C-x o") 'ace-window)
+
+  (set-face-attribute 'aw-leading-char-face nil :foreground "deep sky blue" :weight 'bold :height 2.0)
+  (set-face-attribute 'aw-mode-line-face nil :inherit 'mode-line-buffer-id :foreground "lawn green")
   :diminish ace-window-mode)
 
 ;; snippet
@@ -693,13 +700,36 @@ mouse-3: go to end")))
     "C-c &" "yasnippet")
   :diminish which-key-mode)
 
-(use-package dired+
-  :config
-  (set-face-foreground 'diredp-file-name nil))
+;; from joedicastro
+(use-package dired
+  :init
+  ;; human-readable sizes
+  (setq dired-listing-switches "-alh")
+  ;; 'a' reuses the current buffer, 'RET' opens a new one
+  (put 'dired-find-alternate-file 'disabled nil)
 
+  ;; '^' reuses the current buffer
+  (add-hook 'dired-mode-hook
+            (lambda ()
+              (define-key dired-mode-map (kbd "^")
+                (lambda ()
+                  (interactive)
+                  (find-alternate-file ".."))))))
+
+
+;; [[https://github.com/alpaker/Fill-Column-Indicator][fill-column-indicator]] toggle the vertical column that indicates the fill
+;; threshold.
+
+(use-package fill-column-indicator
+  :ensure nil
+  :commands fci-mode
+  :config
+  (fci-mode)
+  (setq fci-rule-column 80))
 
 ;; start a server
 (use-package server
+  :ensure t
   :config
   (or (server-running-p) (server-start)))
 

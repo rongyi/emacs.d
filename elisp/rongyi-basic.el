@@ -322,5 +322,6 @@
 (bind-key "C-M-y" 'visit-term-buffer-with-current-dir)
 (bind-key "C-(" (surround-text-with "("))
 (bind-key "C-\"" (surround-text-with "\""))
+(define-key process-menu-mode-map (kbd "C-c k") 'ry/delete-process-at-point)
 
 (provide 'rongyi-basic)

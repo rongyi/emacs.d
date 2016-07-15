@@ -491,4 +491,24 @@ after visit also cd to the current buffer's dir"
   (interactive "r")
   (shell-command-on-region beg end "python -mjson.tool" (current-buffer) 'replace))
 
+
+;; from emacs live
+(defun insert-date ()
+  "Insert a time-stamp according to locale's date and time format."
+  (interactive)
+  (insert (format-time-string "%c" (current-time))))
+
+
+;; seen at http://stackoverflow.com/a/18034042
+(defun ry/delete-process-at-point ()
+  (interactive)
+  (let ((process (get-text-property (point) 'tabulated-list-id)))
+    (cond ((and process
+                (processp process))
+           (delete-process process)
+           (revert-buffer))
+          (t
+           (error "no process at point!")))))
+
+
 (provide 'rongyi-defun)
