@@ -468,7 +468,10 @@ auto-indent."
   (add-hook 'c++-mode-hook 'ycmd-mode)
   (set-variable 'ycmd-server-command '("python" "/home/ry/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
   (set-variable 'ycmd-global-config "/home/ry/.emacs.d/ycm_extra_conf.py")
-  (set-variable 'ycmd-extra-conf-whitelist '("/home/ry/tunnel-agent/agentplug")))
+  ;; (set-variable 'ycmd-extra-conf-whitelist '(""))
+  (require 'ycmd-eldoc)
+  (add-hook 'ycmd-mode-hook 'ycmd-eldoc-setup)
+  )
 
 (use-package company-ycmd
   :ensure t
