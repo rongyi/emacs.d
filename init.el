@@ -422,6 +422,7 @@ auto-indent."
   (add-to-list 'popwin:special-display-config `("*Paradox Report*" :noselect t))
   (add-to-list 'popwin:special-display-config `("\\*godoc" :regexp t))
   (add-to-list 'popwin:special-display-config `("*Messages*" :noselect nil))
+  (add-to-list 'popwin:special-display-config `("*Anaconda*" :noselect t :position bottom :height 20))
   (popwin-mode 1))
 
 
