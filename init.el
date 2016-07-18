@@ -368,17 +368,20 @@ auto-indent."
 
 (use-package anaconda-mode
   :ensure t
+  :config
+  (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'python-mode-hook 'eldoc-mode)
+  (setq
+   python-shell-interpreter "python"
+   python-shell-interpreter-args "")
+  (define-key python-mode-map (kbd "C-c f") 'ry/format-python)
   :diminish anaconda-mode)
 
 (use-package company-anaconda
   :ensure t
   :config
   (add-to-list 'company-backends 'company-anaconda)
-  (add-hook 'python-mode-hook 'anaconda-mode)
-  (add-hook 'python-mode-hook 'eldoc-mode)
-  (setq
-   python-shell-interpreter "python"
-   python-shell-interpreter-args ""))
+  )
 
 ;; js
 (use-package company-tern
@@ -423,6 +426,7 @@ auto-indent."
   (add-to-list 'popwin:special-display-config `("\\*godoc" :regexp t))
   (add-to-list 'popwin:special-display-config `("*Messages*" :noselect nil))
   (add-to-list 'popwin:special-display-config `("*Anaconda*" :noselect t :position bottom :height 20))
+  (add-to-list 'popwin:special-display-config `("*Completions*" :noselect nil :position bottom :height 20))
   (popwin-mode 1))
 
 
@@ -467,6 +471,7 @@ auto-indent."
   :ensure t
   :config
   (add-hook 'c++-mode-hook 'ycmd-mode)
+  (add-hook 'python-mode-hook 'ycmd-mode)
   (set-variable 'ycmd-server-command '("python" "/home/ry/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
   (set-variable 'ycmd-global-config "/home/ry/.emacs.d/ycm_extra_conf.py")
   ;; (set-variable 'ycmd-extra-conf-whitelist '(""))

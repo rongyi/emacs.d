@@ -491,6 +491,12 @@ after visit also cd to the current buffer's dir"
   (interactive "r")
   (shell-command-on-region beg end "python -mjson.tool" (current-buffer) 'replace))
 
+(defun ry/format-python ()
+  (interactive)
+  (when (executable-find "yapf")
+    (save-excursion
+      (shell-command-on-region (point-min) (point-max) "yapf" (current-buffer) 'replace))))
+
 
 ;; from emacs live
 (defun insert-date ()
