@@ -9,7 +9,7 @@
   "expand emacs subdir under ~/.emacs.d"
   (expand-file-name d ry/emacs-directory))
 
-(let* ((subdirs '("elisp" "backup"))
+(let* ((subdirs '("elisp" "backup" "snippets"))
        (fulldirs (mapcar 'ry/emacs-subdirectory subdirs)))
   (dolist (dir fulldirs)
     (when (not (file-exists-p dir))
@@ -374,7 +374,7 @@ auto-indent."
   (setq
    python-shell-interpreter "python"
    python-shell-interpreter-args "")
-  (define-key python-mode-map (kbd "C-c f") 'ry/format-python)
+  ;; (define-key python-mode-map (kbd "C-c f") 'ry/format-python)
   :diminish anaconda-mode)
 
 (use-package company-anaconda
@@ -458,7 +458,8 @@ auto-indent."
   :ensure t
   :config
   (yas-global-mode 1)
-  (define-key yas-minor-mode-map (kbd "M-s-/") 'yas-expand)
+  (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-expand)
+  (add-to-list 'yas-snippet-dirs (ry/emacs-subdirectory "snippets"))
   :diminish (yas-minor-mode . " Ⓨ"))
 
 ;; dminish undo-tree and eldoc-mode
@@ -471,7 +472,7 @@ auto-indent."
   :ensure t
   :config
   (add-hook 'c++-mode-hook 'ycmd-mode)
-  (add-hook 'python-mode-hook 'ycmd-mode)
+  ;; (add-hook 'python-mode-hook 'ycmd-mode)
   (set-variable 'ycmd-server-command '("python" "/home/ry/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
   (set-variable 'ycmd-global-config "/home/ry/.emacs.d/ycm_extra_conf.py")
   ;; (set-variable 'ycmd-extra-conf-whitelist '(""))
