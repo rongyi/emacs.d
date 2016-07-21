@@ -131,6 +131,8 @@
 
 (set-frame-font "Hasklig 10")
 (add-to-list 'default-frame-alist '(font . "Hasklig 10"))
+(add-to-list 'default-frame-alist '(width . 110))
+(add-to-list 'default-frame-alist '(height . 50))
 
 (add-hook 'after-make-frame-functions
           (lambda (new-frame)
