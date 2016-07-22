@@ -516,5 +516,16 @@ after visit also cd to the current buffer's dir"
           (t
            (error "no process at point!")))))
 
+(defun ry/copy-all ()
+  "Copy the entire buffer to the clipboard"
+  (interactive)
+  (clipboard-kill-ring-save (point-min) (point-max)))
+
+(defun ry/scratch ()
+  "Create a new scratch buffer that does not need to be
+saved. This is useful for editing snippets of text in a temporary
+buffer"
+  (interactive)
+  (switch-to-buffer (make-temp-name "scratch-")))
 
 (provide 'rongyi-defun)

@@ -1007,6 +1007,11 @@ mouse-3: go to end")))
   :ensure t
   :bind ("M-;" . smart-comment))
 
+(use-package modern-cpp-font-lock
+  :ensure t
+  :config
+  (add-hook 'c++-mode-hook 'modern-c++-font-lock-mode))
+
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
   :ensure t
