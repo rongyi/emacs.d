@@ -317,7 +317,8 @@ after visit also cd to the current buffer's dir"
 (defun ry/emacs-reload ()
   (interactive)
   (load-file user-init-file)
-  (message ".emacs reloaded successfully"))
+  (message ".emacs reloaded successfully")
+  (powerline-reset))
 
 
 (defun ry/eval-current-form ()

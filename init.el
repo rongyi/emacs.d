@@ -128,7 +128,8 @@
   :bind (("C-c j w" . avy-goto-word-1)
          ("C-c j l" . avy-goto-line)
          ("C-c j b" . avy-pop-mark)
-         ("C-c j j" . avy-goto-char-2))
+         ("C-c j j" . avy-goto-char-2)
+         ("C-c j c" . avy-goto-char))
   :config
   (set-face-attribute 'avy-lead-face nil :foreground "gold" :weight 'bold :background nil)
   (set-face-attribute 'avy-lead-face-0 nil :foreground "deep sky blue" :weight 'bold :background nil))
@@ -276,7 +277,8 @@
   (when (display-graphic-p (selected-frame))
     (with-eval-after-load 'flycheck
       (custom-set-variables
-       '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))))
+       '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))))
+  (setq flycheck-clang-language-standard "c++11"))
 
 
 ;; silver searcher
@@ -285,6 +287,7 @@
   :config
   (setq ag-reuse-buffers t
         ag-highlight-search t
+        ag-ignore-list '("elpa" ".git" ".venv" "venv" "GTAGS" "GPATH" "GRTAGS")
         ag-project-root-function (lambda (d)
                                    (let ((default-directory d))
                                      (projectile-project-root)))))
@@ -467,7 +470,7 @@ auto-indent."
   (add-to-list 'yas-snippet-dirs (ry/emacs-subdirectory "snippets"))
   :diminish (yas-minor-mode . " Ⓨ"))
 
-;; dminish undo-tree and eldoc-mode
+;; undo-tree (use C-x u to visualize, C-_ to undo, M-_ to redo)
 (use-package undo-tree
   :ensure t
   :diminish undo-tree-mode)
@@ -695,7 +698,7 @@ mouse-3: go to end")))
   :ensure t
   :config
   (which-key-mode)
-  (setq which-key-idle-delay 0.4
+  (setq which-key-idle-delay 0.1
         which-key-sort-order 'which-key-prefix-then-key-order
         which-key-key-replacement-alist
         '(("<\\([[:alnum:]-]+\\)>" . "\\1")

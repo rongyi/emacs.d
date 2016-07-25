@@ -179,6 +179,15 @@
 
 
 ;; ido mode
+;; go straight home by pressing ~
+(add-hook 'ido-setup-hook (lambda ()
+                            (define-key ido-file-completion-map
+                              (kbd "~")
+                              (lambda ()
+                                (interactive)
+                                (if (looking-back "/")
+                                    (insert "~/")
+                                  (call-interactively 'self-insert-command))))))
 (after-load 'ido
   (ido-mode t)
   (ido-everywhere t))
@@ -234,8 +243,8 @@
 ;; change cache save place
 (setq smex-save-file (expand-file-name ".smex-items" user-emacs-directory))
 
-;; make header file c++mode, for current job
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+;; make header file as c++mode, C rarely use now.
+(add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
 
 ;; highlight TODO
 (add-hook 'prog-mode-hook (lambda ()
@@ -325,5 +334,6 @@
 (bind-key "C-(" (surround-text-with "("))
 (bind-key "C-\"" (surround-text-with "\""))
 (define-key process-menu-mode-map (kbd "C-c k") 'ry/delete-process-at-point)
+
 
 (provide 'rongyi-basic)
