@@ -308,6 +308,10 @@
 
 (setq js-indent-level 2)
 
+;; cancel company-mode in gud mode
+(add-hook 'gud-mode-hook (lambda ()
+                             (company-mode -1)))
+
 (after-load 'org
   (require 'ox-md nil t))
 ;; using cl

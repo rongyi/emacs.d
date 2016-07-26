@@ -629,6 +629,12 @@ mouse-3: go to end")))
         golden-ratio-exclude-modes '(flycheck-error-list-mode
                                      calc-mode
                                      dired-mode
+                                     gdb-locals-mode
+                                     gdb-registers-mode
+                                     gdb-breakpoints-mode
+                                     gdb-threads-mode
+                                     gdb-frames-mode
+                                     gdb-inferior-io-mode
                                      ediff-mode
                                      )
         ;; Exclude a couple of special buffers from golden ratio, namely Helm,
@@ -698,7 +704,7 @@ mouse-3: go to end")))
   :ensure t
   :config
   (which-key-mode)
-  (setq which-key-idle-delay 0.1
+  (setq which-key-idle-delay 0.3
         which-key-sort-order 'which-key-prefix-then-key-order
         which-key-key-replacement-alist
         '(("<\\([[:alnum:]-]+\\)>" . "\\1")
@@ -1019,6 +1025,15 @@ mouse-3: go to end")))
   :ensure t
   :config
   (add-hook 'c++-mode-hook 'modern-c++-font-lock-mode))
+
+(use-package gdb-mi
+  :ensure t
+  :init
+  (setq
+   ;; use gdb-many-windows by default when `M-x gdb'
+   gdb-many-windows t
+   ;; Non-nil means display source file containing the main routine at startup
+   gdb-show-main t))
 
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
