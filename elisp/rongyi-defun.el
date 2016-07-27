@@ -529,4 +529,10 @@ buffer"
   (interactive)
   (switch-to-buffer (make-temp-name "scratch-")))
 
+(defun ry/angry-split ()
+  "Open file after split"
+  (interactive)
+  (ry/split-window-horizontally-and-switch)
+  (ido-find-file))
+
 (provide 'rongyi-defun)
