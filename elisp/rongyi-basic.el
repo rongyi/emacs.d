@@ -310,7 +310,7 @@
 
 ;; cancel company-mode in gud mode
 (add-hook 'gud-mode-hook (lambda ()
-                             (company-mode -1)))
+                           (company-mode -1)))
 
 (after-load 'org
   (require 'ox-md nil t))

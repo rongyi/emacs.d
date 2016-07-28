@@ -1035,6 +1035,32 @@ mouse-3: go to end")))
    ;; Non-nil means display source file containing the main routine at startup
    gdb-show-main t))
 
+(use-package cc-mode
+  :defer t
+  :config
+  ;; The reason we don't use quickrun is most of the time
+  ;; we will use gdb to debug the exec file, but quickrun
+  ;; delete the exec file as default.
+  (defun ry/cc-test(prefix)
+    "test cc code"
+    (interactive "p")
+    (let* ((file (buffer-file-name))
+           (path (file-name-directory file))
+           (output (file-name-nondirectory  (file-name-sans-extension file))))
+      (visit-term-buffer)
+      (insert (format "cd %s && g++ -g --std=c++11 %s -o %s"
+                      path
+                      (file-name-nondirectory  file)
+                      output))
+      (comint-send-input)
+      ;; switch back to source code
+      (cond
+       ((> prefix 1) (other-window -1))
+       (t (insert (format "./%s" output))
+          (comint-send-input)))
+      (message "current file builded.")))
+  (define-key c++-mode-map (kbd "C-c C-c") 'ry/cc-test))
+
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
   :ensure t
