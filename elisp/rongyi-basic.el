@@ -308,10 +308,6 @@
 
 (setq js-indent-level 2)
 
-;; cancel company-mode in gud mode
-(add-hook 'gud-mode-hook (lambda ()
-                           (company-mode -1)))
-
 (after-load 'org
   (require 'ox-md nil t))
 ;; using cl
@@ -323,6 +319,7 @@
 (bind-key "C-c f d" 'ry/delete-current-buffer-file)
 (bind-key "C-c f m" 'ry/rename-file-and-buffer)
 (bind-key "C-c f c" 'ry/kill-other-buffers)
+(bind-key "C-c f p" 'ry/copy-all)
 (bind-key "M-\\" 'ry/angry-split)
 
 ;; put window command together

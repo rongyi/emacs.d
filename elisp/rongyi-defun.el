@@ -306,7 +306,7 @@ after visit also cd to the current buffer's dir"
   (interactive)
   (let* ((frame (selected-frame))
          (alpha (frame-parameter frame 'alpha))
-         (dotfile-setting (cons 60
+         (dotfile-setting (cons 80
                                 100)))
     (set-frame-parameter
      frame 'alpha

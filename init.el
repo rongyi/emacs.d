@@ -346,8 +346,9 @@ auto-indent."
         company-dabbrev-downcase nil
         company-require-match nil
         company-show-numbers t
+        company-semantic-insert-arguments nil
         company-transformers '(company-sort-by-occurrence)
-        company-global-modes '(not term-mode))
+        company-global-modes '(not term-mode gud-mode))
   (add-to-list 'company-backends 'company-capf)
   (add-to-list 'company-backends 'company-files)
 
@@ -479,6 +480,8 @@ auto-indent."
 (use-package ycmd
   :ensure t
   :config
+  ;; cancel argument
+
   (add-hook 'c++-mode-hook 'ycmd-mode)
   ;; (add-hook 'python-mode-hook 'ycmd-mode)
   (set-variable 'ycmd-server-command '("python" "/home/ry/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
@@ -1060,6 +1063,7 @@ mouse-3: go to end")))
           (comint-send-input)))
       (message "current file builded.")))
   (define-key c++-mode-map (kbd "C-c C-c") 'ry/cc-test))
+
 
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
