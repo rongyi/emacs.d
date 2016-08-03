@@ -344,11 +344,15 @@ auto-indent."
         company-require-match nil
         company-dabbrev-ignore-case nil
         company-dabbrev-downcase nil
-        company-require-match nil
+        company-require-match 'never
         company-show-numbers t
         company-semantic-insert-arguments nil
         company-transformers '(company-sort-by-occurrence)
-        company-global-modes '(not term-mode gud-mode))
+        company-global-modes '(not term-mode gud-mode)
+        company-frontends '(company-pseudo-tooltip-unless-just-one-frontend
+                            company-preview-frontend
+                            company-echo-metadata-frontend)
+        company-auto-complete t)
   (add-to-list 'company-backends 'company-capf)
   (add-to-list 'company-backends 'company-files)
 
@@ -358,6 +362,8 @@ auto-indent."
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
   (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
   (define-key company-active-map [tab] 'company-complete-common-or-cycle)
+  (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
+  (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
   :diminish company-mode " ⓐ")
 
 (use-package company-statistics
