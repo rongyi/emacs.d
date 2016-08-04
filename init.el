@@ -1034,6 +1034,9 @@ mouse-3: go to end")))
 (use-package smart-comment
   :ensure t
   :bind ("M-;" . smart-comment))
+;; (use-package comment-dwim-2
+;;   :ensure t
+;;   :bind (("M-;" . comment-dwim-2)))
 
 (use-package modern-cpp-font-lock
   :ensure t
@@ -1086,6 +1089,9 @@ mouse-3: go to end")))
   :bind (("C-c m m" . bm-toggle)
          ("C-c m n" . bm-next)
          ("C-c m p" . bm-previous)))
+
+(use-package goto-chg
+  :ensure t)
 
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader

@@ -535,4 +535,18 @@ buffer"
   (ry/split-window-horizontally-and-switch)
   (ido-find-file))
 
+
+;; http://sriramkswamy.github.io/dotemacs/
+(defun ry/replace-next-underscore-with-camel (arg)
+  (interactive "p")
+  (if (> arg 0)
+ (setq arg (1+ arg))) ; 1-based index to get eternal loop with 0
+  (let ((case-fold-search nil))
+    (while (not (= arg 1))
+      (search-forward-regexp "\\b_[a-z]")
+      (forward-char -2)
+      (delete-char 1)
+      (capitalize-word 1)
+      (setq arg (1- arg)))))
+
 (provide 'rongyi-defun)
