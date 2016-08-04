@@ -350,8 +350,8 @@ auto-indent."
         company-transformers '(company-sort-by-occurrence)
         company-global-modes '(not term-mode gud-mode)
         company-dabbrev-downcase nil
-        ;; for YCM like completion, not very well
         company-require-match 'never
+        ;; for YCM like completion, not very well
         ;; company-frontends '(company-pseudo-tooltip-unless-just-one-frontend
         ;;                     company-preview-frontend
         ;;                     company-echo-metadata-frontend)
