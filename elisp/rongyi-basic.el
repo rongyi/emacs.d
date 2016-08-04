@@ -120,6 +120,7 @@
   (setq x-select-enable-clipboard t))
 
 (setq truncate-partial-width-windows nil)
+(setq-default truncate-lines t)
 
 
 (mouse-avoidance-mode 'exile)
