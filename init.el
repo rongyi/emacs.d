@@ -156,6 +156,7 @@
         helm-file-cache-fuzzy-match           t
         helm-imenu-fuzzy-match                t
         helm-mode-fuzzy-match                 t
+        helm-ff-skip-boring-files             t
         helm-locate-fuzzy-match               t
         helm-quick-update                     t
         helm-recentf-fuzzy-match              t
@@ -168,7 +169,8 @@
   (setq helm-display-function 'helm-default-display-buffer)
   (setq helm-adaptive-history-file (expand-file-name
                                     "helm-adapative-history"
-                                    user-emacs-directory)))
+                                    user-emacs-directory))
+  :bind (("C-x f" . helm-for-files)))
 
 
 ;; projectile
@@ -352,7 +354,8 @@ auto-indent."
         company-frontends '(company-pseudo-tooltip-unless-just-one-frontend
                             company-preview-frontend
                             company-echo-metadata-frontend)
-        company-auto-complete t)
+        company-auto-complete t
+        )
   (add-to-list 'company-backends 'company-capf)
   (add-to-list 'company-backends 'company-files)
 
@@ -713,7 +716,7 @@ mouse-3: go to end")))
   :ensure t
   :config
   (which-key-mode)
-  (setq which-key-idle-delay 0.3
+  (setq which-key-idle-delay 0.2
         which-key-sort-order 'which-key-prefix-then-key-order
         which-key-key-replacement-alist
         '(("<\\([[:alnum:]-]+\\)>" . "\\1")
@@ -730,7 +733,9 @@ mouse-3: go to end")))
     "C-c j" "jump"
     "C-c f" "files/buffers"
     "C-c !" "flycheck"
-    "C-c &" "yasnippet")
+    "C-c &" "yasnippet"
+    "C-c /" "google-this"
+    "C-c m" "visual bookmark")
   :diminish which-key-mode)
 
 ;; from joedicastro
@@ -1070,6 +1075,17 @@ mouse-3: go to end")))
       (message "current file builded.")))
   (define-key c++-mode-map (kbd "C-c C-c") 'ry/cc-test))
 
+
+(use-package google-this
+  :ensure t
+  :config
+  (google-this-mode 1))
+
+(use-package bm
+  :ensure t
+  :bind (("C-c m m" . bm-toggle)
+         ("C-c m n" . bm-next)
+         ("C-c m p" . bm-previous)))
 
 ;; when everything is set, we make our evil leader bindings
 (use-package evil-leader
