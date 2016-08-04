@@ -896,6 +896,11 @@ mouse-3: go to end")))
   :init
   (progn
     (add-hook 'prog-mode-hook 'highlight-numbers-mode)))
+(use-package highlight-thing
+  :ensure t
+  :config
+  (highlight-thing-mode 1)
+  :diminish highlight-thing-mode)
 
 
 (use-package ignoramus                  ; Ignore uninteresting files everywhere
