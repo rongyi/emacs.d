@@ -345,16 +345,17 @@ auto-indent."
         company-minimum-prefix-length 2
         company-require-match nil
         company-dabbrev-ignore-case nil
-        company-dabbrev-downcase nil
-        company-require-match 'never
         company-show-numbers t
         company-semantic-insert-arguments nil
         company-transformers '(company-sort-by-occurrence)
         company-global-modes '(not term-mode gud-mode)
-        company-frontends '(company-pseudo-tooltip-unless-just-one-frontend
-                            company-preview-frontend
-                            company-echo-metadata-frontend)
-        company-auto-complete t
+        company-dabbrev-downcase nil
+        ;; for YCM like completion, not very well
+        company-require-match 'never
+        ;; company-frontends '(company-pseudo-tooltip-unless-just-one-frontend
+        ;;                     company-preview-frontend
+        ;;                     company-echo-metadata-frontend)
+        ;; company-auto-complete t
         )
   (add-to-list 'company-backends 'company-capf)
   (add-to-list 'company-backends 'company-files)
