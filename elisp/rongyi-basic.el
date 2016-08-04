@@ -44,6 +44,8 @@
 
 ;; auto save
 (add-hook 'focus-out-hook 'save-all)
+;; save every 20 characters
+(setq auto-save-interval 20)
 
 ;; break long lines at word boundaries
 (visual-line-mode 1)
