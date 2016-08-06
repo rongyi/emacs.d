@@ -1088,7 +1088,8 @@ mouse-3: go to end")))
 (use-package google-this
   :ensure t
   :config
-  (google-this-mode 1))
+  (google-this-mode 1)
+  :diminish google-this-mode)
 
 (use-package bm
   :ensure t
