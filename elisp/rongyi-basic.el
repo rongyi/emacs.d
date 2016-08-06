@@ -322,7 +322,7 @@
 (bind-key "C-c f d" 'ry/delete-current-buffer-file)
 (bind-key "C-c f m" 'ry/rename-file-and-buffer)
 (bind-key "C-c f c" 'ry/kill-other-buffers)
-(bind-key "C-c f p" 'ry/copy-all)
+(bind-key "C-c f y" 'ry/copy-all)
 (bind-key "M-\\" 'ry/angry-split)
 
 ;; put window command together
