@@ -1091,6 +1091,7 @@ mouse-3: go to end")))
   (google-this-mode 1)
   :diminish google-this-mode)
 
+;; mark with UI
 (use-package bm
   :ensure t
   :bind (("C-c m m" . bm-toggle)

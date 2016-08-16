@@ -33,6 +33,7 @@
     (comment-or-uncomment-region (line-beginning-position) (line-end-position))))
 
 
+;; mainly for include guard in C/C++
 (defun random-suffix ()
   (let ((ret "")
         (mycharset "1234567890ABCDEFGHIJKLMNOPQRSTYVWXYZ"))
@@ -104,7 +105,6 @@ directory to make multiple eshell windows easier."
   (interactive)
   (move-end-of-line 1)
   (newline-and-indent))
-
 
 
 (defun smarter-move-beginning-of-line (arg)
@@ -199,6 +199,7 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
   (newline-and-indent))
 
 (defun lint-code ()
+  "insert link url for current buffer, the buffer name is the last section of the url"
   (interactive)
   (insert (format "// http://www.lintcode.com/zh-cn/problem/%s\n" (file-name-sans-extension (buffer-name)))))
 
@@ -221,7 +222,8 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
 
 
 (defun visit-term-buffer ()
-  "Create or visit a terminal buffer"
+  "Create or visit a terminal buffer,
+Split window first and then open zsh"
   (interactive)
   (let ((shell-name (getenv "SHELL"))
         (height (/ (window-total-height) 3)))
@@ -317,8 +319,8 @@ after visit also cd to the current buffer's dir"
 (defun ry/emacs-reload ()
   (interactive)
   (load-file user-init-file)
-  (message ".emacs reloaded successfully")
-  (powerline-reset))
+  (powerline-reset)
+  (message ".emacs reloaded successfully"))
 
 
 (defun ry/eval-current-form ()
