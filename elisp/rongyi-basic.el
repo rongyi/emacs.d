@@ -71,9 +71,10 @@
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
 ;; Flash the frame to represent a bell.
-(setq visible-bell t)
-;; nevermind that's annoying
-(setq ring-bell-function 'ignore)
+(setq visible-bell nil)
+(setq ring-bell-function (lambda ()
+                           (invert-face 'mode-line)
+                           (run-with-timer 0.05 nil 'invert-face 'mode-line)))
 ;; refresh buffer fast
 (setq auto-revert-interval 1)
 ;; Show me the new saved file if the contents change on disk when editing.
