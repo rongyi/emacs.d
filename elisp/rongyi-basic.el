@@ -170,8 +170,16 @@
 
 ;; subword-mode in prog-mode-hook
 (add-hook 'prog-mode-hook 'subword-mode)
-;; format linum
-(setq linum-format (if (not window-system) "%4d " "%4d"))
+;; format linum, add some spaces
+(setq linum-format (lambda (line)
+                     (propertize
+                      (format (concat " %"
+                                      (number-to-string
+                                       (length (number-to-string
+                                                (line-number-at-pos (point-max)))))
+                                      "d ")
+                              line)
+                      'face 'linum)))
 
 ;; Make sure script files are excutable after save
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
@@ -323,6 +331,7 @@
 (bind-key "C-c f m" 'ry/rename-file-and-buffer)
 (bind-key "C-c f c" 'ry/kill-other-buffers)
 (bind-key "C-c f y" 'ry/copy-all)
+(bind-key "C-c f o" 'find-or-create-file-at-point)
 (bind-key "M-\\" 'ry/angry-split)
 
 ;; put window command together

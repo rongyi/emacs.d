@@ -367,6 +367,24 @@ after visit also cd to the current buffer's dir"
         (kill-buffer buffer)
         (message "File '%s' successfully removed" filename)))))
 
+(defun file-name-at-point ()
+  (save-excursion
+    (let* ((file-name-regexp "[./a-zA-Z0-9\-_~]")
+           (start (progn
+                    (while (looking-back file-name-regexp)
+                      (forward-char -1))
+                    (point)))
+           (end (progn
+                  (while (looking-at file-name-regexp)
+                    (forward-char 1))
+                  (point))))
+      (buffer-substring start end))))
+
+(defun find-or-create-file-at-point ()
+  "when under point is a path/file name, opens it."
+  (interactive)
+  (find-file (file-name-at-point)))
+
 ;; from magnars
 (defun ry/sudo-edit (&optional arg)
   (interactive "p")
