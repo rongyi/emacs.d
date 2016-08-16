@@ -58,3 +58,5 @@
 *** DONE [[git@github.com:jonnay/emagicians-starter-kit.git][emagicians-starter-kit]]
 
 *** TODO [[http://pragmaticemacs.com/][Emacs Pragmatic]]
+
+*** Write a note about Emacs & Lintcode
