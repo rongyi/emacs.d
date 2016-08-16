@@ -3,7 +3,7 @@
 ** DONE 使用use-package而不是自己造的轮子，进而需要对use-package的代码学习
 ** DONE 加入diminish和spaceline来美化modeline
 ** DONE emacs package: ctags-update, 能否配置成Vim一样的键映射
-** TODO 阅读自己关注的一些repo和follow的人的emacs配置，学习elisp [15/16]
+** TODO 阅读自己关注的一些repo和follow的人的emacs配置，学习elisp [15/17]
 *** DONE https://github.com/lunaryorn/.emacs.d.git
     beacon光标定位
 *** DONE https://github.com/howardabrams/dot-files.git
@@ -59,4 +59,4 @@
 
 *** TODO [[http://pragmaticemacs.com/][Emacs Pragmatic]]
 
-*** Write a note about Emacs & Lintcode
+*** TODO Write a note about Emacs & Lintcode
