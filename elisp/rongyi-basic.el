@@ -335,6 +335,9 @@
 (bind-key "C-c f o" 'find-or-create-file-at-point)
 (bind-key "M-\\" 'ry/angry-split)
 
+;; edit part
+(bind-key "C-c e ," 'ry/newline-after-comma)
+
 ;; put window command together
 (global-set-key (kbd "C-c w t") 'ry/toggle-transparency)
 (global-set-key (kbd "C-c w f") 'toggle-frame-maximized)

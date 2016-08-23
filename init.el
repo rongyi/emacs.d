@@ -736,7 +736,8 @@ mouse-3: go to end")))
     "C-c !" "flycheck"
     "C-c &" "yasnippet"
     "C-c /" "google-this"
-    "C-c m" "visual bookmark")
+    "C-c m" "visual bookmark"
+    "C-c e" "editing")
   :diminish which-key-mode)
 
 ;; from joedicastro
