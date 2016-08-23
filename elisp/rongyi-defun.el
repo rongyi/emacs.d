@@ -606,4 +606,14 @@ buffer"
   (delete-trailing-whitespace)
   (indent-buffer))
 
+(defun ry/newline-after-comma ()
+  "insert newline after comma, offten used in a very long line code
+especially in function argument or Python code when the lint system tell
+me the line is too long"
+  (interactive)
+  (search-forward-regexp ", ")
+  (forward-char -1)
+  (delete-char 1)
+  (newline-and-indent))
+
 (provide 'rongyi-defun)
