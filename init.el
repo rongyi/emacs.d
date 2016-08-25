@@ -664,13 +664,14 @@ mouse-3: go to end")))
           ,(rx bos "*NeoTree*" eos)))
   :diminish (golden-ratio-mode . "ⓖ"))
 
-                                        ; Save buffers when focus is lost
+; Save buffers when focus is lost
 (use-package focus-autosave-mode
   :ensure t
   :init (focus-autosave-mode)
   :diminish focus-autosave-mode)
 
-(use-package hl-todo                    ; Highlight TODOs in buffers
+; Highlight TODOs in buffers
+(use-package hl-todo
   :ensure t
   :defer t
   :init (global-hl-todo-mode))
