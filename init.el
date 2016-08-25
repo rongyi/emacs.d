@@ -1084,6 +1084,7 @@ mouse-3: go to end")))
   :ensure t
   :config
   (google-this-mode 1)
+  ;; quick search
   (define-key google-this-mode-map (kbd "C-c / /") 'google-this)
   :diminish google-this-mode)
 
