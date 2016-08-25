@@ -44,10 +44,10 @@
 
 ;; RongYi settings
 (require 'rongyi-defun)
+;; in the begnning, all function are defined in rongyi-defun, it's time to make some change
+(require 'rongyi-editing)
 
 (require 'rongyi-basic)
-
-
 
 (use-package evil
   :init
@@ -218,11 +218,6 @@
   (setq spaceline-window-numbers-unicode t)
   (spaceline-spacemacs-theme))
 
-
-;; powerline, deprecated!
-;; (require-install-nessary 'powerline)
-;; (setq powerline-default-separator 'wave)
-;; (powerline-center-evil-theme)
 
 
 ;; flycheck

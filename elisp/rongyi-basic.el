@@ -108,8 +108,10 @@
 ;;(add-hook 'prog-mode-hook 'idle-highlight-mode)
 (add-hook 'prog-mode-hook 'hl-line-mode)
 ;; highlight current line number
-(require-install-nessary 'hlinum)
-(hlinum-activate)
+(use-package hlinum
+  :ensure t
+  :config
+  (hlinum-activate))
 ;; highlight matching braces
 (show-paren-mode 1)
 ;; highlight the entire expression
@@ -191,30 +193,40 @@
 
 
 ;; ido mode
-;; go straight home by pressing ~
-(add-hook 'ido-setup-hook (lambda ()
-                            (define-key ido-file-completion-map
-                              (kbd "~")
-                              (lambda ()
-                                (interactive)
-                                (if (looking-back "/")
-                                    (insert "~/")
-                                  (call-interactively 'self-insert-command))))))
-(after-load 'ido
+(use-package ido
+  :ensure t
+  :config
   (ido-mode t)
-  (ido-everywhere t))
-(global-set-key (kbd "C-x C-f") 'ido-find-file)
-(require-install-nessary 'ido-ubiquitous)
-(ido-ubiquitous-mode 1)
-(require-install-nessary 'ido-vertical-mode)
-(ido-vertical-mode)
-(require-install-nessary 'flx-ido)
+  (ido-everywhere t)
+  (global-set-key (kbd "C-x C-f") 'ido-find-file)
+  ;; go straight home by pressing ~
+  (add-hook 'ido-setup-hook (lambda ()
+                              (define-key ido-file-completion-map
+                                (kbd "~")
+                                (lambda ()
+                                  (interactive)
+                                  (if (looking-back "/")
+                                      (insert "~/")
+                                    (call-interactively 'self-insert-command))))
+                              (define-key ido-completion-map (kbd "C-p") 'ido-prev-match)
+                              (define-key ido-completion-map (kbd "C-n") 'ido-next-match))))
+
+(use-package ido-ubiquitous
+  :ensure t
+  :config
+  (ido-ubiquitous-mode 1))
+
+(use-package ido-vertical-mode
+  :ensure t
+  :config
+  (ido-vertical-mode))
+(use-package flx-ido
+  :ensure t)
+
 (setq gc-cons-threshold 20000000)
 (flx-ido-mode 1)
 
-(add-hook 'ido-setup-hook (lambda ()
-                            (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
-                            (define-key ido-completion-map (kbd "C-p") 'ido-prev-match)))
+
 
 ;; eldoc-mode
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
@@ -247,13 +259,15 @@
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 ;; smex
-(require-install-nessary 'smex)
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-(setq-default smex-key-advice-ignore-menu-bar t)
-;; change cache save place
-(setq smex-save-file (expand-file-name ".smex-items" user-emacs-directory))
+(use-package smex
+  :ensure t
+  :config
+  (smex-initialize)
+  (global-set-key (kbd "M-x") 'smex)
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+  (setq-default smex-key-advice-ignore-menu-bar t)
+  ;; change cache save place
+  (setq smex-save-file (expand-file-name ".smex-items" user-emacs-directory)))
 
 ;; make header file as c++mode, C rarely use now.
 (add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
