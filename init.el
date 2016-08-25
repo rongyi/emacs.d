@@ -852,8 +852,10 @@ mouse-3: go to end")))
   :ensure t
   :config
   (setq highlight-symbol-idle-delay 0.5)
+  ;; Navigate occurrences of the symbol under point with M-n and M-p, and
   (add-hook 'prog-mode-hook (lambda ()
-                              (highlight-symbol-mode)))
+                              (highlight-symbol-mode)
+                              (highlight-symbol-nav-mode)))
   :diminish highlight-symbol-mode)
 
 ;; manual switch on/off
@@ -1136,7 +1138,7 @@ mouse-3: go to end")))
                 "e" 'helm-semantic-or-imenu
                 "p" 'projectile-find-file
                 "g" 'magit-status
-                "s" 'ag-project
+                "s" 'helm-ag-project-root
                 "t" 'helm-gtags-select
                 "SPC" 'ethan-wspace-clean-all
                 "w" 'ace-window
