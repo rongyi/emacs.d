@@ -220,7 +220,6 @@
   (spaceline-spacemacs-theme))
 
 
-
 ;; flycheck
 (use-package flycheck-pos-tip
   :ensure t)
@@ -655,8 +654,8 @@ mouse-3: go to end")))
           ,(rx bos "*NeoTree*" eos)))
   :diminish (golden-ratio-mode . "ⓖ"))
 
-
-(use-package focus-autosave-mode        ; Save buffers when focus is lost
+; Save buffers when focus is lost
+(use-package focus-autosave-mode
   :ensure t
   :init (focus-autosave-mode)
   :diminish focus-autosave-mode)
@@ -1011,7 +1010,7 @@ mouse-3: go to end")))
 (use-package autorevert                 ; Auto-revert buffers of changed files
   :init (global-auto-revert-mode)
   :config
-  (setq auto-revert-verbose nil         ; Shut up, please!
+  (setq auto-revert-verbose nil
         ;; Revert Dired buffers, too
         global-auto-revert-non-file-buffers t)
 

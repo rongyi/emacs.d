@@ -77,8 +77,6 @@
                            (run-with-timer 0.05 nil 'invert-face 'mode-line)))
 ;; refresh buffer fast
 (setq auto-revert-interval 1)
-;; Show me the new saved file if the contents change on disk when editing.
-;; (global-auto-revert-mode 1)
 ;; no blinking cursor
 (blink-cursor-mode -1)
 
@@ -106,6 +104,7 @@
 ;; (add-hook 'prog-mode-hook 'whitespace-mode)
 ;; highlight the word under the point
 ;;(add-hook 'prog-mode-hook 'idle-highlight-mode)
+
 (add-hook 'prog-mode-hook 'hl-line-mode)
 ;; highlight current line number
 (use-package hlinum
@@ -126,7 +125,6 @@
 
 (setq truncate-partial-width-windows nil)
 (setq-default truncate-lines t)
-
 
 (mouse-avoidance-mode 'exile)
 
@@ -302,11 +300,9 @@
 
 ;; add more for tab
 (setq tab-always-indent 'complete)
-
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
-
 
 ;; When not in a terminal, configure a few window system specific things.
 (when window-system
