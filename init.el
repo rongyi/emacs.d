@@ -654,7 +654,7 @@ mouse-3: go to end")))
           ,(rx bos "*NeoTree*" eos)))
   :diminish (golden-ratio-mode . "ⓖ"))
 
-; Save buffers when focus is lost
+                                        ; Save buffers when focus is lost
 (use-package focus-autosave-mode
   :ensure t
   :init (focus-autosave-mode)
@@ -1101,34 +1101,32 @@ mouse-3: go to end")))
   :ensure t)
 
 ;; when everything is set, we make our evil leader bindings
-(use-package evil-leader
+(use-package general
   :ensure t
   :config
-  (setq evil-leader/in-all-states 1)
-  (global-evil-leader-mode)
-  (evil-leader/set-leader ",")
-  (evil-leader/set-key
-    "," 'goto-last-change               ; normaly its ``m' , this is a workaround for my new keyboard
-    "l" 'linum-mode
-    "w" 'save-buffer
-    "q" 'kill-this-buffer
-    "c SPC" 'comment-or-uncomment-line-or-region
-    "b" 'bookmark-bmenu-list
-    "f" 'avy-goto-char
-    "e" 'helm-semantic-or-imenu
-    "p" 'projectile-find-file
-    "g" 'magit-status
-    "s" 'ag-project
-    "t" 'helm-gtags-select
-    "SPC" 'ethan-wspace-clean-all
-    "w" 'ace-window
-    "K" (lambda ()
-          (interactive)
-          (save-excursion
-            (other-window 1)
-            (quit-window)
-            (other-window 1)))
-    "i" 'find-user-init-file))
+  (general-evil-setup)
+  (general-nmap :prefix ","
+                "," 'goto-last-change               ; normaly its ``m' , this is a workaround for my new keyboard
+                "l" 'linum-mode
+                "w" 'save-buffer
+                "q" 'kill-this-buffer
+                "c SPC" 'comment-or-uncomment-line-or-region
+                "b" 'bookmark-bmenu-list
+                "f" 'avy-goto-char
+                "e" 'helm-semantic-or-imenu
+                "p" 'projectile-find-file
+                "g" 'magit-status
+                "s" 'ag-project
+                "t" 'helm-gtags-select
+                "SPC" 'ethan-wspace-clean-all
+                "w" 'ace-window
+                "K" (lambda ()
+                      (interactive)
+                      (save-excursion
+                        (other-window 1)
+                        (quit-window)
+                        (other-window 1)))
+                "i" 'find-user-init-file))
 
 ;; diminish more minor mode
 (diminish 'global-auto-revert-mode)
