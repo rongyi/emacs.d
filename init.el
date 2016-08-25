@@ -173,6 +173,16 @@
                                     user-emacs-directory))
   :bind (("C-x f" . helm-for-files)))
 
+(use-package helm-ag
+  :ensure t
+  :bind (("C-c s a" . helm-ag-project-root)
+         ("C-c s A" . helm-ag)
+         ("C-c s c" . helm-ag-this-file))
+  :config
+  (setq helm-ag-fuzzy-match t
+        helm-ag-insert-at-point 'symbol
+        helm-ag-edit-save t))
+
 
 ;; projectile
 (use-package projectile
@@ -733,7 +743,8 @@ mouse-3: go to end")))
     "C-c &" "yasnippet"
     "C-c /" "google-this"
     "C-c m" "visual bookmark"
-    "C-c e" "editing")
+    "C-c e" "editing"
+    "C-c s" "searching")
   :diminish which-key-mode)
 
 ;; from joedicastro
@@ -849,13 +860,20 @@ mouse-3: go to end")))
 (use-package focus
   :ensure t)
 
-;; just like swiper
+;; just like swiper, but swiper has some bug in it
 (use-package helm-swoop
-  :ensure t)
+  :ensure t
+  :bind (("C-c s s" . helm-swoop)
+         ("C-c s S" . helm-multi-swoop)
+         ("C-c s C-s" . helm-multi-swoop-all))
+  :config
+  (setq helm-swoop-speed-or-color t
+        helm-swoop-split-window-function 'helm-default-display-buffer))
 
 ;; using in Python mode when needed
 (use-package highlight-indentation
   :ensure t)
+
 (use-package demo-it
   :ensure t)
 
@@ -875,6 +893,8 @@ mouse-3: go to end")))
   :diminish volatile-highlights-mode)
 
 (use-package visual-regexp
+  :bind (("C-c s r" . vr/query-replace)
+         ("C-c s R" . vr/replace))
   :ensure t)
 
 (use-package iedit
