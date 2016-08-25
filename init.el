@@ -902,6 +902,9 @@ mouse-3: go to end")))
 (use-package iedit
   :ensure t
   :config
+  ;; use tab to navigate
+  ;; use M-; to iedit-toggle-selection
+  ;; TODO: key is different with highlight-symbol(M-n M-p)
   (global-set-key (kbd "C-:") 'iedit-mode))
 
 (use-package highlight-parentheses
