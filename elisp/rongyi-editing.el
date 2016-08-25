@@ -1,6 +1,7 @@
 
 ;; it is a unit in c/c++, and type this two key is so slow, so we need a map
 (defun insert-pointer-access ()
+  "like := in Go, -> in C/C++ is a unit for pointer access"
   (interactive)
   (insert "->"))
 

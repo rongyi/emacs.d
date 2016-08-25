@@ -23,15 +23,12 @@
 
 (add-to-list 'load-path (ry/emacs-subdirectory "elisp"))
 
-
-
 ;; package initialization
 (require 'package)
 (setq package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
                          ("org" . "http://orgmode.org/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
-
 
 ;; Bootstrap use-package
 (unless (package-installed-p 'use-package)
@@ -90,6 +87,7 @@
   (define-key evil-insert-state-map (kbd "C-w") 'evil-delete)
   (define-key evil-visual-state-map (kbd "C-w") 'evil-delete)
   (define-key evil-insert-state-map (kbd "C-o") 'ry/open-line-above)
+  ;; we dont want to learn emacs keymap for jump
   (define-key evil-normal-state-map (kbd "C-]") 'helm-gtags-dwim)
   (define-key evil-normal-state-map (kbd "C-t") 'helm-gtags-pop-stack)
   ;; pain in the ass
@@ -1086,6 +1084,7 @@ mouse-3: go to end")))
   :ensure t
   :config
   (google-this-mode 1)
+  (define-key google-this-mode-map (kbd "C-c / /") 'google-this)
   :diminish google-this-mode)
 
 ;; mark with UI
