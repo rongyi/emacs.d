@@ -337,6 +337,7 @@
 
 ;; edit part
 (bind-key "C-c e ," 'ry/newline-after-comma)
+(bind-key "C-c e d" 'insert-date)
 
 ;; put window command together
 (global-set-key (kbd "C-c w t") 'ry/toggle-transparency)

@@ -359,6 +359,7 @@ auto-indent."
         )
   (add-to-list 'company-backends 'company-capf)
   (add-to-list 'company-backends 'company-files)
+  (add-to-list 'company-backends 'company-dabbrev)
 
   ;; cancel company explicitly
   (define-key company-active-map (kbd "C-g") 'company-abort)
