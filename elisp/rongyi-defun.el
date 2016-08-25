@@ -421,4 +421,27 @@ buffer"
              (set-window-start w2 s1)
              (setq i (1+ i)))))))
 
+;; from lunaryorn's emacs.d
+(defun ry/find-side-windows (&optional side)
+  "Get all side window if any.
+
+If SIDE is non-nil only get windows on that side."
+  (let (windows)
+    (walk-window-tree
+     (lambda (window)
+       (let ((window-side (window-parameter window 'window-side)))
+         (when (and window-side (or (not side) (eq window-side side)))
+           (push window windows)))))
+    windows))
+
+(defun ry/quit-all-side-windows ()
+  "Quit all side windows of the current frame."
+  (interactive)
+  (dolist (window (ry/find-side-windows))
+    (when (window-live-p window)
+      (quit-window nil window)
+      ;; When the window is still live, delete it
+      (when (window-live-p window)
+        (delete-window window)))))
+
 (provide 'rongyi-defun)
