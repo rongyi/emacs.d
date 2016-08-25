@@ -39,6 +39,9 @@
 (require 'diminish)
 (require 'bind-key)
 
+(use-package dash
+  :ensure t)
+
 ;; RongYi settings
 (require 'rongyi-defun)
 ;; in the begnning, all function are defined in rongyi-defun, it's time to make some change

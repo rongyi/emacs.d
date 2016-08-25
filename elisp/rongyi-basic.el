@@ -133,18 +133,26 @@
 ;; This isn't a typewriter (even if it is a terminal); one space after sentences,
 ;; please.
 (setq sentence-end-double-space nil)
-;; font
 
-(set-frame-font "Hasklig 10")
-(add-to-list 'default-frame-alist '(font . "Hasklig 10"))
+;; font
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Standard-Faces.html
+;; some other font: hasklig/Sourcecode pro
+(set-frame-font "PragmataPro 10")
+(add-to-list 'default-frame-alist '(font . "PragmataPro 10"))
 (add-to-list 'default-frame-alist '(width . 110))
 (add-to-list 'default-frame-alist '(height . 50))
 
+(defun ry/configure-fonts (frame)
+  "font configuration"
+  (dolist (script '(symbol mathematical))
+    (set-fontset-font t script (font-spec :family "XITS Math")
+                      frame 'prepend))
+  (set-fontset-font "fontset-default" 'han '("Microsoft JhengHei" . "unicode-bmp")))
+
 (add-hook 'after-make-frame-functions
-          (lambda (new-frame)
-            (set-fontset-font "fontset-default" 'han '("Microsoft JhengHei" . "unicode-bmp"))
-            ))
-(set-fontset-font "fontset-default" 'han '("Microsoft JhengHei" . "unicode-bmp"))
+          'ry/configure-fonts)
+(-when-let (frame (selected-frame))
+  (ry/configure-fonts frame))
 
 ;; hippie expand
 (global-set-key (kbd "M-/") 'hippie-expand)
