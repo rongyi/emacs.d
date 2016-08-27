@@ -405,27 +405,37 @@ auto-indent."
 (use-package company-anaconda
   :ensure t
   :config
-  (add-to-list 'company-backends 'company-anaconda)
-  )
+  (add-to-list 'company-backends 'company-anaconda))
 
 ;; js
-(use-package company-tern
-  :ensure t)
-
 (use-package js2-mode
   :ensure t
   :config
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
   (add-hook 'js-mode-hook 'js2-minor-mode)
   (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
-  (add-hook 'js-mode-hook (lambda () (tern-mode t)))
-  (add-to-list 'company-backends 'company-tern)
   (setq company-tern-property-marker "")
   (setq company-tern-meta-as-single-line t)
   (setq js2-highlight-level 3
         js2-basic-offset 2
+        js2-mode-show-parse-errors nil
+        js2-mode-show-strict-warnings nil
         js2-pretty-multiline-declarations t)
   :diminish js2-mode "JS")
+
+(use-package tern
+  :ensure t
+  :defer t
+  :init (add-hook 'js2-mode-hook 'tern-mode)
+  :config
+  ;; Don't generate port files
+  (add-to-list 'tern-command "--no-port-file" 'append))
+
+(use-package company-tern
+  :ensure t
+  :after company
+  :config
+  (add-to-list 'company-backends 'company-tern))
 
 (use-package json-mode
   :ensure t)
@@ -436,7 +446,6 @@ auto-indent."
   :init
   (add-hook 'org-mode-hook (lambda ()
                              (org-bullets-mode 1))))
-
 
 ;; close unnessary buffer automaticly
 (use-package popwin
@@ -664,13 +673,13 @@ mouse-3: go to end")))
           ,(rx bos "*NeoTree*" eos)))
   :diminish (golden-ratio-mode . "ⓖ"))
 
-; Save buffers when focus is lost
+                                        ; Save buffers when focus is lost
 (use-package focus-autosave-mode
   :ensure t
   :init (focus-autosave-mode)
   :diminish focus-autosave-mode)
 
-; Highlight TODOs in buffers
+                                        ; Highlight TODOs in buffers
 (use-package hl-todo
   :ensure t
   :defer t
@@ -1131,28 +1140,28 @@ mouse-3: go to end")))
   :ensure t
   :config
   (general-evil-setup)
-  (general-nmap :prefix ","
-                "," 'goto-last-change               ; normaly its ``m' , this is a workaround for my new keyboard
-                "l" 'linum-mode
-                "w" 'save-buffer
-                "q" 'kill-this-buffer
-                "c SPC" 'comment-or-uncomment-line-or-region
-                "b" 'bookmark-bmenu-list
-                "f" 'avy-goto-char
-                "e" 'helm-semantic-or-imenu
-                "p" 'projectile-find-file
-                "g" 'magit-status
-                "s" 'helm-ag-project-root
-                "t" 'helm-gtags-select
-                "SPC" 'ethan-wspace-clean-all
-                "w" 'ace-window
-                "K" (lambda ()
-                      (interactive)
-                      (save-excursion
-                        (other-window 1)
-                        (quit-window)
-                        (other-window 1)))
-                "i" 'find-user-init-file))
+  (general-nvmap :prefix ","
+                 "," 'goto-last-change               ; normaly its ``m' , this is a workaround for my new keyboard
+                 "l" 'linum-mode
+                 "w" 'save-buffer
+                 "q" 'kill-this-buffer
+                 "c SPC" 'comment-or-uncomment-line-or-region
+                 "b" 'bookmark-bmenu-list
+                 "f" 'avy-goto-char
+                 "e" 'helm-semantic-or-imenu
+                 "p" 'projectile-find-file
+                 "g" 'magit-status
+                 "s" 'helm-ag-project-root
+                 "t" 'helm-gtags-select
+                 "SPC" 'ethan-wspace-clean-all
+                 "w" 'ace-window
+                 "K" (lambda ()
+                       (interactive)
+                       (save-excursion
+                         (other-window 1)
+                         (quit-window)
+                         (other-window 1)))
+                 "i" 'find-user-init-file))
 
 ;; diminish more minor mode
 (diminish 'global-auto-revert-mode)
