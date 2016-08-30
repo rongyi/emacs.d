@@ -181,6 +181,11 @@
         helm-ag-insert-at-point 'symbol
         helm-ag-edit-save t))
 
+(use-package helm-flx
+  :ensure t
+  :after helm
+  :config
+  (helm-flx-mode 1))
 
 ;; projectile
 (use-package projectile
@@ -885,6 +890,7 @@ mouse-3: go to end")))
          ("C-c s C-s" . helm-multi-swoop-all))
   :config
   (setq helm-swoop-speed-or-color t
+        helm-swoop-use-fuzzy-match t
         helm-swoop-split-window-function 'helm-default-display-buffer))
 
 ;; using in Python mode when needed
