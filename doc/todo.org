@@ -64,4 +64,4 @@
 *** TODO emacs一些库函数源码阅读 [0/3]
 **** TODO s (string库)
 **** TODO f (file lib)
-**** TODO dash (functional)
+**** TODO dash (functional lib)
