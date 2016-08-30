@@ -1,4 +1,18 @@
 
+;; using mordern emacs lib
+(use-package f)
+(use-package s)
+(use-package dash)
+
+(defun ry/exec (command)
+  "execute a shell command and return its output as a string"
+  (s-trim (shell-command-to-string command)))
+
+(defun ry/exec-with-rc (command &rest args)
+  "like ry/exec, but with return code to indicate something"
+  (with-temp-buffer
+    (list (apply 'call-process command nil (current-buffer) nil args)
+          (s-trim (buffer-string)))))
 
 (defun require-or-install (pkg)
   "require a lib, if fail install it!

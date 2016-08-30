@@ -213,7 +213,9 @@
 
 ;; nyan cat
 (use-package nyan-mode
-  :ensure t)
+  :ensure t
+  :config
+  (setq nyan-wavy-trail t))
 ;; spaceline: spacemacs's modeline
 (use-package spaceline-config
   :ensure spaceline
