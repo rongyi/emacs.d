@@ -831,7 +831,9 @@ mouse-3: go to end")))
   :diminish rainbow-mode)
 
 (use-package helm-gtags
-  :ensure t)
+  :ensure t
+  :config
+  (setq helm-gtags-fuzzy-match t))
 
 (use-package exec-path-from-shell
   :ensure t
