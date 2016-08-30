@@ -51,10 +51,9 @@
 
 (use-package evil
   :init
-  (setq evil-want-C-i-jump nil)
   :ensure t
   :config
-
+  (setq evil-want-C-i-jump nil)
   (define-key evil-insert-state-map (kbd "M-.") 'insert-pointer-access)
   (define-key evil-insert-state-map (kbd "C-c") '(lambda ()
                                                    (interactive)
@@ -107,7 +106,7 @@
   (setq evil-replace-state-cursor '("red" bar))
   (setq evil-operator-state-cursor '("red" hollow))
 
-  ;; int git commit message or org mode, we'll using evil when we needed
+  ;; in git commit message or org mode, we'll using evil when we needed
   (evil-set-initial-state 'text-mode 'emacs)
   (evil-set-initial-state 'org-mode 'emacs)
   (evil-set-initial-state 'anaconda-mode-view-mode 'emacs)
@@ -115,12 +114,11 @@
   ;; http://emacs.stackexchange.com/questions/9583/how-to-treat-underscore-as-part-of-the-word
   (defalias #'forward-evil-word #'forward-evil-symbol)
   (evil-mode 1)
-
   :diminish evil-mode)
 
+;; count search number
 (use-package evil-anzu
   :ensure t)
-
 
 
 ;; avy
@@ -190,9 +188,10 @@
   :init (projectile-global-mode 1)
   :commands projectile-ag
   :config
-  (setq projectile-completion-system 'ido)
-  (setq projectile-indexing-method 'native) ; force the use of native indexing in operating systems other than Windows
-  (setq projectile-enable-caching t)
+  (setq projectile-enable-caching t
+        projectile-completion-system 'ido
+        projectile-indexing-method 'native ; force the use of native indexing in operating systems other than Windows
+        projectile-find-dir-includes-top-level t)
   :diminish projectile-mode)
 
 ;; magit
@@ -207,7 +206,10 @@
 
   (global-set-key (kbd "<f2>") 'magit-status)
   (global-set-key (kbd "C-M-g") 'magit-status)
-  (setq magit-commit-arguments '("--verbose")))
+  (setq magit-commit-arguments '("--verbose")
+        magit-save-repository-buffers 'dontask
+        magit-log-buffer-file-locked t
+        magit-revision-show-gravatars nil))
 
 ;; nyan cat
 (use-package nyan-mode
@@ -754,7 +756,8 @@ mouse-3: go to end")))
     "C-c /" "google-this"
     "C-c m" "visual bookmark"
     "C-c e" "editing"
-    "C-c s" "searching")
+    "C-c s" "searching"
+    "C-c g" "git")
   :diminish which-key-mode)
 
 ;; from joedicastro
