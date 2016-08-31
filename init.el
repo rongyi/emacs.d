@@ -518,10 +518,10 @@ auto-indent."
 
   (add-hook 'c++-mode-hook 'ycmd-mode)
   (add-hook 'c-mode-hook 'ycmd-mode)
-  ;; (add-hook 'python-mode-hook 'ycmd-mode)
   (set-variable 'ycmd-server-command '("python" "/home/ry/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
   (set-variable 'ycmd-global-config (expand-file-name ".emacs.d/ycm_extra_conf.py" (getenv "HOME")))
-  ;; (set-variable 'ycmd-extra-conf-whitelist '(""))
+  ;; make it larger
+  (setq ycmd-max-num-identifier-candidates 30)
   (require 'ycmd-eldoc)
   (add-hook 'ycmd-mode-hook 'ycmd-eldoc-setup)
   )
@@ -833,7 +833,9 @@ mouse-3: go to end")))
 
 (use-package helm-gtags
   :ensure t
-  :config
+  :init
+  ;; from the document
+  ;; Enable fuzzy match. You should set this value before loading helm-gtags.el
   (setq helm-gtags-fuzzy-match t))
 
 (use-package exec-path-from-shell
