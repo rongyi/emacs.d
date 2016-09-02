@@ -196,7 +196,8 @@
   (setq projectile-enable-caching t
         projectile-completion-system 'ido
         projectile-indexing-method 'native ; force the use of native indexing in operating systems other than Windows
-        projectile-find-dir-includes-top-level t)
+        projectile-find-dir-includes-top-level t
+        projectile-globally-ignored-file-suffixes '(".o" ".lo" ".Plo"))
   :diminish projectile-mode)
 
 ;; magit
@@ -518,7 +519,7 @@ auto-indent."
 
   (add-hook 'c++-mode-hook 'ycmd-mode)
   (add-hook 'c-mode-hook 'ycmd-mode)
-  (set-variable 'ycmd-server-command '("python" "/home/ry/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
+  (set-variable 'ycmd-server-command '("python" "/usr/local/ycmd/ycmd"))
   (set-variable 'ycmd-global-config (expand-file-name ".emacs.d/ycm_extra_conf.py" (getenv "HOME")))
   ;; make it larger
   (setq ycmd-max-num-identifier-candidates 30)
