@@ -337,6 +337,8 @@
 (add-to-list 'auto-mode-alist '("\\.json\\'\\|\\.jshintrc\\'" . js-mode))
 
 (setq js-indent-level 2)
+;; dont intent in c++ namespace
+(c-set-offset 'innamespace 0)
 
 (after-load 'org
   (require 'ox-md nil t))
