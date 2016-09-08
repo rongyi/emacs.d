@@ -94,6 +94,7 @@
   (define-key evil-normal-state-map (kbd "C-t") 'helm-gtags-pop-stack)
   ;; pain in the ass
   (define-key evil-normal-state-map (kbd "K") nil)
+  (define-key evil-normal-state-map (kbd "/") 'helm-swoop)
 
   ;; make j == gj, visual line
   (setq evil-cross-lines t)
@@ -354,6 +355,7 @@ auto-indent."
 (use-package company
   :ensure t
   :config
+
   (add-hook 'after-init-hook 'global-company-mode)
   (add-hook 'after-init-hook 'company-statistics-mode)
   (setq company-idle-delay 0
@@ -384,6 +386,7 @@ auto-indent."
   (define-key company-active-map [tab] 'company-complete-common-or-cycle)
   (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
   (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
+
   :diminish company-mode " ⓐ")
 
 (use-package company-statistics
@@ -896,7 +899,7 @@ mouse-3: go to end")))
          ("C-c s C-s" . helm-multi-swoop-all))
   :config
   (setq helm-swoop-speed-or-color t
-        helm-swoop-use-fuzzy-match t
+        helm-swoop-use-fuzzy-match nil
         helm-swoop-split-window-function 'helm-default-display-buffer))
 
 ;; using in Python mode when needed
