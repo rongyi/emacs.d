@@ -458,4 +458,9 @@ If SIDE is non-nil only get windows on that side."
       (when (window-live-p window)
         (delete-window window)))))
 
+(defun ry/switch-to-buffer-per-window ()
+  "Switch buffer group by window"
+  (interactive)
+  (set-window-buffer nil (car (car (window-prev-buffers)))))
+
 (provide 'rongyi-defun)

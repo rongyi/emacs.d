@@ -288,14 +288,12 @@
 (global-set-key (kbd "C-x C-=") 'ry/diff-buffer-file-changes)
 
 
-;; bind to C-M-l, just like in xemacs:
-(global-set-key (kbd "C-M-l") 'switch-to-other-buffer)
+(global-set-key (kbd "C-M-l") 'ry/switch-to-buffer-per-window)
 
 
 (global-set-key [remap move-beginning-of-line] 'smarter-move-beginning-of-line)
 
 (global-set-key (kbd "C-+") 'surround)
-
 
 
 ;; add more for tab
