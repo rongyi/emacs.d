@@ -1183,7 +1183,8 @@ mouse-3: go to end")))
                          (other-window 1)
                          (quit-window)
                          (other-window 1)))
-                 "i" 'find-user-init-file))
+                 "i" 'find-user-init-file
+                 "r" 'helm-resume))
 
 ;; diminish more minor mode
 (diminish 'global-auto-revert-mode)
