@@ -143,6 +143,8 @@
 ;; helm
 (use-package helm
   :ensure t
+  :init
+  (setq helm-command-prefix-key "C-c h")
   :config
   (require 'helm-config)
   (require 'helm-misc)

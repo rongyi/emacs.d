@@ -275,7 +275,7 @@
   ;; change cache save place
   (setq smex-save-file (expand-file-name ".smex-items" user-emacs-directory)))
 
-;; make header file as c++mode, C rarely use now.
+;; make header file as c++mode, rarely use c now
 (add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
 
 ;; highlight TODO
@@ -287,7 +287,7 @@
 
 (global-set-key (kbd "C-x C-=") 'ry/diff-buffer-file-changes)
 
-
+;; switch buffer per window
 (global-set-key (kbd "C-M-l") 'ry/switch-to-buffer-per-window)
 
 
