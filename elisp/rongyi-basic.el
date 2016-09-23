@@ -278,7 +278,7 @@
 ;; make header file as c++mode, rarely use c now
 (add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
 
-;; highlight TODO
+;; highlight some keywords in comments
 (add-hook 'prog-mode-hook (lambda ()
                             (font-lock-add-keywords nil
                                                     '(("\\<\\(FIX\\|FIXME\\|TODO\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)))))

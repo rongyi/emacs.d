@@ -217,6 +217,8 @@
   (global-set-key (kbd "C-M-g") 'magit-status)
   (setq magit-commit-arguments '("--verbose")
         magit-save-repository-buffers 'dontask
+        ;; use ido to look for branches
+        magit-completing-read-function 'magit-ido-completing-read
         magit-log-buffer-file-locked t
         magit-revision-show-gravatars nil))
 
@@ -433,9 +435,13 @@ auto-indent."
   (setq company-tern-meta-as-single-line t)
   (setq js2-highlight-level 3
         js2-basic-offset 2
+        js2-cleanup-whitespace t
+        js2-enter-indents-newline t
+        js2-indent-on-enter-key t
         js2-mode-show-parse-errors nil
         js2-mode-show-strict-warnings nil
-        js2-pretty-multiline-declarations t)
+        js2-pretty-multiline-declarations t
+        js2-global-externs (list "window" "module" "require" "buster" "sinon" "assert" "refute" "setTimeout" "clearTimeout" "setInterval" "clearInterval" "location" "__dirname" "console" "JSON" "jQuery" "$"))
   :diminish js2-mode "JS")
 
 (use-package tern
