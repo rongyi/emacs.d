@@ -61,7 +61,7 @@
 
 *** TODO Write a note about Emacs & Lintcode
 
-*** TODO emacs一些库函数源码阅读 [1/3]
+*** TODO emacs一些库函数源码阅读 [3/3]
 **** DONE s (string库)
-**** TODO f (file lib)
-**** TODO dash (functional lib)
+**** DONE f (file lib)
+**** DONE dash (functional lib)
