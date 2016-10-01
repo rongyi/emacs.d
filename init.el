@@ -622,6 +622,8 @@ mouse-3: go to end")))
   :init (beacon-mode 1)
   :config
   (setq beacon-color "red")
+  ;; In shell, we always near the point, so hint is not needed
+  (add-to-list 'beacon-dont-blink-major-modes 'shell-mode)
   :diminish beacon-mode)
 
 
