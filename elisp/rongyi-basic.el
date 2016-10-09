@@ -373,6 +373,7 @@
 (bind-key "C-c e ," 'ry/newline-after-comma)
 (bind-key "C-c e d" 'insert-date)
 (bind-key "C-c e i" 'insert-include-guard)
+(bind-key "C-c e l" 'lint-code)
 
 ;; put window command together
 (global-set-key (kbd "C-c w t") 'ry/toggle-transparency)
