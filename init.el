@@ -1163,6 +1163,11 @@ mouse-3: go to end")))
          ("C-c m n" . bm-next)
          ("C-c m p" . bm-previous)))
 
+(use-package tramp
+  :ensure t
+  :config
+  (setq tramp-default-method "ssh"))
+
 (use-package goto-chg
   :ensure t)
 
