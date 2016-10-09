@@ -44,7 +44,8 @@
 
 ;; RongYi settings
 (require 'rongyi-defun)
-;; in the begnning, all function are defined in rongyi-defun, it's time to make some change
+;; in the begnning, all function are defined in rongyi-defun,
+;; editing is the first separated 'module'
 (require 'rongyi-editing)
 
 (require 'rongyi-basic)
@@ -622,7 +623,7 @@ mouse-3: go to end")))
   :init (beacon-mode 1)
   :config
   (setq beacon-color "red")
-  ;; In shell, we always near the point, so hint is not needed
+  ;; in shell, we always focus at the point
   (add-to-list 'beacon-dont-blink-major-modes 'shell-mode)
   :diminish beacon-mode)
 
