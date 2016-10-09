@@ -1,4 +1,5 @@
 * 关于
-  使用Vim差不多十年了，只是顺着DRY原则来学习下世界上另外一个编辑器，越发觉得Emacs强于Vim的地方，这个repo既是个人配置Emacs的地方也是学习记录的地方。
+  使用Vim差不多十年了，只是顺着DRY原则来学习下世界上另外一个编辑器(The dark size)，越发觉得Emacs强于Vim的地方，这个repo既是个人配置Emacs的地方也是学习记录的地方。
 
-  个人Emacs还处于迭代期。
+  目前此repo状态已经比较稳定。主要配置了C/C++/Python/Go/JS编程环境
+
