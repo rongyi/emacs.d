@@ -873,20 +873,29 @@ mouse-3: go to end")))
   (dumb-jump-mode)
   :diminish dumb-jump-mode)
 
-;; themes
+;; Are your a theme slut?
 ;; (use-package color-theme-sanityinc-solarized
 ;;   :ensure t
 ;;   :config
-;;   (load-theme 'sanityinc-solarized-dark t))
+;;   (load-theme 'sanityinc-solarized-dark t)
+;;   (load-theme 'sanityinc-solarized-light t))
+
 ;; (use-package color-theme-sanityinc-tomorrow
 ;;   :ensure t
 ;;   :config
 ;;   (load-theme 'sanityinc-tomorrow-eighties t))
-(use-package moe-theme
+
+;; (use-package moe-theme
+;;   :ensure t
+;;   :config
+;;   (moe-dark))
+
+;; (load-theme 'leuven t)
+
+(use-package dracula-theme
   :ensure t
   :config
-  (moe-dark))
-;; (load-theme 'leuven t)
+  (load-theme 'dracula t))
 
 (use-package highlight-symbol
   :ensure t

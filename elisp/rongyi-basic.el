@@ -134,7 +134,7 @@
 
 ;; font
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Standard-Faces.html
-;; some other font: hasklig/Sourcecode pro
+;; some other font: hasklig/Sourcecode pro/Monoid
 (set-frame-font "PragmataPro 10")
 (add-to-list 'default-frame-alist '(font . "PragmataPro 10"))
 (add-to-list 'default-frame-alist '(width . 110))
