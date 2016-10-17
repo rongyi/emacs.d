@@ -1180,6 +1180,15 @@ mouse-3: go to end")))
 (use-package goto-chg
   :ensure t)
 
+(use-package visual-fill-column
+  :ensure nil
+  :bind (("C-c w c" . visual-fill-column-mode))
+  :defer t
+  :config
+  (setq-default visual-fill-column-center-text t
+                visual-fill-column-width 150
+                visual-fill-column-fringes-outside-margins nil))
+
 ;; when everything is set, we make our evil leader bindings
 (use-package general
   :ensure t
