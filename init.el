@@ -516,7 +516,7 @@ auto-indent."
   :ensure t
   :config
   (yas-global-mode 1)
-  (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-expand)
+  (define-key yas-minor-mode-map (kbd "C-M-,") 'yas-expand)
   (add-to-list 'yas-snippet-dirs (ry/emacs-subdirectory "snippets"))
   :diminish (yas-minor-mode . " Ⓨ"))
 
