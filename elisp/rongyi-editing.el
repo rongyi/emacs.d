@@ -207,7 +207,7 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
 (defun ry/replace-next-underscore-with-camel (arg)
   (interactive "p")
   (if (> arg 0)
- (setq arg (1+ arg))) ; 1-based index to get eternal loop with 0
+      (setq arg (1+ arg))) ; 1-based index to get eternal loop with 0
   (let ((case-fold-search nil))
     (while (not (= arg 1))
       (search-forward-regexp "\\b_[a-z]")
@@ -229,6 +229,14 @@ me the line is too long"
   (forward-char -1)
   (delete-char 1)
   (newline-and-indent))
+
+(defun ry/delete-company-useless-template ()
+  "delete company function template"
+  (interactive)
+  (evil-ex-substitute (line-beginning-position)
+                      (line-end-position)
+                      '(",  " t t)      ; '(re ignorecase wholeline) see: evil-ex-make-pattern
+                      ""))
 
 (defun lorem ()
   "Insert a lorem ipsum."

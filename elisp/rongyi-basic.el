@@ -374,6 +374,7 @@
 (bind-key "C-c e d" 'insert-date)
 (bind-key "C-c e i" 'insert-include-guard)
 (bind-key "C-c e l" 'lint-code)
+(bind-key "C-c e t" 'ry/delete-company-useless-template)
 
 ;; put window command together
 (global-set-key (kbd "C-c w t") 'ry/toggle-transparency)

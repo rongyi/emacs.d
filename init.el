@@ -387,8 +387,10 @@ auto-indent."
   (define-key company-active-map (kbd "C-g") 'company-abort)
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
-  (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
-  (define-key company-active-map [tab] 'company-complete-common-or-cycle)
+  ;; (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
+  ;; (define-key company-active-map [tab] 'company-complete-common-or-cycle)
+  (define-key company-active-map (kbd "TAB") 'company-complete-selection)
+  (define-key company-active-map [tab] 'company-complete-selection)
   (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
   (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
 
@@ -534,7 +536,8 @@ auto-indent."
   (set-variable 'ycmd-server-command '("python" "/usr/local/ycmd/ycmd"))
   (set-variable 'ycmd-global-config (expand-file-name ".emacs.d/ycm_extra_conf.py" (getenv "HOME")))
   ;; make it larger
-  (setq ycmd-max-num-identifier-candidates 30)
+  (setq ycmd-max-num-identifier-candidates 30
+        ycmd-extra-conf-handler 'load)
   (require 'ycmd-eldoc)
   (add-hook 'ycmd-mode-hook 'ycmd-eldoc-setup)
   )
