@@ -423,9 +423,10 @@ auto-indent."
   :diminish anaconda-mode)
 
 (use-package company-anaconda
-  :ensure t
+  :ensure nil
   :config
-  (add-to-list 'company-backends 'company-anaconda))
+  ;; (add-to-list 'company-backends 'company-anaconda)
+  )
 
 ;; js
 (use-package js2-mode
@@ -531,8 +532,8 @@ auto-indent."
   :config
   ;; cancel argument
 
-  (add-hook 'c++-mode-hook 'ycmd-mode)
-  (add-hook 'c-mode-hook 'ycmd-mode)
+  (dolist (hook '(c-mode-hook c++-mode-hook python-mode-hook))
+    (add-hook hook #'ycmd-mode))
   (set-variable 'ycmd-server-command '("python" "/usr/local/ycmd/ycmd"))
   (set-variable 'ycmd-global-config (expand-file-name ".emacs.d/ycm_extra_conf.py" (getenv "HOME")))
   ;; make it larger
