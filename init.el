@@ -579,6 +579,7 @@ auto-indent."
       (message "current file builded.")))
 
   (define-key go-mode-map (kbd "C-c C-c") 'ry/go-test)
+  (define-key go-mode-map (kbd "M-.") 'godef-jump)
   (setq godoc-at-point-function 'godoc-gogetdoc))
 
 (use-package go-eldoc
@@ -1199,6 +1200,11 @@ mouse-3: go to end")))
   (setq-default visual-fill-column-center-text t
                 visual-fill-column-width 150
                 visual-fill-column-fringes-outside-margins nil))
+
+(use-package etags
+  :ensure t
+  :config
+  (global-set-key (kbd "M-*") 'pop-tag-mark))
 
 ;; when everything is set, we make our evil leader bindings
 (use-package general
