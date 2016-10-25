@@ -36,7 +36,7 @@
 ;; auto indent
 (define-key global-map (kbd "RET") 'newline-and-indent)
 (setq ad-redefinition-action 'accept)
-;; no tab using 2spaces for tab
+;; no tab using 2spaces for tab, go mode will change this for itself
 (setq-default
  indent-tabs-mode nil
  tab-width 2

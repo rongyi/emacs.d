@@ -90,7 +90,7 @@
   (define-key evil-insert-state-map (kbd "C-w") 'evil-delete)
   (define-key evil-visual-state-map (kbd "C-w") 'evil-delete)
   (define-key evil-insert-state-map (kbd "C-o") 'ry/open-line-above)
-  ;; we dont want to learn emacs keymap for jump
+  ;; we dont want to learn emacs keymap for jumping around
   (define-key evil-normal-state-map (kbd "C-]") 'helm-gtags-dwim)
   (define-key evil-normal-state-map (kbd "C-t") 'helm-gtags-pop-stack)
   ;; pain in the ass
@@ -560,6 +560,12 @@ auto-indent."
   :config
   ;; (add-hook 'before-save-hook 'gofmt-before-save)
   (define-key go-mode-map (kbd "C-c C-f") 'gofmt)
+  (add-hook 'go-mode-hook (lambda ()
+                            (setq tab-width 4 ; C/C++ is 2, prefer go-fmt favor
+                                  indent-tabs-mode t)
+                            ;; tabs are fine in go mode
+                            (setq ethan-wspace-errors
+                                  (remove 'tabs ethan-wspace-errors))))
   (defun ry/go-test(prefix)
     "a shortcut to run go demo when learning golang"
     (interactive "p")
@@ -872,6 +878,7 @@ mouse-3: go to end")))
   ;; Vim habit
   (define-key dumb-jump-mode-map (kbd "C-M-g") nil)
   (define-key dumb-jump-mode-map (kbd "C-M-p") nil)
+  ;; similar to C-] C-[
   (global-set-key (kbd "C-}") 'dumb-jump-go)
   (global-set-key (kbd "C-{") 'dumb-jump-back)
   (dumb-jump-mode)
@@ -1199,7 +1206,10 @@ mouse-3: go to end")))
   :config
   (general-evil-setup)
   (general-nvmap :prefix ","
-                 "," 'goto-last-change               ; normaly its ``m' , this is a workaround for my new keyboard
+                 "," (lambda ()  ; normaly its ``m' , this is a workaround for my new keyboard
+                       (interactive)
+                       (goto-last-change)
+                       (goto-last-change))
                  "l" 'linum-mode
                  "w" 'save-buffer
                  "q" 'kill-this-buffer
