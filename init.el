@@ -558,14 +558,6 @@ auto-indent."
 (use-package go-mode
   :ensure t
   :config
-  ;; (add-hook 'before-save-hook 'gofmt-before-save)
-  (define-key go-mode-map (kbd "C-c C-f") 'gofmt)
-  (add-hook 'go-mode-hook (lambda ()
-                            (setq tab-width 4 ; C/C++ is 2, prefer go-fmt favor
-                                  indent-tabs-mode t)
-                            ;; tabs are fine in go mode
-                            (setq ethan-wspace-errors
-                                  (remove 'tabs ethan-wspace-errors))))
   (defun ry/go-test(prefix)
     "a shortcut to run go demo when learning golang"
     (interactive "p")
@@ -577,21 +569,19 @@ auto-indent."
       (when (> prefix 1)
         (other-window -1))
       (message "current file builded.")))
+  (defun ry/go-tab-less-evil ()
 
+    (setq tab-width 4 ; not the same with C/C++, prefer go-fmt favor
+          indent-tabs-mode t)
+    ;; tabs are fine in go mode
+    (setq ethan-wspace-errors
+          (remove 'tabs ethan-wspace-errors)))
+  ;; (add-hook 'before-save-hook 'gofmt-before-save)
+  (add-hook 'go-mode-hook #'ry/go-tab-less-evil)
+
+  (define-key go-mode-map (kbd "C-c C-f") 'gofmt)
   (define-key go-mode-map (kbd "C-c C-c") 'ry/go-test)
   (define-key go-mode-map (kbd "M-.") 'godef-jump)
-  (setq godoc-at-point-function 'godoc-gogetdoc))
-
-(use-package go-eldoc
-  :ensure t
-  :config
-  (add-hook 'go-mode-hook 'go-eldoc-setup))
-
-;; go auto complete
-(use-package company-go
-  :ensure t
-  :config
-  (add-to-list 'company-backends 'company-go)
   ;; the same key as show python function doc in anaconda mode
   (define-key go-mode-map (kbd "M-?") 'godoc-at-point)
   (define-key go-mode-map (kbd "M-=") (lambda ()
@@ -599,7 +589,20 @@ auto-indent."
                                         (insert ":=")))
   (define-key go-mode-map (kbd "M-<") (lambda ()
                                         (interactive)
-                                        (insert "<-"))))
+                                        (insert "<-")))
+  (setq godoc-at-point-function 'godoc-gogetdoc))
+
+(use-package go-eldoc
+  :ensure t
+  :config
+  (add-hook 'go-mode-hook 'go-eldoc-setup))
+
+;; go auto complete, give ycmd a try
+(use-package company-go
+  :ensure nil
+  :config
+  ;; (add-to-list 'company-backends 'company-go)
+  )
 ;; goline
 (use-package golint
   :ensure t)
@@ -1212,10 +1215,7 @@ mouse-3: go to end")))
   :config
   (general-evil-setup)
   (general-nvmap :prefix ","
-                 "," (lambda ()  ; normaly its ``m' , this is a workaround for my new keyboard
-                       (interactive)
-                       (goto-last-change)
-                       (goto-last-change))
+                 "," 'goto-last-change
                  "l" 'linum-mode
                  "w" 'save-buffer
                  "q" 'kill-this-buffer
