@@ -532,7 +532,7 @@ auto-indent."
   :config
   ;; cancel argument
 
-  (dolist (hook '(c-mode-hook c++-mode-hook python-mode-hook))
+  (dolist (hook '(c-mode-hook c++-mode-hook python-mode-hook go-mode-hook))
     (add-hook hook #'ycmd-mode))
   (set-variable 'ycmd-server-command '("python" "/usr/local/ycmd/ycmd"))
   (set-variable 'ycmd-global-config (expand-file-name ".emacs.d/ycm_extra_conf.py" (getenv "HOME")))
@@ -540,8 +540,7 @@ auto-indent."
   (setq ycmd-max-num-identifier-candidates 30
         ycmd-extra-conf-handler 'load)
   (require 'ycmd-eldoc)
-  (add-hook 'ycmd-mode-hook 'ycmd-eldoc-setup)
-  )
+  (add-hook 'ycmd-mode-hook 'ycmd-eldoc-setup))
 
 (use-package company-ycmd
   :ensure t
