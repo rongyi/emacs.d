@@ -91,8 +91,8 @@
   (define-key evil-visual-state-map (kbd "C-w") 'evil-delete)
   (define-key evil-insert-state-map (kbd "C-o") 'ry/open-line-above)
   ;; we dont want to learn emacs keymap for jumping around
-  (define-key evil-normal-state-map (kbd "C-]") 'helm-gtags-dwim)
-  (define-key evil-normal-state-map (kbd "C-t") 'helm-gtags-pop-stack)
+  (define-key evil-normal-state-map (kbd "C-]") 'dumb-jump-go)
+  (define-key evil-normal-state-map (kbd "C-t") 'dumb-jump-back)
   ;; pain in the ass
   (define-key evil-normal-state-map (kbd "K") nil)
   (define-key evil-normal-state-map (kbd "/") 'helm-swoop)
@@ -556,6 +556,7 @@ auto-indent."
 ;; golang config
 (use-package go-mode
   :ensure t
+  :after flycheck
   :config
   (defun ry/go-test(prefix)
     "a shortcut to run go demo when learning golang"
@@ -569,12 +570,12 @@ auto-indent."
         (other-window -1))
       (message "current file builded.")))
   (defun ry/go-tab-less-evil ()
-
     (setq tab-width 4 ; not the same with C/C++, prefer go-fmt favor
           indent-tabs-mode t)
     ;; tabs are fine in go mode
     (setq ethan-wspace-errors
-          (remove 'tabs ethan-wspace-errors)))
+          (remove 'tabs ethan-wspace-errors))
+    (flycheck-disable-checker 'go-vet))
   ;; (add-hook 'before-save-hook 'gofmt-before-save)
   (add-hook 'go-mode-hook #'ry/go-tab-less-evil)
 
@@ -598,7 +599,7 @@ auto-indent."
 
 ;; go auto complete, give ycmd a try
 (use-package company-go
-  :ensure nil
+  :ensure t
   :config
   ;; (add-to-list 'company-backends 'company-go)
   )
@@ -888,11 +889,12 @@ mouse-3: go to end")))
   :diminish dumb-jump-mode)
 
 ;; Are your a theme slut?
-;; (use-package color-theme-sanityinc-solarized
-;;   :ensure t
-;;   :config
-;;   (load-theme 'sanityinc-solarized-dark t)
-;;   (load-theme 'sanityinc-solarized-light t))
+(use-package color-theme-sanityinc-solarized
+  :ensure t
+  :config
+  (load-theme 'sanityinc-solarized-dark t)
+  ;; (load-theme 'sanityinc-solarized-light t)
+  )
 
 ;; (use-package color-theme-sanityinc-tomorrow
 ;;   :ensure t
@@ -906,10 +908,10 @@ mouse-3: go to end")))
 
 ;; (load-theme 'leuven t)
 
-(use-package dracula-theme
-  :ensure t
-  :config
-  (load-theme 'dracula t))
+;; (use-package dracula-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'dracula t))
 
 (use-package highlight-symbol
   :ensure t
