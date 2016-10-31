@@ -574,8 +574,7 @@ auto-indent."
           indent-tabs-mode t)
     ;; tabs are fine in go mode
     (setq ethan-wspace-errors
-          (remove 'tabs ethan-wspace-errors))
-    (flycheck-disable-checker 'go-vet))
+          (remove 'tabs ethan-wspace-errors)))
   ;; (add-hook 'before-save-hook 'gofmt-before-save)
   (add-hook 'go-mode-hook #'ry/go-tab-less-evil)
 
@@ -889,12 +888,12 @@ mouse-3: go to end")))
   :diminish dumb-jump-mode)
 
 ;; Are your a theme slut?
-(use-package color-theme-sanityinc-solarized
-  :ensure t
-  :config
-  (load-theme 'sanityinc-solarized-dark t)
-  ;; (load-theme 'sanityinc-solarized-light t)
-  )
+;; (use-package color-theme-sanityinc-solarized
+;;   :ensure t
+;;   :config
+;;   (load-theme 'sanityinc-solarized-dark t)
+;;   (load-theme 'sanityinc-solarized-light t)
+;;   )
 
 ;; (use-package color-theme-sanityinc-tomorrow
 ;;   :ensure t
@@ -906,7 +905,7 @@ mouse-3: go to end")))
 ;;   :config
 ;;   (moe-dark))
 
-;; (load-theme 'leuven t)
+(load-theme 'leuven t)
 
 ;; (use-package dracula-theme
 ;;   :ensure t
@@ -1209,6 +1208,8 @@ mouse-3: go to end")))
   :ensure t
   :config
   (global-set-key (kbd "M-*") 'pop-tag-mark))
+(use-package protobuf-mode
+  :ensure t)
 
 ;; when everything is set, we make our evil leader bindings
 (use-package general
