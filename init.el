@@ -201,7 +201,7 @@
         projectile-completion-system 'ido
         projectile-indexing-method 'native ; force the use of native indexing in operating systems other than Windows
         projectile-find-dir-includes-top-level t
-        projectile-globally-ignored-file-suffixes '(".o" ".lo" ".Plo"))
+        projectile-globally-ignored-file-suffixes '(".o" ".lo" ".a" ".pyc"))
   :diminish projectile-mode)
 
 ;; magit
