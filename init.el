@@ -566,8 +566,10 @@ auto-indent."
       (visit-term-buffer)
       (insert (format "cd %s && go build %s" path file))
       (comint-send-input)
-      (when (> prefix 1)
-        (other-window -1))
+      (cond
+       ((> prefix 1) (other-window -1))
+       (t (insert (format "./%s" output))
+          (comint-send-input)))
       (message "current file builded.")))
   (defun ry/go-tab-less-evil ()
     (setq tab-width 4 ; not the same with C/C++, prefer go-fmt favor
@@ -905,12 +907,12 @@ mouse-3: go to end")))
 ;;   :config
 ;;   (moe-dark))
 
-(load-theme 'leuven t)
+;; (load-theme 'leuven t)
 
-;; (use-package dracula-theme
-;;   :ensure t
-;;   :config
-;;   (load-theme 'dracula t))
+(use-package dracula-theme
+  :ensure t
+  :config
+  (load-theme 'dracula t))
 
 (use-package highlight-symbol
   :ensure t
