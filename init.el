@@ -214,6 +214,13 @@
     (split-window-sensibly (selected-window))
     (find-file (expand-file-name ".gitignore" (magit-toplevel))))
 
+  (defun ry/magit-cursor-fix ()
+    (beginning-of-buffer)
+    (when (looking-at "#")
+      (forward-line 2)))
+
+  (add-hook 'git-commit-mode-hook 'ry/magit-cursor-fix)
+
   (global-set-key (kbd "<f2>") 'magit-status)
   (global-set-key (kbd "C-M-g") 'magit-status)
   (setq magit-commit-arguments '("--verbose")
@@ -445,7 +452,9 @@ auto-indent."
         js2-mode-show-parse-errors nil
         js2-mode-show-strict-warnings nil
         js2-pretty-multiline-declarations t
-        js2-global-externs (list "window" "module" "require" "buster" "sinon" "assert" "refute" "setTimeout" "clearTimeout" "setInterval" "clearInterval" "location" "__dirname" "console" "JSON" "jQuery" "$"))
+        js2-global-externs (list "window" "module" "require" "buster" "sinon" "assert" "refute" "setTimeout" "clearTimeout" "setInterval" "clearInterval" "location" "__dirname" "console" "JSON" "jQuery" "$")
+        js2-idle-timer-delay 0.1
+        js2-strict-trailing-comma-warning t)
   :diminish js2-mode "JS")
 
 (use-package tern
@@ -1219,6 +1228,11 @@ mouse-3: go to end")))
   :ensure t
   :defer t
   :bind (("C-c e j" . json-reformat-region)))
+
+;; Highlight Escape Sequences
+(use-package highlight-escape-sequences
+  :ensure t
+  :diminish hes-mode)
 
 ;; when everything is set, we make our evil leader bindings
 (use-package general

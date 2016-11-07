@@ -93,6 +93,10 @@
 ;; show column numbers in modline
 (setq column-number-mode t)
 
+;; Save minibuffer history
+(savehist-mode 1)
+(setq history-length 1000)
+
 ;; use ibuffer for list buffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
@@ -246,8 +250,6 @@
 (setq gc-cons-threshold 20000000)
 (flx-ido-mode 1)
 
-
-
 ;; eldoc-mode
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
@@ -303,7 +305,6 @@
 
 ;; switch buffer per window
 (global-set-key (kbd "C-M-l") 'ry/switch-to-buffer-per-window)
-
 
 (global-set-key [remap move-beginning-of-line] 'smarter-move-beginning-of-line)
 
