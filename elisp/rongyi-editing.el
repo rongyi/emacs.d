@@ -278,5 +278,61 @@ me the line is too long"
     (setq deactivate-mark nil)
     (exchange-point-and-mark)))
 
+;; from magnars
+(defun ry/duplicate-current-line(&optional num)
+  "Duplicate the current line NUM times."
+  (interactive "p")
+  (save-excursion
+    (when (eq (point-at-eol) (point-max))
+      (goto-char (point-max))
+      (newline)
+      (forward-char -1))
+    (ry/duplicate-region num (point-at-bol) (1+ (point-at-eol)))))
+
+(defun ry/duplicate-region (&optional num start end)
+  "Duplicate the region bounded by START and END NUM times."
+  (interactive "p")
+  (save-excursion
+    (let* ((start (or start (region-beginning)))
+           (end (or end (region-end)))
+           (region (buffer-substring start end)))
+      (goto-char end)
+      (dotimes (i num)
+        (insert region)))))
+
+(defun ry/duplicate-current-line-or-region (arg)
+  "Duplicates the current line or region ARG times."
+  (interactive "p")
+  (if (region-active-p)
+      (let ((beg (region-beginning))
+            (end (region-end)))
+        (ry/duplicate-region arg beg end))
+    (ry/duplicate-current-line arg)))
+
+(defun ry/current-paren-count ()
+  (interactive)
+  (car (syntax-ppss)))
+
+(defun ry/point-is-in-paren-p ()
+  (> (current-paren-count) 0))
+
+(defun ry/move-point-forward-out-of-paren ()
+  (interactive)
+  (while (point-is-in-paren-p) (forward-char)))
+
+(defun ry/move-point-backward-out-of-paren ()
+  (interactive)
+  (while (point-is-in-paren-p) (backward-char)))
+
+(defun ry/strip-paren ()
+  "Strip paren, (argument) ==> argument"
+  (interactive)
+  (if (point-is-in-paren-p)
+      (save-excursion
+        (move-point-forward-out-of-paren)
+        (backward-delete-char 1)
+        (move-point-backward-out-of-paren)
+        (delete-char 1))
+    (error "Point isn't in paren")))
 
 (provide 'rongyi-editing)
