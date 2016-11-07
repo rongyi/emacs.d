@@ -562,7 +562,8 @@ auto-indent."
     "a shortcut to run go demo when learning golang"
     (interactive "p")
     (let* ((file (buffer-file-name))
-           (path (file-name-directory file)))
+           (path (file-name-directory file))
+           (output (file-name-nondirectory  (file-name-sans-extension file))))
       (visit-term-buffer)
       (insert (format "cd %s && go build %s" path file))
       (comint-send-input)
@@ -907,12 +908,12 @@ mouse-3: go to end")))
 ;;   :config
 ;;   (moe-dark))
 
-;; (load-theme 'leuven t)
+(load-theme 'leuven t)
 
-(use-package dracula-theme
-  :ensure t
-  :config
-  (load-theme 'dracula t))
+;; (use-package dracula-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'dracula t))
 
 (use-package highlight-symbol
   :ensure t
@@ -1210,8 +1211,14 @@ mouse-3: go to end")))
   :ensure t
   :config
   (global-set-key (kbd "M-*") 'pop-tag-mark))
+
 (use-package protobuf-mode
   :ensure t)
+
+(use-package json-reformat              ; Reformat JSON
+  :ensure t
+  :defer t
+  :bind (("C-c e j" . json-reformat-region)))
 
 ;; when everything is set, we make our evil leader bindings
 (use-package general

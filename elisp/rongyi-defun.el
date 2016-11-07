@@ -262,7 +262,10 @@ after visit also cd to the current buffer's dir"
 (defun ry/copy-whole-buffer-to-clipboard ()
   "Copy entire buffer to clipboard"
   (interactive)
-  (clipboard-kill-ring-save (point-min) (point-max)))
+  (if (region-active-p)
+      (clipboard-kill-ring-save (region-beginning)
+                                (region-end))
+    (clipboard-kill-ring-save (point-min) (point-max))))
 
 (defun ry/copy-clipboard-to-whole-buffer ()
   "Copy clipboard and replace buffer"
