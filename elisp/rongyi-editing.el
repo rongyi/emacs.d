@@ -233,10 +233,15 @@ me the line is too long"
 (defun ry/delete-company-useless-template ()
   "delete company function template"
   (interactive)
-  (evil-ex-substitute (line-beginning-position)
-                      (line-end-position)
-                      '(",  " t t)      ; '(re ignorecase wholeline) see: evil-ex-make-pattern
-                      ""))
+  (let ((start (make-marker))
+        (end (make-marker)))
+    (set-marker start (line-beginning-position))
+    (set-marker end (line-end-position))
+    (replace-string ", " "" nil start end)))
+  ;; (evil-ex-substitute (line-beginning-position)
+  ;;                     (line-end-position)
+  ;;                     '(",  " t t)      ; '(re ignorecase wholeline) see: evil-ex-make-pattern
+  ;;                     ""))
 
 (defun lorem ()
   "Insert a lorem ipsum."
