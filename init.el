@@ -62,12 +62,12 @@
   (setq evil-want-C-i-jump nil)
   (evil-map insert "M-." 'insert-pointer-access)
   (evil-map insert "C-c" '(lambda ()
-                             (interactive)
-                             (save-excursion
-                               (evil-normal-state)
-                               (when (fboundp 'company-abort)
-                                 (company-abort))
-                               )))
+                            (interactive)
+                            (save-excursion
+                              (evil-normal-state)
+                              (when (fboundp 'company-abort)
+                                (company-abort))
+                              )))
   (evil-map visual "C-c" 'evil-normal-state)
   (evil-map normal "C-e" 'evil-end-of-line)
   (evil-map insert "C-e" 'evil-end-of-line)
@@ -150,6 +150,30 @@
   (require 'helm-misc)
   (require 'helm-locate)
 
+  ;; from https://www.reddit.com/r/emacs/comments/2z7nbv/lean_helm_window/
+  (defvar helm-source-header-default-background (face-attribute 'helm-source-header :background))
+  (defvar helm-source-header-default-foreground (face-attribute 'helm-source-header :foreground))
+  (defvar helm-source-header-default-box (face-attribute 'helm-source-header :box))
+  (defvar helm-source-header-default-height (face-attribute 'helm-source-header :height) )
+
+  (defun helm-toggle-header-line ()
+    "Hide the `helm' header is there is only one source."
+    (when dotspacemacs-helm-no-header
+      (if (> (length helm-sources) 1)
+          (set-face-attribute 'helm-source-header
+                              nil
+                              :foreground helm-source-header-default-foreground
+                              :background helm-source-header-default-background
+                              :box helm-source-header-default-box
+                              :height helm-source-header-default-height)
+        (set-face-attribute 'helm-source-header
+                            nil
+                            :foreground (face-attribute 'helm-selection :background)
+                            :background (face-attribute 'helm-selection :background)
+                            :box nil
+                            :height 0.1))))
+  (add-hook 'helm-before-initialize-hook 'helm-toggle-header-line)
+
   (setq helm-quick-update t)
   (setq helm-bookmark-show-location t)
 
@@ -172,6 +196,11 @@
   (setq helm-adaptive-history-file (expand-file-name
                                     "helm-adapative-history"
                                     user-emacs-directory))
+
+  ;; helm navidation on hjkl
+  (define-key helm-map (kbd "C-j") 'helm-next-line)
+  (define-key helm-map (kbd "C-k") 'helm-previous-line)
+
   :bind (("C-x f" . helm-for-files)))
 
 (use-package helm-ag
