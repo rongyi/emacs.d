@@ -383,4 +383,11 @@ me the line is too long"
   (clipboard-yank)
   (deactivate-mark))
 
+(defun ry/sort-lines ()
+  "Sort lines in region or current buffer"
+  (interactive)
+  (let ((beg (if (region-active-p) (region-beginning) (point-min)))
+        (end (if (region-active-p) (region-end) (point-max))))
+    (sort-lines nil beg end)))
+
 (provide 'rongyi-editing)

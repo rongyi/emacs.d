@@ -123,7 +123,6 @@ after visit also cd to the current buffer's dir"
   (interactive)
   (switch-to-buffer "*scratch*"))
 
-
 (defun ry/find-file-as-root ()
   "Edit a file as root"
   (interactive)
@@ -264,12 +263,6 @@ after visit also cd to the current buffer's dir"
   (split-window-horizontally)
   (other-window 1))
 
-(defun ry/sort-lines ()
-  "Sort lines in region or current buffer"
-  (interactive)
-  (let ((beg (if (region-active-p) (region-beginning) (point-min)))
-        (end (if (region-active-p) (region-end) (point-max))))
-    (sort-lines nil beg end)))
 
 
 (defvar user-home-directory (concat (expand-file-name "~") "/"))
