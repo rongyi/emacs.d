@@ -4,6 +4,14 @@
 (use-package s)
 (use-package dash)
 
+;; shorthand for interactive lambdas
+(defmacro λ (&rest body)
+  `(lambda ()
+     (interactive)
+     ,@body))
+
+(global-set-key (kbd "s-l") (λ (insert "\u03bb")))
+
 (defun ry/exec (command)
   "execute a shell command and return its output as a string"
   (s-trim (shell-command-to-string command)))
@@ -39,8 +47,6 @@ Use use-package instead, this is a very first emacs function I wrote"
   (switch-to-buffer
    (if (<= arg 1) (other-buffer (current-buffer))
      (nth (1+ arg) (buffer-list)))))
-
-
 
 ;; http://www.howardism.org/Technical/Emacs/eshell-fun.html
 (defun eshell-here ()

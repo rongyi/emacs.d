@@ -333,12 +333,12 @@
 
 ;; but disable electric-pair-mode in minibuffer
 ;; http://emacs.stackexchange.com/questions/5981/how-to-make-electric-pair-mode-buffer-local/5990#5990
-(defvar ry-electic-pair-modes '(prog-mode org-mode text-mode))
+(defvar ry/electic-pair-modes '(prog-mode org-mode text-mode))
 
-(defun ry-inhibit-electric-pair-mode (char)
-  (not (member major-mode ry-electic-pair-modes)))
+(defun ry/inhibit-electric-pair-mode (char)
+  (not (member major-mode ry/electic-pair-modes)))
 
-(setq electric-pair-inhibit-predicate #'ry-inhibit-electric-pair-mode)
+(setq electric-pair-inhibit-predicate #'ry/inhibit-electric-pair-mode)
 
 ;; take whatever we want to fit the 'combo'
 (global-set-key [(control return)] 'newline-for-code)

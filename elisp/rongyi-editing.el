@@ -336,4 +336,18 @@ me the line is too long"
         (delete-char 1))
     (error "Point isn't in paren")))
 
+(defun ry/kill-and-indent-line ()
+  "Kill the entire current line and reposition point at indentation, just like Vim's S command"
+  (interactive)
+  (back-to-indentation)
+  (kill-line))
+
+(defun ry/comment-kill-all ()
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (comment-kill (save-excursion
+                    (goto-char (point-max))
+                    (line-number-at-pos)))))
+
 (provide 'rongyi-editing)
