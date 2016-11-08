@@ -1290,7 +1290,8 @@ mouse-3: go to end")))
                          (other-window 1)))
                  "i" 'find-user-init-file
                  "r" 'helm-resume
-                 "y" 'ry/copy-whole-buffer-to-clipboard))
+                 "y" 'ry/copy-whole-buffer-to-clipboard
+                 "?" 'helm-descbinds))
 
 ;; diminish more minor mode
 (diminish 'global-auto-revert-mode)
