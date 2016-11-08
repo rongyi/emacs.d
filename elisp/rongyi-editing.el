@@ -238,10 +238,6 @@ me the line is too long"
     (set-marker start (line-beginning-position))
     (set-marker end (line-end-position))
     (replace-string ", " "" nil start end)))
-  ;; (evil-ex-substitute (line-beginning-position)
-  ;;                     (line-end-position)
-  ;;                     '(",  " t t)      ; '(re ignorecase wholeline) see: evil-ex-make-pattern
-  ;;                     ""))
 
 (defun lorem ()
   "Insert a lorem ipsum."
