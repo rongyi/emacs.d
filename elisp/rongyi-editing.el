@@ -356,4 +356,31 @@ me the line is too long"
       (kill-region (region-beginning) (region-end))
     (backward-kill-word 1)))
 
+;; from spacemacs
+(defun current-line ()
+  "Return the line at point as a string."
+  (buffer-substring (line-beginning-position) (line-end-position)))
+
+(defun ry/safe-erase-buffer ()
+  "Prompt before erasing the content of the file."
+  (interactive)
+  (if (y-or-n-p (format "Erase content of buffer %s ? " (current-buffer)))
+      (erase-buffer)))
+
+;; http://stackoverflow.com/a/10216338/4869
+(defun ry/copy-whole-buffer-to-clipboard ()
+  "Copy entire buffer to clipboard"
+  (interactive)
+  (if (region-active-p)
+      (clipboard-kill-ring-save (region-beginning)
+                                (region-end))
+    (clipboard-kill-ring-save (point-min) (point-max))))
+
+(defun ry/copy-clipboard-to-whole-buffer ()
+  "Copy clipboard and replace buffer"
+  (interactive)
+  (delete-region (point-min) (point-max))
+  (clipboard-yank)
+  (deactivate-mark))
+
 (provide 'rongyi-editing)

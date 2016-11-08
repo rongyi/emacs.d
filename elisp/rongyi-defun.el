@@ -264,22 +264,6 @@ after visit also cd to the current buffer's dir"
   (split-window-horizontally)
   (other-window 1))
 
-;; http://stackoverflow.com/a/10216338/4869
-(defun ry/copy-whole-buffer-to-clipboard ()
-  "Copy entire buffer to clipboard"
-  (interactive)
-  (if (region-active-p)
-      (clipboard-kill-ring-save (region-beginning)
-                                (region-end))
-    (clipboard-kill-ring-save (point-min) (point-max))))
-
-(defun ry/copy-clipboard-to-whole-buffer ()
-  "Copy clipboard and replace buffer"
-  (interactive)
-  (delete-region (point-min) (point-max))
-  (clipboard-yank)
-  (deactivate-mark))
-
 (defun ry/sort-lines ()
   "Sort lines in region or current buffer"
   (interactive)
@@ -332,7 +316,8 @@ after visit also cd to the current buffer's dir"
   (save-some-buffers t)
   (mapc 'kill-buffer
         (delq (current-buffer)
-              (remove-if-not 'ry/opened-file-buffer-or-magit-p (buffer-list)))))
+              (remove-if-not 'ry/opened-file-buffer-or-magit-p (buffer-list))))
+  (message "Buffer deleted!"))
 
 (defun save-all ()
   "Saves all dirty buffers without asking for confirmation."
@@ -471,6 +456,15 @@ If SIDE is non-nil only get windows on that side."
   "Switch buffer group by window"
   (interactive)
   (set-window-buffer nil (car (car (window-prev-buffers)))))
+
+;; from spacemacs, just like ours function above
+(defun ry/alternate-buffer ()
+  "Switch back and forth between current and last buffer in the
+current window."
+  (interactive)
+  (if (evil-alternate-buffer)
+      (switch-to-buffer (car (evil-alternate-buffer)))
+    (switch-to-buffer (other-buffer (current-buffer) t))))
 
 (defun ry/buffer-as-string ()
   (buffer-string (region-beginning)
