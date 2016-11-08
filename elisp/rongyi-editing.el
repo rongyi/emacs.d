@@ -350,4 +350,10 @@ me the line is too long"
                     (goto-char (point-max))
                     (line-number-at-pos)))))
 
+(defun ry/kill-region-or-backward-word ()
+  (interactive)
+  (if (region-active-p)
+      (kill-region (region-beginning) (region-end))
+    (backward-kill-word 1)))
+
 (provide 'rongyi-editing)
