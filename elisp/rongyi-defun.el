@@ -472,4 +472,8 @@ If SIDE is non-nil only get windows on that side."
   (interactive)
   (set-window-buffer nil (car (car (window-prev-buffers)))))
 
+(defun ry/buffer-as-string ()
+  (buffer-string (region-beginning)
+                 (region-end)))
+
 (provide 'rongyi-defun)
