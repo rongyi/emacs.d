@@ -374,6 +374,8 @@
 (bind-key "C-c e i" 'insert-include-guard)
 (bind-key "C-c e l" 'lint-code)
 (bind-key "C-c e t" 'ry/delete-company-useless-template)
+(bind-key "C-c e s" 'ry/sudo-edit)
+(bind-key "C-c e S" 'save-all)
 
 ;; put window command together
 (global-set-key (kbd "C-c w t") 'ry/toggle-transparency)

@@ -263,8 +263,6 @@ after visit also cd to the current buffer's dir"
   (split-window-horizontally)
   (other-window 1))
 
-
-
 (defvar user-home-directory (concat (expand-file-name "~") "/"))
 
 (defun ry/shorter-file-name (file-name)
