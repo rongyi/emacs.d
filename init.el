@@ -1020,8 +1020,14 @@ mouse-3: go to end")))
 
 (use-package highlight-parentheses
   :ensure t
+  :init
+  (setq hl-paren-colors '("Springgreen3"
+                          "IndianRed1"
+                          "IndianRed3"
+                          "IndianRed4"))
+  (add-hook 'prog-mode-hook #'highlight-parentheses-mode)
   :config
-  (highlight-parentheses-mode)
+  (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold)
   :diminish highlight-paren-mode)
 
 
