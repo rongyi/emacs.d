@@ -461,4 +461,40 @@ current window."
   (buffer-string (region-beginning)
                  (region-end)))
 
+;; from http://www.emacswiki.org/emacs/WordCount
+(defun ry/count-words-analysis (start end)
+  "Count how many times each word is used in the region.
+ Punctuation is ignored."
+  (interactive "r")
+  (let (words alist_words_compare (formated ""))
+    (save-excursion
+      (goto-char start)
+      (while (re-search-forward "\\w+" end t)
+        (let* ((word (intern (match-string 0)))
+               (cell (assq word words)))
+          (if cell
+              (setcdr cell (1+ (cdr cell)))
+            (setq words (cons (cons word 1) words))))))
+    (defun alist_words_compare (a b)
+      "Compare elements from an associative list of words count.
+Compare them on count first,and in case of tie sort them alphabetically."
+      (let ((a_key (car a))
+            (a_val (cdr a))
+            (b_key (car b))
+            (b_val (cdr b)))
+        (if (eq a_val b_val)
+            (string-lessp a_key b_key)
+          (> a_val b_val))))
+    (setq words (cl-sort words 'alist_words_compare))
+    (while words
+      (let* ((word (pop words))
+             (name (car word))
+             (count (cdr word)))
+        (setq formated (concat formated (format "[%s: %d], " name count)))))
+    (when (interactive-p)
+      (if (> (length formated) 2)
+          (message (substring formated 0 -2))
+        (message "No words.")))
+    words))
+
 (provide 'rongyi-defun)

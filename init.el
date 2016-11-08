@@ -158,20 +158,19 @@
 
   (defun helm-toggle-header-line ()
     "Hide the `helm' header is there is only one source."
-    (when dotspacemacs-helm-no-header
-      (if (> (length helm-sources) 1)
-          (set-face-attribute 'helm-source-header
-                              nil
-                              :foreground helm-source-header-default-foreground
-                              :background helm-source-header-default-background
-                              :box helm-source-header-default-box
-                              :height helm-source-header-default-height)
+    (if (> (length helm-sources) 1)
         (set-face-attribute 'helm-source-header
                             nil
-                            :foreground (face-attribute 'helm-selection :background)
-                            :background (face-attribute 'helm-selection :background)
-                            :box nil
-                            :height 0.1))))
+                            :foreground helm-source-header-default-foreground
+                            :background helm-source-header-default-background
+                            :box helm-source-header-default-box
+                            :height helm-source-header-default-height)
+      (set-face-attribute 'helm-source-header
+                          nil
+                          :foreground (face-attribute 'helm-selection :background)
+                          :background (face-attribute 'helm-selection :background)
+                          :box nil
+                          :height 0.1)))
   (add-hook 'helm-before-initialize-hook 'helm-toggle-header-line)
 
   (setq helm-quick-update t)
@@ -711,7 +710,7 @@ mouse-3: go to end")))
 (use-package golden-ratio               ; Automatically resize windows
   :ensure t
   :init
-  (defun rongyi-toggle-golden-ratio ()
+  (defun ry/toggle-golden-ratio ()
     (interactive)
     (if (bound-and-true-p golden-ratio-mode)
         (progn
@@ -719,7 +718,7 @@ mouse-3: go to end")))
           (balance-windows))
       (golden-ratio-mode)
       (golden-ratio)))
-  :bind (("C-c =" . rongyi-toggle-golden-ratio))
+  :bind (("C-c =" . ry/toggle-golden-ratio))
   :config
   (setq golden-ratio-extra-commands '(windmove-up
                                       windmove-down
@@ -729,7 +728,14 @@ mouse-3: go to end")))
                                       ace-delete-window
                                       ace-select-window
                                       ace-swap-window
-                                      ace-maximize-window)
+                                      ace-maximize-window
+                                      select-window-0
+                                      select-window-1
+                                      select-window-2
+                                      select-window-3
+                                      select-window-4
+                                      select-window-5 ;5 will do
+                                      )
         ;; Exclude a couple of special modes from golden ratio, namely
         ;; Flycheck's error list, calc
         golden-ratio-exclude-modes '(flycheck-error-list-mode
@@ -1261,6 +1267,11 @@ mouse-3: go to end")))
 (use-package highlight-escape-sequences
   :ensure t
   :diminish hes-mode)
+
+(use-package adaptive-wrap
+  :config
+  (progn
+    (add-hook 'visual-line-mode-hook 'adaptive-wrap-prefix-mode)))
 
 ;; when everything is set, we make our evil leader bindings
 (use-package general
