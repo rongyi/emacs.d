@@ -382,6 +382,9 @@ auto-indent."
   ;; and we dont want to change that
   (define-key smartparens-mode-map (kbd "C-S-<left>") 'sp-backward-slurp-sexp)
   (define-key smartparens-mode-map (kbd "C-S-<right>") 'sp-backward-barf-sexp)
+  (setq sp-show-pair-delay 0.2
+        sp-show-pair-from-inside t
+        sp-cancel-autoskip-on-backward-movement nil)
 
   :diminish smartparens-mode)
 
