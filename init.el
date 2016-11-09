@@ -925,7 +925,12 @@ mouse-3: go to end")))
   (if (equal system-type 'darwin)
       (setq inferior-lisp-program "/usr/local/bin/clisp")
     (setq inferior-lisp-program "/usr/bin/clisp"))
-  (slime-setup '(slime-fancy slime-company)))
+  (slime-setup '(slime-fancy slime-company))
+  (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol
+        slime-fuzzy-completion-in-place t
+        slime-enable-evaluate-in-emacs t
+        slime-autodoc-use-multiline-p t
+        slime-auto-start 'always))
 
 ;; ggtags for reading kernel code
 (use-package ggtags
