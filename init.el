@@ -378,10 +378,11 @@ auto-indent."
   (require 'smartparens-config)
   (add-hook 'prog-mode-hook 'smartparens-mode)
   (sp-use-smartparens-bindings)
-  ;; ubuntu's workspace key is <C-M-left> <C-M-right>
+  ;; Ubuntu's workspace moving key is <C-M-left> <C-M-right>
   ;; and we dont want to change that
   (define-key smartparens-mode-map (kbd "C-S-<left>") 'sp-backward-slurp-sexp)
   (define-key smartparens-mode-map (kbd "C-S-<right>") 'sp-backward-barf-sexp)
+
   :diminish smartparens-mode)
 
 ;; company
@@ -445,7 +446,6 @@ auto-indent."
 
 
 ;; python auto complete
-
 (use-package anaconda-mode
   :ensure t
   :config
@@ -462,6 +462,16 @@ auto-indent."
   :config
   ;; (add-to-list 'company-backends 'company-anaconda)
   )
+
+(use-package indent-guide
+  :ensure t
+  :init
+  (add-hook 'python-mode-hook 'indent-guide-mode)
+  (setq indent-guide-delay 0.3)
+  :config
+  ;; we only want this in Python mode
+  (indent-guide-global-mode -1)
+  :diminish indent-guide-mode)
 
 ;; js
 (use-package js2-mode
@@ -1029,7 +1039,7 @@ mouse-3: go to end")))
   (add-hook 'prog-mode-hook #'highlight-parentheses-mode)
   :config
   (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold)
-  :diminish highlight-paren-mode)
+  :diminish highlight-parentheses-mode)
 
 
 (use-package highlight-numbers
