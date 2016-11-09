@@ -359,7 +359,7 @@
 (require 'cl)
 ;; file related
 (global-set-key (kbd "C-c f e") 'ry/recentf-ido-find-file)
-;; use bind-key from here
+
 (bind-key "C-c f w" 'browse-url)
 (bind-key "C-c f d" 'ry/delete-current-buffer-file)
 (bind-key "C-c f m" 'ry/rename-file-and-buffer)
@@ -368,7 +368,7 @@
 (bind-key "C-c f o" 'find-or-create-file-at-point)
 (bind-key "M-\\" 'ry/angry-split)
 
-;; edit part
+;; edit section
 (bind-key "C-c e ," 'ry/newline-after-comma)
 (bind-key "C-c e d" 'insert-date)
 (bind-key "C-c e i" 'insert-include-guard)
@@ -378,19 +378,21 @@
 (bind-key "C-c e S" 'save-all)
 
 ;; put window command together
-(global-set-key (kbd "C-c w t") 'ry/toggle-transparency)
-(global-set-key (kbd "C-c w f") 'toggle-frame-maximized)
-(global-set-key (kbd "C-c w m") 'ry/toggle-maximize-buffer)
-(global-set-key (kbd "C-c w =") 'balance-windows)
-(global-set-key (kbd "C-c w k") 'delete-window)
-(global-set-key (kbd "C-c w \\") 'split-window-right)
-(global-set-key (kbd "C-c w -") 'split-window-below)
+(bind-key "C-c w t" 'ry/toggle-transparency)
+(bind-key "C-c w f" 'toggle-frame-maximized)
+(bind-key "C-c w F" 'toggle-frame-fullscreen)
+(bind-key "C-c w m" 'ry/toggle-maximize-buffer)
+(bind-key "C-c w =" 'balance-windows)
+(bind-key "C-c w k" 'delete-window)
+(bind-key "C-c w \\" 'split-window-right)
+(bind-key "C-c w -" 'split-window-below)
 (bind-key "C-c w d" 'ry/toggle-current-window-dedication)
 (bind-key "C-c w r" 'rotate-windows)
 
 (bind-key "C-M-y" 'visit-term-buffer-with-current-dir)
 (bind-key "C-(" (surround-text-with "("))
 (bind-key "C-\"" (surround-text-with "\""))
+
 (define-key process-menu-mode-map (kbd "C-c k") 'ry/delete-process-at-point)
 
 
