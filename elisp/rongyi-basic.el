@@ -380,6 +380,7 @@
 ;; put window command together
 (bind-key "C-c w t" 'ry/toggle-transparency)
 (bind-key "C-c w f" 'toggle-frame-maximized)
+
 (bind-key "C-c w F" 'toggle-frame-fullscreen)
 (bind-key "C-c w m" 'ry/toggle-maximize-buffer)
 (bind-key "C-c w =" 'balance-windows)

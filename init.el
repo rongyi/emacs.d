@@ -247,6 +247,11 @@
     (beginning-of-buffer)
     (when (looking-at "#")
       (forward-line 2)))
+  ;; from howardabrams, make magit status fullscreen
+  (defadvice magit-status (around magit-fullscreen activate)
+    (window-configuration-to-register :magit-fullscreen)
+    ad-do-it
+    (delete-other-windows))
 
   (add-hook 'git-commit-mode-hook 'ry/magit-cursor-fix)
 
@@ -467,15 +472,17 @@ auto-indent."
   ;; (add-to-list 'company-backends 'company-anaconda)
   )
 
-(use-package indent-guide
-  :ensure t
-  :init
-  (add-hook 'python-mode-hook 'indent-guide-mode)
-  (setq indent-guide-delay 0.3)
-  :config
-  ;; we only want this in Python mode
-  (indent-guide-global-mode -1)
-  :diminish indent-guide-mode)
+;; indent guide have some bugs
+;; (use-package indent-guide
+;;   :ensure nil
+;;   :defer t
+;;   :init
+;;   (add-hook 'python-mode-hook 'indent-guide-mode)
+;;   (setq indent-guide-delay 0.3)
+;;   :config
+;;   ;; we only want this in Python mode
+;;   (indent-guide-global-mode -1)
+;;   :diminish indent-guide-mode)
 
 ;; js
 (use-package js2-mode
