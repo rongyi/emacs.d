@@ -199,6 +199,7 @@
   ;; helm navidation on hjkl
   (define-key helm-map (kbd "C-j") 'helm-next-line)
   (define-key helm-map (kbd "C-k") 'helm-previous-line)
+  (define-key helm-map (kbd "C-q") 'helm-keyboard-quit)
 
   :bind (("C-x f" . helm-for-files)))
 
