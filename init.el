@@ -86,6 +86,7 @@
   (evil-map insert "C-p" 'evil-previous-line)
   (evil-map normal "C-w" 'ry/kill-region-or-backward-word)
   (evil-map insert "C-w" 'ry/kill-region-or-backward-word)
+  (evil-map visual "C-w" 'ry/kill-region-or-backward-word)
   (evil-map insert "C-o" 'ry/open-line-above)
 
   ;; we dont want to learn emacs keymap for jumping around
