@@ -455,15 +455,30 @@ auto-indent."
 
 
 ;; python auto complete
-(use-package anaconda-mode
-  :ensure t
+(use-package python-mode
+  :defer t
+  :ensure nil
   :config
   (add-hook 'python-mode-hook 'anaconda-mode)
   (add-hook 'python-mode-hook 'eldoc-mode)
   (setq
    python-shell-interpreter "python"
    python-shell-interpreter-args "")
-  ;; (define-key python-mode-map (kbd "C-c f") 'ry/format-python)
+
+  (setq-local electric-layout-rules
+              '((?: . (lambda ()
+                        (and (zerop (first (syntax-ppss)))
+                             (python-info-statement-starts-block-p)
+                             'after)))))
+  (when (fboundp #'python-imenu-create-flat-index)
+    (setq-local imenu-create-index-function
+                #'python-imenu-create-flat-index))
+  (add-hook 'post-self-insert-hook
+            #'electric-layout-post-self-insert-function nil 'local)
+  (add-hook 'after-save-hook 'prelude-python-mode-set-encoding nil 'local))
+
+(use-package anaconda-mode
+  :ensure t
   :diminish anaconda-mode)
 
 (use-package company-anaconda
