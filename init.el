@@ -288,8 +288,6 @@
 
 
 ;; flycheck
-(use-package flycheck-pos-tip
-  :ensure t)
 (use-package flycheck
   :ensure t
   :diminish flycheck-mode
@@ -344,6 +342,11 @@
        '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))))
   (setq flycheck-clang-language-standard "c++11"))
 
+(use-package flycheck-pos-tip
+  :ensure t
+  :after flycheck
+  :config
+  (flycheck-pos-tip-mode))
 
 ;; silver searcher
 (use-package ag
@@ -355,7 +358,6 @@
         ag-project-root-function (lambda (d)
                                    (let ((default-directory d))
                                      (projectile-project-root)))))
-
 
 ;; color variable: highlights each source code identifier uniquely based on its name
 (use-package color-identifiers-mode
