@@ -998,12 +998,12 @@ mouse-3: go to end")))
 ;;   :config
 ;;   (moe-dark))
 
-(load-theme 'leuven t)
+;; (load-theme 'leuven t)
 
-;; (use-package dracula-theme
-;;   :ensure t
-;;   :config
-;;   (load-theme 'dracula t))
+(use-package dracula-theme
+  :ensure t
+  :config
+  (load-theme 'dracula t))
 
 (use-package highlight-symbol
   :ensure t

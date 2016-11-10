@@ -5,6 +5,11 @@
   (interactive)
   (insert "->"))
 
+(defun insert-backquote ()
+  "Insert backquote, type ` with Leopold keyboard is a bit tedious"
+  (interactive)
+  (insert "`"))
+
 
 (defun comment-or-uncomment-line-or-region ()
   "comments or uncomments the current line or region"

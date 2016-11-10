@@ -97,8 +97,6 @@
 (savehist-mode 1)
 (setq history-length 1000)
 
-;; use ibuffer for list buffer
-(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; http://emacsredux.com/blog/2013/05/31/highlight-lines-that-exceed-a-certain-length-limit/
 ;; (require 'whitespace)
@@ -156,8 +154,6 @@
 (-when-let (frame (selected-frame))
   (ry/configure-fonts frame))
 
-;; hippie expand
-(global-set-key (kbd "M-/") 'hippie-expand)
 
 (setq hippie-expand-try-functions-list
       '(try-expand-dabbrev
@@ -301,21 +297,13 @@
 
 (modify-syntax-entry ?_ "w")
 
-(global-set-key (kbd "C-x C-=") 'ry/diff-buffer-file-changes)
 
-;; switch buffer per window
-(global-set-key (kbd "C-M-l") 'ry/switch-to-buffer-per-window)
-
-(global-set-key [remap move-beginning-of-line] 'smarter-move-beginning-of-line)
-
-(global-set-key (kbd "C-+") 'surround)
 
 
 ;; add more for tab
 (setq tab-always-indent 'complete)
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
-(global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
 
 ;; When not in a terminal, configure a few window system specific things.
 (when window-system
@@ -340,9 +328,6 @@
 
 (setq electric-pair-inhibit-predicate #'ry/inhibit-electric-pair-mode)
 
-;; take whatever we want to fit the 'combo'
-(global-set-key [(control return)] 'newline-for-code)
-(global-set-key (kbd "M-RET") 'newline-for-code)
 
 (setq-default indicate-empty-lines +1)
 
@@ -357,8 +342,25 @@
   (require 'ox-md nil t))
 ;; using cl
 (require 'cl)
+
+;; global key bindings
+
 ;; file related
 (global-set-key (kbd "C-c f e") 'ry/recentf-ido-find-file)
+;; use ibuffer for list buffer
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+;; hippie expand
+(global-set-key (kbd "M-/") 'hippie-expand)
+(global-set-key (kbd "C-x C-=") 'ry/diff-buffer-file-changes)
+;; switch buffer per window
+(global-set-key (kbd "C-M-l") 'ry/switch-to-buffer-per-window)
+(global-set-key [remap move-beginning-of-line] 'smarter-move-beginning-of-line)
+(global-set-key (kbd "C-+") 'surround)
+(global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
+;; take whatever we want to fit the 'combo'
+(global-set-key [(control return)] 'newline-for-code)
+(global-set-key (kbd "M-RET") 'newline-for-code)
+(global-set-key (kbd "C-<escape>") 'insert-backquote)
 
 (bind-key "C-c f w" 'browse-url)
 (bind-key "C-c f d" 'ry/delete-current-buffer-file)
