@@ -916,7 +916,10 @@ mouse-3: go to end")))
 
 ;; slime company
 (use-package slime-company
-  :ensure t)
+  :ensure t
+  :init
+  (slime-setup '(slime-fancy slime-company)))
+
 ;; slime for lisp
 (use-package slime
   :ensure t
