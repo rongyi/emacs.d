@@ -4,6 +4,7 @@
 if [[ $# -gt 0 ]]
 then
     cp init.el ~/.emacs.d/
+    mkdir -p ~/.emacs.d/elisp
     cp -r elisp/* ~/.emacs.d/elisp/
     cp -r ./snippets ~/.emacs.d/snippets
     echo "sync repo to .emacs.d done"
