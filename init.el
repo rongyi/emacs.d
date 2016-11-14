@@ -67,7 +67,7 @@
                               (evil-normal-state)
                               (when (fboundp 'company-abort)
                                 (company-abort))
-                              )))
+                              (save-buffer))))
   (evil-map visual "C-c" 'evil-normal-state)
   (evil-map normal "C-e" 'evil-end-of-line)
   (evil-map insert "C-e" 'evil-end-of-line)
@@ -998,12 +998,12 @@ mouse-3: go to end")))
 ;;   :config
 ;;   (moe-dark))
 
-;; (load-theme 'leuven t)
+(load-theme 'leuven t)
 
-(use-package dracula-theme
-  :ensure t
-  :config
-  (load-theme 'dracula t))
+;; (use-package dracula-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'dracula t))
 
 (use-package highlight-symbol
   :ensure t
@@ -1244,7 +1244,7 @@ mouse-3: go to end")))
    ;; Non-nil means display source file containing the main routine at startup
    gdb-show-main t))
 
-(use-package cc-mode
+(use-package c++-mode
   :defer t
   :config
   ;; The reason we don't use quickrun is most of the time
