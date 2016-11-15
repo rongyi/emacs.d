@@ -3,7 +3,7 @@
 
 ;; basic settings
 (setq inhibit-startup-message t)
-(setq initial-scratch-message ";; happy hacking, ry")
+(setq initial-scratch-message ";; hack and be merry, ry!")
 (setq inhibit-startup-echo-area-message "rongyi")
 ;; custom to a seprate file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
