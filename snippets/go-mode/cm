@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: cm
+# key: cm
+# --
+package main
+import (
+       "fmt"
+)
+
+func main() {
+     $1
+}

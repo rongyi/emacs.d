@@ -661,6 +661,7 @@ auto-indent."
   (define-key go-mode-map (kbd "M-.") 'godef-jump)
   ;; the same key as show python function doc in anaconda mode
   (define-key go-mode-map (kbd "M-?") 'godoc-at-point)
+  (define-key go-mode-map (kbd "C-c C-r") 'go-remove-unused-imports)
   (define-key go-mode-map (kbd "M-=") (lambda ()
                                         (interactive)
                                         (insert ":=")))
@@ -998,12 +999,12 @@ mouse-3: go to end")))
 ;;   :config
 ;;   (moe-dark))
 
-(load-theme 'leuven t)
+;; (load-theme 'leuven t)
 
-;; (use-package dracula-theme
-;;   :ensure t
-;;   :config
-;;   (load-theme 'dracula t))
+(use-package dracula-theme
+  :ensure t
+  :config
+  (load-theme 'dracula t))
 
 (use-package highlight-symbol
   :ensure t
