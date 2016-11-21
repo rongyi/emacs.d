@@ -360,6 +360,12 @@ buffer"
   (ry/split-window-horizontally-and-switch)
   (ido-find-file))
 
+(defun ry/angry-split-switch ()
+  "Switch buffer in another buffer"
+  (interactive)
+  (ry/split-window-horizontally-and-switch)
+  (ido-switch-buffer))
+
 
 ;; from magnar
 (defun ry/toggle-window-split ()

@@ -369,6 +369,7 @@
 (bind-key "C-c f y" 'ry/copy-all)
 (bind-key "C-c f o" 'find-or-create-file-at-point)
 (bind-key "M-\\" 'ry/angry-split)
+(bind-key "M-|" 'ry/angry-split-switch)
 
 ;; edit section
 (bind-key "C-c e ," 'ry/newline-after-comma)
