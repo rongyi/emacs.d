@@ -262,7 +262,24 @@
         ;; use ido to look for branches
         magit-completing-read-function 'magit-ido-completing-read
         magit-log-buffer-file-locked t
-        magit-revision-show-gravatars nil))
+        magit-revision-show-gravatars nil
+        ;; put unstage before untracked, this is copied from repo and put untrack at the end
+        magit-status-sections-hook '(magit-insert-status-headers
+                                     magit-insert-merge-log
+                                     magit-insert-rebase-sequence
+                                     magit-insert-am-sequence
+                                     magit-insert-sequencer-sequence
+                                     magit-insert-bisect-output
+                                     magit-insert-bisect-rest
+                                     magit-insert-bisect-log
+                                     magit-insert-unstaged-changes
+                                     magit-insert-staged-changes
+                                     magit-insert-stashes
+                                     magit-insert-unpulled-from-upstream
+                                     magit-insert-unpulled-from-pushremote
+                                     magit-insert-unpushed-to-upstream
+                                     magit-insert-unpushed-to-pushremote
+                                     magit-insert-untracked-files)))
 
 ;; nyan cat
 (use-package nyan-mode
