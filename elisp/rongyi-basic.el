@@ -169,8 +169,7 @@
 
 (when (eq system-type 'darwin) ;; mac specific settings
   (setq mac-option-modifier 'alt)
-  (setq mac-command-modifier 'meta)
-  )
+  (setq mac-command-modifier 'meta))
 
 (setq whitespace-style '(tailing))
 (global-whitespace-mode 1)
@@ -379,6 +378,7 @@
 (bind-key "C-c e t" 'ry/delete-company-useless-template)
 (bind-key "C-c e s" 'ry/sudo-edit)
 (bind-key "C-c e S" 'save-all)
+(bind-key "C-c e w" 'toggle-truncate-lines)
 
 ;; put window command together
 (bind-key "C-c w t" 'ry/toggle-transparency)
