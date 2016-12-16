@@ -25,9 +25,9 @@
 
 ;; package initialization
 (require 'package)
-(setq package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
-                         ("org" . "http://orgmode.org/elpa/")
-                         ("gnu" . "http://elpa.gnu.org/packages/")))
+(setq package-archives '(("melpa" . "http://elpa.emacs-china.org/melpa/")
+                         ("org" . "http://elpa.emacs-china.org/org/")
+                         ("gnu" . "http://elpa.emacs-china.org/gnu/")))
 (package-initialize)
 
 ;; Bootstrap use-package
@@ -896,7 +896,8 @@ mouse-3: go to end")))
     "C-c m" "visual bookmark"
     "C-c e" "editing"
     "C-c s" "searching"
-    "C-c g" "git")
+    "C-c g" "git"
+    "C-c C-d" "slime document")
   :diminish which-key-mode)
 
 ;; from joedicastro
@@ -947,13 +948,14 @@ mouse-3: go to end")))
   (setq slime-contribs '(slime-fancy))
   (if (equal system-type 'darwin)
       (setq inferior-lisp-program "/usr/local/bin/clisp")
-    (setq inferior-lisp-program "/usr/bin/clisp"))
+    (setq inferior-lisp-program "/usr/bin/sbcl"))
   (slime-setup '(slime-fancy slime-company))
   (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol
         slime-fuzzy-completion-in-place t
         slime-enable-evaluate-in-emacs t
         slime-autodoc-use-multiline-p t
-        slime-auto-start 'always))
+        slime-auto-start 'always
+        common-lisp-hyperspec-root "file:///usr/share/doc/hyperspec/"))
 
 ;; ggtags for reading kernel code
 (use-package ggtags
@@ -1017,6 +1019,10 @@ mouse-3: go to end")))
 ;;   (moe-dark))
 
 ;; (load-theme 'leuven t)
+;; (use-package spacemacs-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'spacemacs-dark t))
 
 (use-package dracula-theme
   :ensure t
@@ -1228,7 +1234,6 @@ mouse-3: go to end")))
 
 (use-package diff-hl                    ; Highlight hunks in fringe
   :ensure t
-  :defer t
   :init
   ;; Highlight changes to the current file in the fringe
   (global-diff-hl-mode)
