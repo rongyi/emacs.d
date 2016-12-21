@@ -478,11 +478,10 @@ auto-indent."
   :defer t
   :ensure nil
   :config
-  (add-hook 'python-mode-hook 'anaconda-mode)
-  (add-hook 'python-mode-hook 'eldoc-mode)
   (setq
    python-shell-interpreter "python"
-   python-shell-interpreter-args "")
+   python-shell-interpreter-args ""
+   python-indent-offset 4)
 
   (setq-local electric-layout-rules
               '((?: . (lambda ()
@@ -498,13 +497,17 @@ auto-indent."
 
 (use-package anaconda-mode
   :ensure t
-  :diminish anaconda-mode)
+  :diminish anaconda-mode
+  :bind (:map anaconda-mode-map
+              ("C-c C-j" . anaconda-mode-find-definitions))
+  :config
+  (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
 
 (use-package company-anaconda
   :ensure nil
   :config
-  ;; (add-to-list 'company-backends 'company-anaconda)
-  )
+  (add-to-list 'company-backends 'company-anaconda))
 
 ;; indent guide have some bugs
 ;; (use-package indent-guide
@@ -624,7 +627,7 @@ auto-indent."
   :config
   ;; cancel argument
 
-  (dolist (hook '(c-mode-hook c++-mode-hook python-mode-hook go-mode-hook))
+  (dolist (hook '(c-mode-hook c++-mode-hook go-mode-hook))
     (add-hook hook #'ycmd-mode))
   (set-variable 'ycmd-server-command '("python" "/usr/local/ycmd/ycmd"))
   (set-variable 'ycmd-global-config (expand-file-name ".emacs.d/ycm_extra_conf.py" (getenv "HOME")))
