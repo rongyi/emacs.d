@@ -66,8 +66,7 @@
                             (save-excursion
                               (evil-normal-state)
                               (when (fboundp 'company-abort)
-                                (company-abort))
-                              (save-buffer))))
+                                (company-abort)))))
   (evil-map visual "C-c" 'evil-normal-state)
   (evil-map normal "C-e" 'evil-end-of-line)
   (evil-map insert "C-e" 'evil-end-of-line)
@@ -113,6 +112,7 @@
   (evil-set-initial-state 'org-mode 'emacs)
   (evil-set-initial-state 'anaconda-mode-view-mode 'emacs)
   (evil-set-initial-state 'shell-mode 'emacs)
+  (evil-set-initial-state 'lisp-mode 'emacs)
   ;; http://emacs.stackexchange.com/questions/9583/how-to-treat-underscore-as-part-of-the-word
   (defalias #'forward-evil-word #'forward-evil-symbol)
   (evil-mode 1)
@@ -581,6 +581,7 @@ auto-indent."
   (add-to-list 'popwin:special-display-config `("*Messages*" :noselect nil))
   (add-to-list 'popwin:special-display-config `("*Anaconda*" :noselect t :position bottom :height 20))
   (add-to-list 'popwin:special-display-config `("*Completions*" :noselect nil :position bottom :height 20))
+  (add-to-list 'popwin:special-display-config `("*slime-macroexpansion*" :noselect nil :position bottom :height 20))
   (popwin-mode 1))
 
 
