@@ -66,7 +66,9 @@
                             (save-excursion
                               (evil-normal-state)
                               (when (fboundp 'company-abort)
-                                (company-abort)))))
+                                (company-abort))
+                              (when (buffer-file-name)
+                                (save-buffer)))))
   (evil-map visual "C-c" 'evil-normal-state)
   (evil-map normal "C-e" 'evil-end-of-line)
   (evil-map insert "C-e" 'evil-end-of-line)
