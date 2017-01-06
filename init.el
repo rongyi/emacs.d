@@ -111,10 +111,10 @@
 
   ;; in git commit message or org mode, we'll using evil when we needed
   (evil-set-initial-state 'text-mode 'emacs)
-  (evil-set-initial-state 'org-mode 'emacs)
   (evil-set-initial-state 'anaconda-mode-view-mode 'emacs)
   (evil-set-initial-state 'shell-mode 'emacs)
   (evil-set-initial-state 'lisp-mode 'emacs)
+  (evil-set-initial-state 'inf-haskell-mode 'emacs)
   ;; http://emacs.stackexchange.com/questions/9583/how-to-treat-underscore-as-part-of-the-word
   (defalias #'forward-evil-word #'forward-evil-symbol)
   (evil-mode 1)
@@ -1354,6 +1354,32 @@ mouse-3: go to end")))
   :config
   (progn
     (add-hook 'visual-line-mode-hook 'adaptive-wrap-prefix-mode)))
+
+;; haskell config
+(use-package hindent
+  :ensure t)
+
+(use-package company-ghc
+  :ensure t
+  :config
+  (add-to-list 'company-backends 'company-ghc)
+  (setq company-ghc-show-info t))
+
+(use-package haskell-mode
+  :ensure t
+  :after hindent
+  :config
+  (add-hook 'haskell-mode-hook #'hindent-mode)
+  (add-hook 'haskell-mode-hook #'company-mode)
+  (setq haskell-process-type 'ghci)
+  (setq haskell-program-name "/usr/bin/ghci")
+  (add-hook 'haskell-mode-hook 'inf-haskell-mode)
+
+  ;; http://futurismo.biz/archives/2662
+  (defadvice inferior-haskell-load-file (after change-focus-after-load)
+    "Change focus to GHCi window after C-c C-l command"
+    (other-window 1))
+  (ad-activate 'inferior-haskell-load-file))
 
 ;; when everything is set, we make our evil leader bindings
 (use-package general
