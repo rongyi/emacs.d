@@ -119,7 +119,7 @@
 (setq show-paren-style 'expression)
 ;; highlight style
 (custom-set-faces
- '(show-paren-match ((t (:background "azure2")))))
+ '(show-paren-match ((t (:background "azure2" :underline nil)))))
 
 ;; make copy and paste work properly under X Windows
 (when (eq system-type "gnu/linux")

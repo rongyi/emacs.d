@@ -1,9 +1,11 @@
 
 ;; it is a unit in c/c++, and type this two key is so slow, so we need a map
-(defun insert-pointer-access ()
-  "like := in Go, -> in C/C++ is a unit for pointer access"
-  (interactive)
-  (insert "->"))
+(defun insert-pointer-access (prefix)
+  "like := in Go, -> in C/C++ is a unit for pointer access, haskell has <-"
+  (interactive "p")
+  (if (> prefix 1)
+      (insert "<-")
+    (insert "->")))
 
 (defun insert-backquote ()
   "Insert backquote, type ` with Leopold keyboard is a bit tedious"
