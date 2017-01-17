@@ -1092,7 +1092,9 @@ mouse-3: go to end")))
   ;; use tab to navigate
   ;; use M-; to iedit-toggle-selection
   ;; TODO: key is different with highlight-symbol(M-n M-p)
-  (global-set-key (kbd "C-:") 'iedit-mode))
+  (global-set-key (kbd "C-:") 'iedit-mode)
+  ;; we want M-; means comment everywhere!
+  (define-key iedit-mode-keymap (kbd "M-;") nil))
 
 (use-package highlight-parentheses
   :ensure t
@@ -1272,8 +1274,8 @@ mouse-3: go to end")))
    ;; Non-nil means display source file containing the main routine at startup
    gdb-show-main t))
 
-(use-package c++-mode
-  :defer t
+(use-package cc-mode
+  :ensure t
   :config
   ;; The reason we don't use quickrun is most of the time
   ;; we will use gdb to debug the exec file, but quickrun
