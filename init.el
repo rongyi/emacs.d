@@ -358,7 +358,8 @@
     (with-eval-after-load 'flycheck
       (custom-set-variables
        '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))))
-  (setq flycheck-clang-language-standard "c++11"))
+  (setq flycheck-clang-language-standard "c++11")
+  (setq flycheck-flake8-maximum-line-length 160))
 
 (use-package flycheck-pos-tip
   :ensure t
