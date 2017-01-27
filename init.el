@@ -1361,6 +1361,16 @@ mouse-3: go to end")))
 (use-package hindent
   :ensure t)
 
+;; first update cabal, and then cabal install ghc-mod
+;; follow this link: https://www.haskell.org/downloads/linux
+;; this will use the latest haskell ghc
+(use-package ghc
+  :ensure t
+  :config
+  (autoload 'ghc-init "ghc" nil t)
+  (autoload 'ghc-debug "ghc" nil t)
+  (add-hook 'haskell-mode-hook (lambda () (ghc-init))))
+
 (use-package company-ghc
   :ensure t
   :config
@@ -1382,6 +1392,10 @@ mouse-3: go to end")))
     "Change focus to GHCi window after C-c C-l command"
     (other-window 1))
   (ad-activate 'inferior-haskell-load-file))
+
+;; yaml mode
+(use-package yaml-mode
+  :ensure t)
 
 ;; when everything is set, we make our evil leader bindings
 (use-package general
