@@ -1362,6 +1362,7 @@ mouse-3: go to end")))
   :ensure t)
 
 ;; first update cabal, and then cabal install ghc-mod
+;; using cabal mirror: https://mirrors.tuna.tsinghua.edu.cn/help/hackage/ if the download is slow
 ;; follow this link: https://www.haskell.org/downloads/linux
 ;; this will use the latest haskell ghc
 (use-package ghc
