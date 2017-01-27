@@ -1375,7 +1375,7 @@ mouse-3: go to end")))
 (use-package company-ghc
   :ensure t
   :config
-  (add-to-list 'company-backends 'company-ghc)
+  (add-to-list 'company-backends '(company-ghc :with company-dabbrev))
   (setq company-ghc-show-info t))
 
 (use-package haskell-mode
