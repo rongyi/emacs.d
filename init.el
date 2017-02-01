@@ -1392,7 +1392,10 @@ mouse-3: go to end")))
   (defadvice inferior-haskell-load-file (after change-focus-after-load)
     "Change focus to GHCi window after C-c C-l command"
     (other-window 1))
-  (ad-activate 'inferior-haskell-load-file))
+  (ad-activate 'inferior-haskell-load-file)
+  (define-key haskell-mode-map (kbd "M-=") (lambda ()
+                                              (interactive)
+                                              (insert "=>"))))
 
 ;; yaml mode
 (use-package yaml-mode
