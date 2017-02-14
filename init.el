@@ -1006,13 +1006,7 @@ mouse-3: go to end")))
   (dumb-jump-mode)
   :diminish dumb-jump-mode)
 
-;; Are your a theme slut?
-;; (use-package color-theme-sanityinc-solarized
-;;   :ensure t
-;;   :config
-;;   (load-theme 'sanityinc-solarized-dark t)
-;;   (load-theme 'sanityinc-solarized-light t)
-;;   )
+;; Are you a theme slut?
 
 ;; (use-package color-theme-sanityinc-tomorrow
 ;;   :ensure t
@@ -1030,10 +1024,30 @@ mouse-3: go to end")))
 ;;   :config
 ;;   (load-theme 'spacemacs-dark t))
 
-(use-package dracula-theme
-  :ensure t
+;; (use-package dracula-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'dracula t))
+
+;; from lunaryorn
+(use-package solarized                  ; My colour theme
+  :ensure solarized-theme
   :config
-  (load-theme 'dracula t))
+  ;; Disable variable pitch fonts in Solarized theme
+  (setq
+   solarized-use-variable-pitch nil
+   ;; Prefer italics over bold
+   solarized-use-less-bold t
+   solarized-use-more-italic t
+   solarized-distinct-doc-face t      ; Emphasize docstrings
+   ;; I find different font sizes irritating.
+   solarized-height-minus-1 1.0
+   solarized-height-plus-1 1.0
+   solarized-height-plus-2 1.0
+   solarized-height-plus-3 1.0
+   solarized-height-plus-4 1.0)
+
+  (load-theme 'solarized-light t))
 
 (use-package highlight-symbol
   :ensure t
