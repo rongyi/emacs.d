@@ -1359,7 +1359,11 @@ mouse-3: go to end")))
 
 ;; haskell config
 (use-package hindent
-  :ensure t)
+  :ensure t
+  :init
+  (add-hook 'haskell-mode-hook #'hindent-mode)
+  :config
+  (setq hindent-style "gibiansky"))
 
 ;; first update cabal, and then cabal install ghc-mod
 ;; using cabal mirror: https://mirrors.tuna.tsinghua.edu.cn/help/hackage/ if the download is slow
@@ -1382,17 +1386,22 @@ mouse-3: go to end")))
   :ensure t
   :after hindent
   :config
-  (add-hook 'haskell-mode-hook #'hindent-mode)
   (add-hook 'haskell-mode-hook #'company-mode)
   (setq haskell-process-type 'ghci)
   (setq haskell-program-name "/usr/bin/ghci")
-  (add-hook 'haskell-mode-hook 'inf-haskell-mode)
+  (setq haskell-tags-on-save t
+        haskell-process-log t
+        haskell-process-suggest-remove-import-lines t
+        haskell-process-auto-import-loaded-modules t)
+  (add-hook 'haskell-mode-hook #'inf-haskell-mode)
+  (add-hook 'haskell-mode-hook #'interactive-haskell-mode)
 
   ;; http://futurismo.biz/archives/2662
   (defadvice inferior-haskell-load-file (after change-focus-after-load)
     "Change focus to GHCi window after C-c C-l command"
     (other-window 1))
   (ad-activate 'inferior-haskell-load-file)
+  ;; shortcut for some unit input
   (define-key haskell-mode-map (kbd "M-=") (lambda ()
                                               (interactive)
                                               (insert "=>"))))
