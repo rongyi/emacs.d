@@ -600,9 +600,9 @@ auto-indent."
 (use-package ace-window
   :ensure t
   :config
-  ;; the key "combo" is fast than the least used C-x o
-  ;; so we decide to make a change with swap hot key
-  (global-set-key (kbd "C-x C-o") 'ace-window)
+  ;; rarely use this key now, spaceline containing alt-1 like key to navigate between windows
+  ;; (global-set-key (kbd "C-x C-o") 'ace-window)
+
   ;; it seems like we dont need swap window frequently
   (global-set-key (kbd "C-x o") 'ace-window)
 

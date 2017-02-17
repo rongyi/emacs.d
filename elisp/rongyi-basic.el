@@ -202,6 +202,7 @@
   (ido-mode t)
   (ido-everywhere t)
   (global-set-key (kbd "C-x C-f") 'ido-find-file)
+  (global-set-key (kbd "C-x C-o") 'ido-find-file-other-window)
   ;; go straight home by pressing ~
   (add-hook 'ido-setup-hook (lambda ()
                               (define-key ido-file-completion-map
