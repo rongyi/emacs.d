@@ -704,7 +704,7 @@ auto-indent."
   :config
   ;; (add-to-list 'company-backends 'company-go)
   )
-;; goline
+;; golint
 (use-package golint
   :ensure t)
 
