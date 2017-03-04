@@ -247,7 +247,6 @@
 (flx-ido-mode 1)
 
 ;; eldoc-mode
-(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 
 ;; org-mode setting
@@ -342,6 +341,11 @@
   (require 'ox-md nil t))
 ;; using cl
 (require 'cl)
+
+(global-prettify-symbols-mode 1)
+;; http://endlessparentheses.com/new-in-emacs-25-1-have-prettify-symbols-mode-reveal-the-symbol-at-point.html
+(setq prettify-symbols-unprettify-at-point 'right-edge)
+
 
 ;; global key bindings
 

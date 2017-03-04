@@ -1417,12 +1417,21 @@ mouse-3: go to end")))
   (ad-activate 'inferior-haskell-load-file)
   ;; shortcut for some unit input
   (define-key haskell-mode-map (kbd "M-=") (lambda ()
-                                              (interactive)
-                                              (insert "=>"))))
+                                             (interactive)
+                                             (insert "=>"))))
 
 ;; yaml mode
 (use-package yaml-mode
   :ensure t)
+
+;; from howardabrams
+(use-package lisp-mode
+  :init
+  (defconst lisp--prettify-symbols-alist
+    '(("lambda"  . ?λ)      ; Shrink this
+      ("."       . ?•)))    ; Enlarge this
+  :config
+  (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
 
 ;; when everything is set, we make our evil leader bindings
 (use-package general
