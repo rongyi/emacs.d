@@ -89,6 +89,17 @@
   (evil-map insert "C-w" 'ry/kill-region-or-backward-word)
   (evil-map visual "C-w" 'ry/kill-region-or-backward-word)
   (evil-map insert "C-o" 'ry/open-line-above)
+  ;; dont quite visual mode
+  (evil-map visual "<" #'(lambda ()
+                           (interactive)
+                           (evil-shift-left (region-beginning) (region-end))
+                           (evil-normal-state)
+                           (evil-visual-restore)))
+  (evil-map visual ">" #'(lambda ()
+                           (interactive)
+                           (evil-shift-right (region-beginning) (region-end))
+                           (evil-normal-state)
+                           (evil-visual-restore)))
 
   ;; we dont want to learn emacs keymap for jumping around
   (evil-map normal "C-]" 'dumb-jump-go)
