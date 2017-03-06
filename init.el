@@ -922,7 +922,6 @@ mouse-3: go to end")))
                   (interactive)
                   (find-alternate-file ".."))))))
 
-
 ;; [[https://github.com/alpaker/Fill-Column-Indicator][fill-column-indicator]] toggle the vertical column that indicates the fill
 ;; threshold.
 
@@ -1028,24 +1027,6 @@ mouse-3: go to end")))
   :ensure t
   :config
   (load-theme 'dracula t))
-
-;; from lunaryorn
-;; (use-package solarized                  ; My colour theme
-;;   :ensure solarized-theme
-;;   :config
-;;   ;; Disable variable pitch fonts in Solarized theme
-;;   (setq
-;;    solarized-use-variable-pitch nil
-;;    ;; Prefer italics over bold
-;;    solarized-use-less-bold t
-;;    solarized-use-more-italic t
-;;    solarized-distinct-doc-face t      ; Emphasize docstrings
-;;    ;; I find different font sizes irritating.
-;;    solarized-height-minus-1 1.0
-;;    solarized-height-plus-1 1.0
-;;    solarized-height-plus-2 1.0
-;;    solarized-height-plus-3 1.0
-;;    solarized-height-plus-4 1.0)
 
 ;;   (load-theme 'solarized-light t))
 
