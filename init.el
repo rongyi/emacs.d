@@ -1034,12 +1034,12 @@ mouse-3: go to end")))
 ;;   :config
 ;;   (load-theme 'spacemacs-dark t))
 
-(use-package dracula-theme
-  :ensure t
-  :config
-  (load-theme 'dracula t))
+;; (use-package dracula-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'dracula t))
 
-;;   (load-theme 'solarized-light t))
+(load-theme 'solarized-dark t)
 
 (use-package highlight-symbol
   :ensure t
@@ -1412,10 +1412,6 @@ mouse-3: go to end")))
                                              (interactive)
                                              (insert "=>"))))
 
-;; yaml mode
-(use-package yaml-mode
-  :ensure t)
-
 ;; from howardabrams
 (use-package lisp-mode
   :init
@@ -1424,6 +1420,23 @@ mouse-3: go to end")))
       ("."       . ?•)))    ; Enlarge this
   :config
   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
+
+;; yaml mode
+(use-package yaml-mode
+  :mode (("\\.\\(yml\\|yaml\\)\\'" . yaml-mode)
+         ("Procfile\\'" . yaml-mode)))
+
+(use-package jinja2-mode
+  :ensure t
+  :mode ("\\.j2\\'" . jinja2-mode))
+
+(use-package ansible
+  :ensure t
+  :init (add-to-list 'auto-mode-alist
+                     '("\\(group_vars/.+\\|host_vars/.+\\)" . yaml-mode)))
+
+(use-package ansible-doc
+  :ensure t)
 
 ;; when everything is set, we make our evil leader bindings
 (use-package general
@@ -1454,7 +1467,8 @@ mouse-3: go to end")))
                  "i" 'find-user-init-file
                  "r" 'helm-resume
                  "y" 'ry/copy-whole-buffer-to-clipboard
-                 "?" 'helm-descbinds))
+                 "?" 'helm-descbinds
+                 "a" 'ido-switch-buffer))
 
 ;; diminish more minor mode
 (diminish 'global-auto-revert-mode)

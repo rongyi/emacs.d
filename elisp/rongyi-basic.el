@@ -97,7 +97,6 @@
 (savehist-mode 1)
 (setq history-length 1000)
 
-
 ;; http://emacsredux.com/blog/2013/05/31/highlight-lines-that-exceed-a-certain-length-limit/
 ;; (require 'whitespace)
 ;; (setq whitespace-line-column 80)
