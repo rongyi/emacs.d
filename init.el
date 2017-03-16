@@ -106,6 +106,7 @@
   (evil-map normal "C-t" 'dumb-jump-back)
   ;; pain in the ass
   (evil-map normal "K" nil)
+  (evil-map motion "K" nil)
   (evil-map normal "/" 'helm-swoop)
 
   ;; make j == gj, visual line
