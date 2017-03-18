@@ -2,13 +2,13 @@
 
 # reverse action
 if [[ $# -gt 0 ]]
-then
+then                            # overwrite local settings! for install new machine mostly
     cp init.el ~/.emacs.d/
     mkdir -p ~/.emacs.d/elisp
     cp -r elisp/* ~/.emacs.d/elisp/
     cp -r ./snippets ~/.emacs.d/snippets
     echo "sync repo to .emacs.d done"
-else # backup action
+else # sync local to this repo
     cp ~/.emacs.d/init.el .
     cp ~/.emacs.d/elisp/* elisp/
     cp -r ~/.emacs.d/snippets/* ./snippets
