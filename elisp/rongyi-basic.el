@@ -155,6 +155,9 @@
 (-when-let (frame (selected-frame))
   (ry/configure-fonts frame))
 
+;; allow pasting selection outside of emacs
+(setq select-enable-clipboard t)
+
 ;; https://gist.github.com/mordocai/50783defab3c3d1650e068b4d1c91495
 (defconst fira-code-font-lock-keywords-alist
   (mapcar (lambda (regex-char-pair)
@@ -282,7 +285,8 @@
 (add-hook 'prog-mode-hook
           #'add-fira-code-symbol-keywords)
 
-
+;; hippie expand
+(global-set-key (kbd "M-/") 'hippie-expand)
 (setq hippie-expand-try-functions-list
       '(try-expand-dabbrev
         try-expand-dabbrev-all-buffers
@@ -488,8 +492,6 @@
 (global-set-key (kbd "C-c f e") 'ry/recentf-ido-find-file)
 ;; use ibuffer for list buffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-;; hippie expand
-(global-set-key (kbd "M-/") 'hippie-expand)
 (global-set-key (kbd "C-x C-=") 'ry/diff-buffer-file-changes)
 ;; switch buffer per window
 (global-set-key (kbd "C-M-l") 'ry/switch-to-buffer-per-window)
