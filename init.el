@@ -1040,7 +1040,11 @@ mouse-3: go to end")))
 ;;   :config
 ;;   (load-theme 'dracula t))
 
-(load-theme 'solarized-dark t)
+;; (load-theme 'solarized-dark t)
+(use-package base16-theme
+  :ensure t
+  :config
+  (load-theme 'base16-ashes t))
 
 (use-package highlight-symbol
   :ensure t
@@ -1354,7 +1358,7 @@ mouse-3: go to end")))
   :defer t
   :bind (("C-c e j" . json-reformat-region)))
 
-;; Highlight Escape Sequences
+;; Highlight Escape Sequences: https://github.com/dgutov/highlight-escape-sequences
 (use-package highlight-escape-sequences
   :ensure t
   :diminish hes-mode)

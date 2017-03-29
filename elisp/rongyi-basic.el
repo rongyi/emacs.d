@@ -1,7 +1,5 @@
 ;; basic settings
 
-
-;; basic settings
 (setq inhibit-startup-message t)
 (setq initial-scratch-message ";; hack and be merry, ry!")
 (setq inhibit-startup-echo-area-message "rongyi")
@@ -11,9 +9,9 @@
 ;; no backup file
 (setq make-backup-files nil)
 ;; remember the cursor position
-(setq save-place-file (expand-file-name "cursor.save" user-emacs-directory))
-(setq-default save-place t)
 (require 'saveplace)
+(setq-default save-place t)
+(setq save-place-file (expand-file-name ".cursor.save" user-emacs-directory))
 ;; smooth scrolling
 (setq scroll-margin 5
       scroll-conservatively 9999
@@ -106,6 +104,7 @@
 ;; highlight the word under the point
 ;;(add-hook 'prog-mode-hook 'idle-highlight-mode)
 
+;; highlight current line
 (add-hook 'prog-mode-hook 'hl-line-mode)
 ;; highlight current line number
 (use-package hlinum
@@ -356,6 +355,11 @@
      (delq nil (mapcar
                 (lambda (x) (and (char-equal (string-to-char x) ?.) x))
                 ido-temp-list))))
+  (setq ido-enable-prefix nil
+        ido-enable-flex-matching t
+        ido-auto-merge-work-directories-length -1
+        ido-create-new-buffer 'always
+        ido-use-filename-at-point nil)
 
   (add-hook 'ido-make-file-list-hook 'ido-sort-mtime)
   (add-hook 'ido-make-dir-list-hook 'ido-sort-mtime))
@@ -368,7 +372,9 @@
 (use-package ido-vertical-mode
   :ensure t
   :config
-  (ido-vertical-mode))
+  (ido-vertical-mode)
+  (setq ido-vertical-define-keys 'C-n-C-p-up-down-left-right))
+
 (use-package flx-ido
   :ensure t)
 
