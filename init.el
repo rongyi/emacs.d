@@ -102,8 +102,8 @@
                            (evil-visual-restore)))
 
   ;; we dont want to learn emacs keymap for jumping around
-  (evil-map normal "C-]" 'dumb-jump-go)
-  (evil-map normal "C-t" 'dumb-jump-back)
+  (evil-map normal "C-]" 'helm-gtags-find-tag-from-here)
+  (evil-map normal "C-t" 'helm-gtags-pop-stack)
   ;; pain in the ass
   (evil-map normal "K" nil)
   (evil-map motion "K" nil)
