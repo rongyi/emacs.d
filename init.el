@@ -648,7 +648,8 @@ auto-indent."
   (set-variable 'ycmd-global-config (expand-file-name ".emacs.d/ycm_extra_conf.py" (getenv "HOME")))
   ;; make it larger
   (setq ycmd-max-num-identifier-candidates 30
-        ycmd-extra-conf-handler 'load)
+        ycmd-extra-conf-handler 'load
+        ycmd-force-semantic-completion t)
   (require 'ycmd-eldoc)
   (add-hook 'ycmd-mode-hook 'ycmd-eldoc-setup))
 
