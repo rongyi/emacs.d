@@ -41,7 +41,7 @@
  c-basic-offset 2)
 
 ;; auto save
-(add-hook 'focus-out-hook 'save-all)
+(add-hook 'focus-out-hook 'ry/save-all)
 ;; save every 20 characters
 (setq auto-save-interval 20)
 
@@ -476,7 +476,7 @@
 ;; dont intent in c++ namespace
 (c-set-offset 'innamespace 0)
 
-(after-load 'org
+(ry/after-load 'org
   (require 'ox-md nil t))
 ;; using cl
 (require 'cl)
@@ -484,6 +484,22 @@
 (global-prettify-symbols-mode 1)
 ;; http://endlessparentheses.com/new-in-emacs-25-1-have-prettify-symbols-mode-reveal-the-symbol-at-point.html
 (setq prettify-symbols-unprettify-at-point 'right-edge)
+
+(setq eshell-prompt-function
+      (lambda ()
+        (concat
+         (propertize "┌─[" 'face `(:foreground "green"))
+         (propertize (user-login-name) 'face `(:foreground "red"))
+         (propertize "@" 'face `(:foreground "green"))
+         (propertize (system-name) 'face `(:foreground "blue"))
+         (propertize "]──[" 'face `(:foreground "green"))
+         (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "yellow"))
+         (propertize "]──[" 'face `(:foreground "green"))
+         (propertize (concat (eshell/pwd)) 'face `(:foreground "white"))
+         (propertize "]\n" 'face `(:foreground "green"))
+         (propertize "└─>" 'face `(:foreground "green"))
+         (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green"))
+         )))
 
 
 ;; global key bindings
@@ -508,7 +524,7 @@
 (bind-key "C-c f m" 'ry/rename-file-and-buffer)
 (bind-key "C-c f c" 'ry/kill-other-buffers)
 (bind-key "C-c f y" 'ry/copy-all)
-(bind-key "C-c f o" 'find-or-create-file-at-point)
+(bind-key "C-c f o" 'ry/find-or-create-file-at-point)
 (bind-key "M-\\" 'ry/angry-split)
 (bind-key "M-|" 'ry/angry-split-switch)
 
@@ -519,7 +535,7 @@
 (bind-key "C-c e l" 'lint-code)
 (bind-key "C-c e t" 'ry/delete-company-useless-template)
 (bind-key "C-c e s" 'ry/sudo-edit)
-(bind-key "C-c e S" 'save-all)
+(bind-key "C-c e S" 'ry/save-all)
 (bind-key "C-c e w" 'toggle-truncate-lines)
 
 ;; put window command together
@@ -535,7 +551,7 @@
 (bind-key "C-c w d" 'ry/toggle-current-window-dedication)
 (bind-key "C-c w r" 'ry/rotate-windows)
 
-(bind-key "C-M-y" 'visit-term-buffer-with-current-dir)
+(bind-key "C-M-y" 'ry/visit-term-buffer-with-current-dir)
 (bind-key "C-(" (surround-text-with "("))
 (bind-key "C-\"" (surround-text-with "\""))
 

@@ -22,9 +22,9 @@
     (list (apply 'call-process command nil (current-buffer) nil args)
           (s-trim (buffer-string)))))
 
-(defun require-or-install (pkg)
+(defun ry/require-or-install (pkg)
   "require a lib, if fail install it!
-Use use-package instead, this is a very first emacs function I wrote"
+Use use-package instead, this function is "
   (condition-case nil
       (require pkg)
     (error
@@ -32,7 +32,7 @@ Use use-package instead, this is a very first emacs function I wrote"
      (package-install pkg))))
 
 ;; a eval-after-load sugar
-(defmacro after-load (feature &rest body)
+(defmacro ry/after-load (feature &rest body)
   "After FEATURE is loaded, evaluate BODY."
   (declare (indent defun))
   `(eval-after-load ,feature
@@ -40,7 +40,7 @@ Use use-package instead, this is a very first emacs function I wrote"
 
 
 ;; stole this from xemacs21:
-(defun switch-to-other-buffer (arg)
+(defun ry/switch-to-other-buffer (arg)
   (interactive "p")
   (if (eq arg 0)
       (bury-buffer (current-buffer)))
@@ -49,7 +49,7 @@ Use use-package instead, this is a very first emacs function I wrote"
      (nth (1+ arg) (buffer-list)))))
 
 ;; http://www.howardism.org/Technical/Emacs/eshell-fun.html
-(defun eshell-here ()
+(defun ry/eshell-here ()
   "Opens up a new shell in the directory associated with the
 current buffer's file. The eshell is renamed to match that
 directory to make multiple eshell windows easier."
@@ -68,14 +68,14 @@ directory to make multiple eshell windows easier."
     (eshell-send-input)
     (company-mode -1)))
 
-(defun eshell/x ()
+(defun ry/eshell/x ()
   (insert "exit")
   (eshell-send-input)
   (delete-window))
 
 
 ;; fast open shell init file
-(defun find-shell-init-file  ()
+(defun ry/find-shell-init-file  ()
   "Edit the shell init file in another window"
   (interactive)
   (let* ((shell (car (reverse (split-string (getenv "SHELL") "/"))))
@@ -85,13 +85,13 @@ directory to make multiple eshell windows easier."
                            (t (error "Unkown shell")))))
     (find-file-other-window (expand-file-name shell-init-file (getenv "HOME")))))
 
-(defun find-user-init-file ()
+(defun ry/find-user-init-file ()
   "Edit the `user-init-file', in another window"
   (interactive)
   (find-file-other-window user-init-file))
 
 
-(defun visit-term-buffer ()
+(defun ry/visit-term-buffer ()
   "Create or visit a terminal buffer,
 Split window first and then open zsh"
   (interactive)
@@ -108,12 +108,12 @@ Split window first and then open zsh"
           (message "You already in a shell buffer!")
         (switch-to-buffer-other-window shell-name)))))
 
-(defun visit-term-buffer-with-current-dir ()
+(defun ry/visit-term-buffer-with-current-dir ()
   "Simple wrapper for visit-term-buffer,
 after visit also cd to the current buffer's dir"
   (interactive)
   (let ((file-name (buffer-file-name)))
-    (visit-term-buffer)
+    (ry/visit-term-buffer)
     (when file-name
       (insert (file-name-directory file-name))
       (comint-send-input))))
@@ -212,7 +212,7 @@ after visit also cd to the current buffer's dir"
         (kill-buffer buffer)
         (message "File '%s' successfully removed" filename)))))
 
-(defun file-name-at-point ()
+(defun ry/file-name-at-point ()
   (save-excursion
     (let* ((file-name-regexp "[./a-zA-Z0-9\-_~]")
            (start (progn
@@ -225,10 +225,10 @@ after visit also cd to the current buffer's dir"
                   (point))))
       (buffer-substring start end))))
 
-(defun find-or-create-file-at-point ()
+(defun ry/find-or-create-file-at-point ()
   "when under point is a path/file name, opens it."
   (interactive)
-  (find-file (file-name-at-point)))
+  (find-file (ry/file-name-at-point)))
 
 
 ;; from http://dfan.org/blog/2009/02/19/emacs-dedicated-windows/
@@ -310,17 +310,17 @@ after visit also cd to the current buffer's dir"
               (remove-if-not 'ry/opened-file-buffer-or-magit-p (buffer-list))))
   (message "Buffer deleted!"))
 
-(defun save-all ()
+(defun ry/save-all ()
   "Saves all dirty buffers without asking for confirmation."
   (interactive)
   (save-some-buffers t))
 
-(defun close-other()
+(defun ry/close-other()
   (interactive)
   (save-excursion (other-window 1)
                   (quit-window)))
 
-(defun beautify-json (beg end)
+(defun ry/beautify-json (beg end)
   (interactive "r")
   (shell-command-on-region beg end "python -mjson.tool" (current-buffer) 'replace))
 
@@ -394,7 +394,7 @@ buffer"
           (if this-win-2nd (other-window 1))))))
 
 
-(defun clean-buffer ()
+(defun ry/clean-buffer ()
   "warpper for indent/untabify/delete trailing-whitespace"
   (interactive)
   (untabify-buffer)
