@@ -402,7 +402,7 @@ buffer"
   (indent-buffer))
 
 ;; from magnars modified by ffevotte for dedicated windows support
-(defun rotate-windows (count)
+(defun ry/rotate-windows (count)
   "Rotate your windows.
 Dedicated windows are left untouched. Giving a negative prefix
 argument takes the kindows rotate backwards."
@@ -431,6 +431,26 @@ argument takes the kindows rotate backwards."
                (set-window-start w2 s1)
                (setq i next-i)))))))
 
+
+;; from @bmag
+(defun ry/window-layout-toggle ()
+  "Toggle between horizontal and vertical layout of two windows."
+  (interactive)
+  (if (= (count-windows) 2)
+    (let* ((window-tree (car (window-tree)))
+           (current-split-vertical-p (car window-tree))
+           (first-window (nth 2 window-tree))
+           (second-window (nth 3 window-tree))
+           (second-window-state (window-state-get second-window))
+           (splitter (if current-split-vertical-p
+                         #'split-window-horizontally
+                       #'split-window-vertically)))
+      (delete-other-windows first-window)
+      ;; `window-state-put' also re-selects the window if needed, so we don't
+      ;; need to call `select-window'
+      (window-state-put second-window-state (funcall splitter)))
+    (error "Can't toggle window layout when the number of windows isn't two.")))
+
 ;; from lunaryorn's emacs.d
 (defun ry/find-side-windows (&optional side)
   "Get all side window if any.
@@ -454,10 +474,30 @@ If SIDE is non-nil only get windows on that side."
       (when (window-live-p window)
         (delete-window window)))))
 
-(defun ry/switch-to-buffer-per-window ()
+(defun ry/switch-to-buffer-per-window (&optional window)
   "Switch buffer group by window"
   (interactive)
-  (set-window-buffer nil (car (car (window-prev-buffers)))))
+  (let ((current-buffer (window-buffer window))
+        (buffer-predicate
+         (frame-parameter (window-frame window) 'buffer-predicate)))
+    ;; switch to first buffer previously shown in this window that matches
+    ;; frame-parameter `buffer-predicate'
+    (switch-to-buffer
+     (or (cl-find-if (lambda (buffer)
+                       (and (not (eq buffer current-buffer))
+                            (or (null buffer-predicate)
+                                (funcall buffer-predicate buffer))))
+                     (mapcar #'car (window-prev-buffers window)))
+         ;; `other-buffer' honors `buffer-predicate' so no need to filter
+         (other-buffer current-buffer t)))))
+
+(defun ry/alternate-window ()
+  "Switch back and forth between current and last window in the
+current frame"
+  (interactive)
+  (let ((prev-window (get-mru-window nil t t)))
+    (unless prev-window (user-error "Last window not found"))
+    (select-window prev-window)))
 
 ;; from spacemacs, just like ours function above
 (defun ry/alternate-buffer ()

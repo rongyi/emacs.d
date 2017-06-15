@@ -533,7 +533,7 @@
 (bind-key "C-c w \\" 'split-window-right)
 (bind-key "C-c w -" 'split-window-below)
 (bind-key "C-c w d" 'ry/toggle-current-window-dedication)
-(bind-key "C-c w r" 'rotate-windows)
+(bind-key "C-c w r" 'ry/rotate-windows)
 
 (bind-key "C-M-y" 'visit-term-buffer-with-current-dir)
 (bind-key "C-(" (surround-text-with "("))
