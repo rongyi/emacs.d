@@ -675,7 +675,7 @@ auto-indent."
     (let* ((file (buffer-file-name))
            (path (file-name-directory file))
            (output (file-name-nondirectory  (file-name-sans-extension file))))
-      (visit-term-buffer)
+      (ry/visit-term-buffer)
       (insert (format "cd %s && go build %s" path file))
       (comint-send-input)
       (cond
@@ -750,7 +750,7 @@ mouse-3: go to end")))
   :ensure t
   :init (beacon-mode 1)
   :config
-  (setq beacon-color "red")
+  (setq beacon-color "purple")
   ;; in shell, we always focus at the point
   (add-to-list 'beacon-dont-blink-major-modes 'shell-mode)
   :diminish beacon-mode)
@@ -1023,12 +1023,12 @@ mouse-3: go to end")))
 ;; (use-package color-theme-sanityinc-tomorrow
 ;;   :ensure t
 ;;   :config
-;;   (load-theme 'sanityinc-tomorrow-eighties t))
+;;   (load-theme 'sanityinc-tomorrow-day t))
 
 ;; (use-package moe-theme
 ;;   :ensure t
 ;;   :config
-;;   (moe-dark))
+;;   (moe-light))
 
 ;; (load-theme 'leuven t)
 ;; (use-package spacemacs-theme
@@ -1036,16 +1036,16 @@ mouse-3: go to end")))
 ;;   :config
 ;;   (load-theme 'spacemacs-dark t))
 
-;; (use-package dracula-theme
-;;   :ensure t
-;;   :config
-;;   (load-theme 'dracula t))
-
-;; (load-theme 'solarized-dark t)
-(use-package base16-theme
+(use-package dracula-theme
   :ensure t
   :config
-  (load-theme 'base16-ashes t))
+  (load-theme 'dracula t))
+
+;; (load-theme 'solarized-dark t)
+;; (use-package base16-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'base16-ashes t))
 
 (use-package highlight-symbol
   :ensure t
@@ -1299,7 +1299,7 @@ mouse-3: go to end")))
     (let* ((file (buffer-file-name))
            (path (file-name-directory file))
            (output (file-name-nondirectory  (file-name-sans-extension file))))
-      (visit-term-buffer)
+      (ry/visit-term-buffer)
       (insert (format "cd %s && g++ -g --std=c++11 %s -o %s"
                       path
                       (file-name-nondirectory  file)
@@ -1444,6 +1444,22 @@ mouse-3: go to end")))
 (use-package ansible-doc
   :ensure t)
 
+(use-package bookmark
+  :init (setq bookmark-save-flag 1)
+  :config
+  (defun ry/add-bookmark (name)
+    (interactive
+     (list (let* ((filename (file-name-base (buffer-file-name)))
+                  (project (projectile-project-name))
+                  (func-name (which-function))
+                  (initial (format "%s::%s:%s " project filename func-name)))
+             (read-string "Bookmark: " initial))))
+    (bookmark-set name))
+  :bind (("C-c b m" . ry/add-bookmark)
+         ("C-c r m" . ry/add-bookmark)
+         ("C-c r l" . helm-bookmarks)))
+
+
 ;; when everything is set, we make our evil leader bindings
 (use-package general
   :ensure t
@@ -1455,7 +1471,7 @@ mouse-3: go to end")))
                  "w" 'save-buffer
                  "q" 'kill-this-buffer
                  "c SPC" 'comment-or-uncomment-line-or-region
-                 "b" 'bookmark-bmenu-list
+                 "b" 'helm-bookmark
                  "f" 'avy-goto-char
                  "e" 'helm-semantic-or-imenu
                  "p" 'projectile-find-file
@@ -1470,7 +1486,7 @@ mouse-3: go to end")))
                          (other-window 1)
                          (quit-window)
                          (other-window 1)))
-                 "i" 'find-user-init-file
+                 "i" 'ry/find-user-init-file
                  "r" 'helm-resume
                  "y" 'ry/copy-whole-buffer-to-clipboard
                  "?" 'helm-descbinds
