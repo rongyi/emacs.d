@@ -310,7 +310,7 @@
       (truncate (* scale (frame-char-height)))))
   (setq-default powerline-height (ry/compute-powerline-height))
 
-  (setq powerline-default-separator 'wave)
+  (setq powerline-default-separator 'slant)
   (nyan-mode)
   (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
   (setq spaceline-window-numbers-unicode t)
@@ -1471,7 +1471,7 @@ mouse-3: go to end")))
                  "w" 'save-buffer
                  "q" 'kill-this-buffer
                  "c SPC" 'comment-or-uncomment-line-or-region
-                 "b" 'helm-bookmark
+                 "b" 'helm-bookmarks
                  "f" 'avy-goto-char
                  "e" 'helm-semantic-or-imenu
                  "p" 'projectile-find-file

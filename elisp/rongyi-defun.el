@@ -248,9 +248,10 @@ after visit also cd to the current buffer's dir"
   "Show the full path to the current file in the minibuffer."
   (interactive)
   ;; list-buffers-directory is the variable set in dired buffers
-  (let ((file-name (or (buffer-file-name) list-buffers-directory)))
+  (let* ((file-name (or (buffer-file-name) list-buffers-directory))
+         (ln (line-number-at-pos)))
     (if file-name
-        (message (kill-new file-name))
+        (message (kill-new (format "%s:%d" file-name ln)))
       (error "Buffer not visiting a file"))))
 
 (defun ry/split-window-vertically-and-switch ()

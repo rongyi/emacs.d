@@ -368,7 +368,7 @@
   (add-hook 'ido-make-file-list-hook 'ido-sort-mtime)
   (add-hook 'ido-make-dir-list-hook 'ido-sort-mtime))
 
-(use-package ido-ubiquitous
+(use-package ido-completing-read+
   :ensure t
   :config
   (ido-ubiquitous-mode 1))
