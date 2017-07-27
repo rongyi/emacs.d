@@ -519,7 +519,7 @@ auto-indent."
   (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
 
 (use-package company-anaconda
-  :ensure nil
+  :ensure t
   :config
   (add-to-list 'company-backends 'company-anaconda))
 
@@ -642,7 +642,7 @@ auto-indent."
   :config
   ;; cancel argument
 
-  (dolist (hook '(c-mode-hook c++-mode-hook go-mode-hook))
+  (dolist (hook '(c-mode-hook c++-mode-hook go-mode-hook cc-mode-hook))
     (add-hook hook #'ycmd-mode))
   (set-variable 'ycmd-server-command '("python" "/usr/local/ycmd/ycmd"))
   (set-variable 'ycmd-global-config (expand-file-name ".emacs.d/ycm_extra_conf.py" (getenv "HOME")))
@@ -1046,6 +1046,8 @@ mouse-3: go to end")))
 ;;   :ensure t
 ;;   :config
 ;;   (load-theme 'base16-ashes t))
+
+;; (load-theme 'spacemacs-dark t)
 
 (use-package highlight-symbol
   :ensure t
