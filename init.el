@@ -126,7 +126,7 @@
   (evil-set-initial-state 'anaconda-mode-view-mode 'emacs)
   (evil-set-initial-state 'shell-mode 'emacs)
   (evil-set-initial-state 'lisp-mode 'emacs)
-  (evil-set-initial-state 'gud-mod 'emacs)
+  (evil-set-initial-state 'gud-mode 'emacs)
   ;; http://emacs.stackexchange.com/questions/9583/how-to-treat-underscore-as-part-of-the-word
   (defalias #'forward-evil-word #'forward-evil-symbol)
   (evil-mode 1)
