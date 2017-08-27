@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: forauto
+# key: forauto
+# --
+for (auto $1 : $2) {
+  $3
+}
