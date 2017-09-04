@@ -473,6 +473,12 @@ auto-indent."
   (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
   (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
 
+  (ry/after-load 'company-template
+    (define-key company-template-nav-map (kbd "TAB") nil)
+    (define-key company-template-nav-map [tab] nil)
+    (define-key company-template-field-map (kbd "C-d") 'nil)
+    (define-key company-template-nav-map (kbd "C-d") 'company-template-forward-field))
+
   :diminish company-mode " ⓐ")
 
 (use-package company-statistics
@@ -1461,7 +1467,6 @@ mouse-3: go to end")))
   :bind (("C-c b m" . ry/add-bookmark)
          ("C-c r m" . ry/add-bookmark)
          ("C-c r l" . helm-bookmarks)))
-
 
 ;; when everything is set, we make our evil leader bindings
 (use-package general
