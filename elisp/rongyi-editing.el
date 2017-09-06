@@ -397,4 +397,16 @@ me the line is too long"
         (end (if (region-active-p) (region-end) (point-max))))
     (sort-lines nil beg end)))
 
+(defun start--file (path)
+  "Create a file at PATH, creating any containing directories as necessary.
+Visit the file after creation."
+  (make-directory (file-name-directory path) t)
+  (find-file path))
+
+(defun ry/start-tmp-file (file-name)
+  "Create a file in /tmp for the given file name."
+  (interactive "sName of temporary file: ")
+  (start--file (expand-file-name (format "/tmp/%s" file-name))))
+
+
 (provide 'rongyi-editing)

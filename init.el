@@ -1043,10 +1043,10 @@ mouse-3: go to end")))
 ;;   :config
 ;;   (load-theme 'spacemacs-dark t))
 
-(use-package dracula-theme
-  :ensure t
-  :config
-  (load-theme 'dracula t))
+;; (use-package dracula-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'dracula t))
 
 ;; (load-theme 'solarized-dark t)
 ;; (use-package base16-theme
@@ -1055,6 +1055,11 @@ mouse-3: go to end")))
 ;;   (load-theme 'base16-ashes t))
 
 ;; (load-theme 'spacemacs-dark t)
+
+(use-package tangotango-theme
+  :ensure t
+  :config
+  (load-theme 'tangotango t))
 
 (use-package highlight-symbol
   :ensure t
