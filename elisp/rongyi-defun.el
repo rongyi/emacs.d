@@ -68,7 +68,7 @@ directory to make multiple eshell windows easier."
     (eshell-send-input)
     (company-mode -1)))
 
-(defun ry/eshell/x ()
+(defun eshell/x ()
   (insert "exit")
   (eshell-send-input)
   (delete-window))

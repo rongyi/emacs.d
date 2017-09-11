@@ -121,12 +121,13 @@
   (setq evil-replace-state-cursor '("chocolate" bar))
   (setq evil-operator-state-cursor '("red" hollow))
 
-  ;; in git commit message or org mode, we'll using evil when we needed
+  ;; workaround for some mode
   (evil-set-initial-state 'text-mode 'emacs)
   (evil-set-initial-state 'anaconda-mode-view-mode 'emacs)
   (evil-set-initial-state 'shell-mode 'emacs)
   (evil-set-initial-state 'lisp-mode 'emacs)
   (evil-set-initial-state 'gud-mode 'emacs)
+  (evil-set-initial-state 'godoc-mode 'emacs)
   ;; http://emacs.stackexchange.com/questions/9583/how-to-treat-underscore-as-part-of-the-word
   (defalias #'forward-evil-word #'forward-evil-symbol)
   (evil-mode 1)
@@ -477,7 +478,7 @@ auto-indent."
     (define-key company-template-nav-map (kbd "TAB") nil)
     (define-key company-template-nav-map [tab] nil)
     (define-key company-template-field-map (kbd "C-d") 'nil)
-    (define-key company-template-nav-map (kbd "C-d") 'company-template-forward-field))
+    (define-key company-template-nav-map (kbd "M-j") 'company-template-forward-field))
 
   :diminish company-mode " ⓐ")
 
@@ -635,7 +636,14 @@ auto-indent."
   :config
   (yas-global-mode 1)
   (define-key yas-minor-mode-map (kbd "C-M-,") 'yas-expand)
+
+  ;; disable *ALL* tab in any mode other than company-mode to make it has only
+  ;; one meaning: complete what we want!
+  (define-key yas-keymap (kbd "TAB") nil)
+  (define-key yas-keymap [tab] nil)
+  (define-key yas-keymap (kbd "<C-tab>") 'yas-next-field-or-maybe-expand)
   (add-to-list 'yas-snippet-dirs (ry/emacs-subdirectory "snippets"))
+
   :diminish (yas-minor-mode . " Ⓨ"))
 
 ;; undo-tree (use C-x u to visualize, C-_ to undo, M-_ to redo)
