@@ -699,11 +699,17 @@ auto-indent."
           (comint-send-input)))
       (message "current file builded.")))
   (defun ry/go-tab-less-evil ()
-    (setq tab-width 4 ; not the same with C/C++, prefer go-fmt favor
+    (setq tab-width 4 ; different with C/C++ coding style, prefer go-fmt's favor
           indent-tabs-mode t)
     ;; tabs are fine in go mode
     (setq ethan-wspace-errors
           (remove 'tabs ethan-wspace-errors)))
+  ;; golang struct instance line break
+  (defun ry/insert-comma-and-break ()
+    (interactive)
+    (end-of-line)
+    (insert ",")
+    (newline-for-code))
   ;; (add-hook 'before-save-hook 'gofmt-before-save)
   (add-hook 'go-mode-hook #'ry/go-tab-less-evil)
 
@@ -717,8 +723,10 @@ auto-indent."
                                         (interactive)
                                         (insert ":=")))
   (define-key go-mode-map (kbd "M-<") (lambda ()
-                                        (interactive)
-                                        (insert "<-")))
+                                       (interactive)
+                                       (insert "<-")))
+
+  (global-set-key [(control shift return)] #'ry/insert-comma-and-break)
   (setq godoc-at-point-function 'godoc-gogetdoc))
 
 (use-package go-eldoc
@@ -1051,10 +1059,10 @@ mouse-3: go to end")))
 ;;   :config
 ;;   (load-theme 'spacemacs-dark t))
 
-;; (use-package dracula-theme
-;;   :ensure t
-;;   :config
-;;   (load-theme 'dracula t))
+(use-package dracula-theme
+  :ensure t
+  :config
+  (load-theme 'dracula t))
 
 ;; (load-theme 'solarized-dark t)
 ;; (use-package base16-theme
@@ -1064,10 +1072,10 @@ mouse-3: go to end")))
 
 ;; (load-theme 'spacemacs-dark t)
 
-(use-package tangotango-theme
-  :ensure t
-  :config
-  (load-theme 'tangotango t))
+;; (use-package tangotango-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'tangotango t))
 
 (use-package highlight-symbol
   :ensure t

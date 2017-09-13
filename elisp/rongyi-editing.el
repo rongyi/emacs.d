@@ -138,7 +138,9 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
   (lexical-let ((text surr-str))
     (lambda ()
       (interactive)
-      (surround-text text))))
+      (surround-text text)
+      (when (not (evil-insert-state-p))
+        (evil-insert-state)))))
 
 
 ;; steal from prelude
