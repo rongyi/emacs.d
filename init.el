@@ -89,6 +89,7 @@
   (evil-map insert "C-w" 'ry/kill-region-or-backward-word)
   (evil-map visual "C-w" 'ry/kill-region-or-backward-word)
   (evil-map insert "C-o" 'ry/open-line-above)
+  (evil-map insert "C-y" 'evil-paste-after)
   ;; dont quite visual mode
   (evil-map visual "<" #'(lambda ()
                            (interactive)
@@ -714,11 +715,14 @@ auto-indent."
   (add-hook 'go-mode-hook #'ry/go-tab-less-evil)
 
   (define-key go-mode-map (kbd "C-c C-f") 'gofmt)
+  ;; override global intend buffer or region
+  (define-key go-mode-map (kbd "C-M-\\") 'gofmt)
   (define-key go-mode-map (kbd "C-c C-c") 'ry/go-test)
   (define-key go-mode-map (kbd "M-.") 'godef-jump)
   ;; the same key as show python function doc in anaconda mode
   (define-key go-mode-map (kbd "M-?") 'godoc-at-point)
   (define-key go-mode-map (kbd "C-c C-r") 'go-remove-unused-imports)
+  ;; semantic unit
   (define-key go-mode-map (kbd "M-=") (lambda ()
                                         (interactive)
                                         (insert ":=")))

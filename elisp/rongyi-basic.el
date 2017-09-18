@@ -135,8 +135,8 @@
 ;; font
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Standard-Faces.html
 ;; some other font: hasklig/Sourcecode pro/Monoid/PragmataPro/Fira Code
-(set-frame-font "PragmataPro 12")
-(add-to-list 'default-frame-alist '(font . "PragmataPro 12"))
+(set-frame-font "Fira Code 12")
+(add-to-list 'default-frame-alist '(font . "Fira Code 12"))
 ;; add some ligture: https://gist.github.com/mordocai/50783defab3c3d1650e068b4d1c91495
 (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol")
 (add-to-list 'default-frame-alist '(width . 110))
