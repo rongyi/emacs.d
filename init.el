@@ -1057,16 +1057,16 @@ mouse-3: go to end")))
 ;;   :config
 ;;   (moe-light))
 
-;; (load-theme 'leuven t)
+(load-theme 'leuven t)
 ;; (use-package spacemacs-theme
 ;;   :ensure t
 ;;   :config
 ;;   (load-theme 'spacemacs-dark t))
 
-(use-package dracula-theme
-  :ensure t
-  :config
-  (load-theme 'dracula t))
+;; (use-package dracula-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'dracula t))
 
 ;; (load-theme 'solarized-dark t)
 ;; (use-package base16-theme
