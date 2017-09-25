@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: json tag
-# key: jt
-# --
-\`json:"$0,omitempty"\`
