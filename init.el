@@ -727,8 +727,8 @@ auto-indent."
                                         (interactive)
                                         (insert ":=")))
   (define-key go-mode-map (kbd "M-<") (lambda ()
-                                       (interactive)
-                                       (insert "<-")))
+                                        (interactive)
+                                        (insert "<-")))
 
   (global-set-key [(control shift return)] #'ry/insert-comma-and-break)
   (setq godoc-at-point-function 'godoc-gogetdoc))
@@ -1047,17 +1047,17 @@ mouse-3: go to end")))
 
 ;; Are you a theme slut?
 
-;; (use-package color-theme-sanityinc-tomorrow
-;;   :ensure t
-;;   :config
-;;   (load-theme 'sanityinc-tomorrow-day t))
+(use-package color-theme-sanityinc-tomorrow
+  :ensure t
+  :config
+  (load-theme 'sanityinc-tomorrow-day t))
 
 ;; (use-package moe-theme
 ;;   :ensure t
 ;;   :config
 ;;   (moe-light))
 
-(load-theme 'leuven t)
+;; (load-theme 'leuven t)
 ;; (use-package spacemacs-theme
 ;;   :ensure t
 ;;   :config
@@ -1492,6 +1492,13 @@ mouse-3: go to end")))
   :bind (("C-c b m" . ry/add-bookmark)
          ("C-c r m" . ry/add-bookmark)
          ("C-c r l" . helm-bookmarks)))
+
+;;
+(use-package flycheck-gometalinter
+  :ensure t
+  :config
+  (progn
+    (flycheck-gometalinter-setup)))
 
 ;; when everything is set, we make our evil leader bindings
 (use-package general
