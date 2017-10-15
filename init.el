@@ -1266,13 +1266,7 @@ mouse-3: go to end")))
         ;; Use recentf to manage file name history
         helm-ff-file-name-history-use-recentf t
         ;; Find libraries from `require', etc.
-        helm-ff-search-library-in-sexp t)
-  (when (eq system-type 'darwin)
-    ;; Replace locate with spotlight for `helm-for-files'
-    (setq helm-for-files-preferred-list
-          (append (delq 'helm-source-locate
-                        helm-for-files-preferred-list)
-                  '(helm-source-mac-spotlight)))))
+        helm-ff-search-library-in-sexp t))
 
 (use-package autorevert                 ; Auto-revert buffers of changed files
   :init (global-auto-revert-mode)
