@@ -77,6 +77,14 @@
 (setq auto-revert-interval 1)
 ;; no blinking cursor
 (blink-cursor-mode -1)
+;; make cursor the width of the character it is under
+(setq x-stretch-cursor t)
+;; Save whatever’s in the current (system) clipboard before
+;; replacing it with the Emacs’ text.
+;; https://github.com/dakrone/eos/blob/master/eos.org
+(setq save-interprogram-paste-before-kill t)
+;; copy mouse selected text
+(setq mouse-drag-copy-region t)
 
 ;; Automatically save buffers before launching M-x compile and friends,
 ;; instead of asking you if you want to save.

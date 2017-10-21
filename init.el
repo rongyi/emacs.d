@@ -142,7 +142,9 @@
 ;; avy
 (use-package avy
   :ensure t
-  :bind (("C-c j w" . avy-goto-word-1)
+  ;; TODO: consider this key
+  :bind (("C-j" . avy-goto-word-1)
+         ;; these keys we almost never use
          ("C-c j l" . avy-goto-line)
          ("C-c j b" . avy-pop-mark)
          ("C-c j j" . avy-goto-char-2)
@@ -960,11 +962,13 @@ mouse-3: go to end")))
               (define-key dired-mode-map (kbd "^")
                 (lambda ()
                   (interactive)
-                  (find-alternate-file ".."))))))
+                  (find-alternate-file "..")))))
+  :config
+  ;; auto refresh dired when file changes
+  (add-hook 'dired-mode-hook 'auto-revert-mode))
 
 ;; [[https://github.com/alpaker/Fill-Column-Indicator][fill-column-indicator]] toggle the vertical column that indicates the fill
 ;; threshold.
-
 (use-package fill-column-indicator
   :ensure nil
   :commands fci-mode
@@ -1045,12 +1049,11 @@ mouse-3: go to end")))
   (dumb-jump-mode)
   :diminish dumb-jump-mode)
 
-;; Are you a theme slut?
-
-(use-package color-theme-sanityinc-tomorrow
-  :ensure t
-  :config
-  (load-theme 'sanityinc-tomorrow-day t))
+;; I am a theme slut
+;; (use-package color-theme-sanityinc-tomorrow
+;;   :ensure t
+;;   :config
+;;   (load-theme 'sanityinc-tomorrow-day t))
 
 ;; (use-package moe-theme
 ;;   :ensure t
@@ -1063,10 +1066,10 @@ mouse-3: go to end")))
 ;;   :config
 ;;   (load-theme 'spacemacs-dark t))
 
-;; (use-package dracula-theme
-;;   :ensure t
-;;   :config
-;;   (load-theme 'dracula t))
+(use-package dracula-theme
+  :ensure t
+  :config
+  (load-theme 'dracula t))
 
 ;; (load-theme 'solarized-dark t)
 ;; (use-package base16-theme
@@ -1487,13 +1490,6 @@ mouse-3: go to end")))
          ("C-c r m" . ry/add-bookmark)
          ("C-c r l" . helm-bookmarks)))
 
-;;
-(use-package flycheck-gometalinter
-  :ensure t
-  :config
-  (progn
-    (flycheck-gometalinter-setup)))
-
 ;; when everything is set, we make our evil leader bindings
 (use-package general
   :ensure t
@@ -1501,6 +1497,7 @@ mouse-3: go to end")))
   (general-evil-setup)
   (general-nvmap :prefix ","
                  "," 'goto-last-change
+                 "." 'goto-last-change-reverse
                  "l" 'linum-mode
                  "w" 'save-buffer
                  "q" 'kill-this-buffer

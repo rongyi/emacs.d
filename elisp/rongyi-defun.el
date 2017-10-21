@@ -549,4 +549,8 @@ Compare them on count first,and in case of tie sort them alphabetically."
         (message "No words.")))
     words))
 
+(defun ry/insert-todays-date (arg)
+  (interactive "P")
+  (insert (format-time-string "%Y-%m-%d")))
+
 (provide 'rongyi-defun)
