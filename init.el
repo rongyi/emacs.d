@@ -1083,6 +1083,10 @@ mouse-3: go to end")))
 ;;   :ensure t
 ;;   :config
 ;;   (load-theme 'tangotango t))
+;; (use-package doom-themes
+;;   :ensure t
+;;   :config
+;;   (load-theme 'doom-one t))
 
 (use-package highlight-symbol
   :ensure t
@@ -1489,6 +1493,9 @@ mouse-3: go to end")))
   :bind (("C-c b m" . ry/add-bookmark)
          ("C-c r m" . ry/add-bookmark)
          ("C-c r l" . helm-bookmarks)))
+
+(use-package clang-format
+  :bind (("C-c e f" . clang-format-buffer)))
 
 ;; when everything is set, we make our evil leader bindings
 (use-package general
