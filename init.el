@@ -1335,6 +1335,7 @@ mouse-3: go to end")))
            (path (file-name-directory file))
            (output (file-name-nondirectory  (file-name-sans-extension file))))
       (ry/visit-term-buffer)
+      (end-of-buffer)
       (insert (format "cd %s && g++ -g --std=c++11 %s -o %s"
                       path
                       (file-name-nondirectory  file)
@@ -1343,7 +1344,8 @@ mouse-3: go to end")))
       ;; switch back to source code
       (cond
        ((> prefix 1) (other-window -1))
-       (t (insert (format "./%s" output))
+       (t (end-of-buffer)
+          (insert (format "./%s" output))
           (comint-send-input)))
       (message "current file builded.")))
   (define-key c++-mode-map (kbd "C-c C-c") 'ry/cc-test))
