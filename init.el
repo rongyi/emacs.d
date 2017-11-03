@@ -150,8 +150,27 @@
          ("C-c j j" . avy-goto-char-2)
          ("C-c j c" . avy-goto-char))
   :config
-  (set-face-attribute 'avy-lead-face nil :foreground "gold" :weight 'bold :background nil)
-  (set-face-attribute 'avy-lead-face-0 nil :foreground "deep sky blue" :weight 'bold :background nil))
+  (setq avy-background t
+        avy-style 'de-bruijn
+        avy-timeout-seconds 0.3
+        avy-keys (eval-when-compile (string-to-list "jfkdlsaurieowncpqmxzb")))
+
+  (set-face-foreground 'avy-background-face "#586e75")
+
+  (set-face-attribute 'avy-lead-face nil
+                      :weight 'normal
+                      :background nil
+                      :foreground "#b58900"
+                      :inherit nil)
+  (set-face-attribute 'avy-lead-face-0 nil
+                      :weight 'extra-bold
+                      :background nil
+                      :foreground "#dc322f"
+                      :inherit nil)
+  (set-face-attribute 'avy-lead-face-1 nil
+                      :background nil
+                      :foreground "#839493"
+                      :inherit nil))
 
 ;; expand-region
 (use-package expand-region
@@ -484,6 +503,63 @@ auto-indent."
     (define-key company-template-nav-map (kbd "M-j") 'company-template-forward-field))
 
   :diminish company-mode " ⓐ")
+
+;; from pythonnut
+(use-package hippie-exp
+  :config
+  (defun ry/he-try-expand-flx-regexp (str)
+    "Generate regexp for flexible matching of str."
+    (concat (rx word-boundary)
+            (mapconcat (lambda (x)
+                         (concat (rx (zero-or-more word) (zero-or-more "-"))
+                                 (list x)))
+                       str
+                       "")
+            (rx (zero-or-more word) word-boundary)))
+
+  (defun ry/he-try-expand-flx-collect (str)
+    "Find and collect all words that flex-match str, and sort by flx score"
+    (let ((coll)
+          (regexp (ry/he-try-expand-flx-regexp str)))
+      (save-excursion
+        (goto-char (point-min))
+        (while (search-forward-regexp regexp nil t)
+          (push (thing-at-point 'symbol) coll)))
+      (sort coll #'(lambda (a b)
+                     (> (car (flx-score a str))
+                        (car (flx-score b str)))))))
+
+  (defun ry/he-try-expand-flx (old)
+    "Try to complete word using flx matching."
+    (unless old
+      (he-init-string (he-lisp-symbol-beg) (point))
+      (unless (he-string-member he-search-string he-tried-table)
+        (push he-search-string he-tried-table))
+      (setq he-expand-list
+            (unless (equal he-search-string "")
+              (ry/he-try-expand-flx-collect he-search-string))))
+    (while (and he-expand-list
+                (he-string-member (car he-expand-list) he-tried-table))
+      (pop he-expand-list))
+    (prog1
+        (null he-expand-list)
+      (if (null he-expand-list)
+          (when old (he-reset-string))
+        (he-substitute-string (pop he-expand-list)))))
+
+  (setq hippie-expand-try-functions-list
+        '(yas-hippie-try-expand
+          try-expand-dabbrev
+          try-expand-dabbrev-from-kill
+          ry/he-try-expand-flx
+          try-expand-dabbrev-all-buffers
+          try-complete-file-name-partially
+          try-complete-file-name
+          try-expand-all-abbrevs
+          try-expand-list
+          try-expand-line
+          try-complete-lisp-symbol-partially
+          try-complete-lisp-symbol)))
 
 (use-package company-statistics
   :ensure t

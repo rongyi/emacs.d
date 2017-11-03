@@ -136,6 +136,7 @@
 
 (setq truncate-partial-width-windows nil)
 (setq-default truncate-lines t)
+(setq-default global-visual-line-mode t)
 
 (mouse-avoidance-mode 'exile)
 
@@ -298,17 +299,6 @@
 
 ;; hippie expand
 (global-set-key (kbd "M-/") 'hippie-expand)
-(setq hippie-expand-try-functions-list
-      '(try-expand-dabbrev
-        try-expand-dabbrev-all-buffers
-        try-expand-dabbrev-from-kill
-        try-complete-file-name-partially
-        try-complete-file-name
-        try-expand-all-abbrevs
-        try-expand-list
-        try-expand-line
-        try-complete-lisp-symbol-partially
-        try-complete-lisp-symbol))
 
 (when (eq system-type 'darwin) ;; mac specific settings
   (setq mac-option-modifier 'alt)
