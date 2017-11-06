@@ -103,9 +103,6 @@
 (savehist-mode 1)
 (setq history-length 1000)
 
-;'Woman' > 'man'.
-(defalias 'man 'woman)
-
 ;; http://emacsredux.com/blog/2013/05/31/highlight-lines-that-exceed-a-certain-length-limit/
 ;; (require 'whitespace)
 ;; (setq whitespace-line-column 80)
@@ -539,6 +536,7 @@
 (bind-key "C-c e s" 'ry/sudo-edit)
 (bind-key "C-c e S" 'ry/save-all)
 (bind-key "C-c e w" 'toggle-truncate-lines)
+(bind-key "C-c e T" 'ry/start-tmp-file)
 
 ;; put window command together
 (bind-key "C-c w t" 'ry/toggle-transparency)

@@ -410,5 +410,25 @@ Visit the file after creation."
   (interactive "sName of temporary file: ")
   (start--file (expand-file-name (format "/tmp/%s" file-name))))
 
+(defun ry/start-scratch-html-file (file-name)
+  "Create a test HTML file in ~/scratch to play around with."
+  (interactive "sName of scratch HTML file: ")
+  (ry/start-tmp-file file-name)
+  (erase-buffer)
+  (insert "<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">
+        <title>
+        </title>
+        <style type=\"text/css\">
+        </style>
+    </head>
+    <body>
+
+    </body>
+</html>")
+  (forward-line -2)
+  (move-end-of-line nil))
 
 (provide 'rongyi-editing)

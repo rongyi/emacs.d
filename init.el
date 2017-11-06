@@ -997,7 +997,7 @@ mouse-3: go to end")))
 (use-package which-key
   :ensure t
   :config
-  (which-key-mode)
+  ;; (which-key-mode)
   (setq which-key-idle-delay 0.2
         which-key-sort-order 'which-key-prefix-then-key-order
         which-key-key-replacement-alist
