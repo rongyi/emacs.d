@@ -553,4 +553,10 @@ Compare them on count first,and in case of tie sort them alphabetically."
   (interactive "P")
   (insert (format-time-string "%Y-%m-%d")))
 
+
+(defun ry/spawn-terminal-here ()
+  "Open a terminal in the current buffer's directory"
+  (interactive)
+  (start-process "gnome-terminal" nil "gnome-terminal"))
+
 (provide 'rongyi-defun)
