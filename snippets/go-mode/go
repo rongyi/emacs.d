@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: go
+# key: go
+# --
+go func() {
+   $0
+}()
