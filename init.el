@@ -155,7 +155,22 @@
         avy-timeout-seconds 0.3
         avy-keys (eval-when-compile (string-to-list "jfkdlsaurieowncpqmxzb")))
 
-  (set-face-foreground 'avy-background-face "#586e75"))
+  (set-face-foreground 'avy-background-face "#586e75")
+
+  (set-face-attribute 'avy-lead-face nil
+                      :weight 'normal
+                      :background nil
+                      :foreground "#b58900"
+                      :inherit nil)
+  (set-face-attribute 'avy-lead-face-0 nil
+                      :weight 'extra-bold
+                      :background nil
+                      :foreground "#dc322f"
+                      :inherit nil)
+  (set-face-attribute 'avy-lead-face-1 nil
+                      :background nil
+                      :foreground "#839493"
+                      :inherit nil))
 
 ;; expand-region
 (use-package expand-region
@@ -1111,15 +1126,6 @@ mouse-3: go to end")))
   :diminish dumb-jump-mode)
 
 ;; I am a theme slut
-;; (use-package color-theme-sanityinc-tomorrow
-;;   :ensure t
-;;   :config
-;;   (load-theme 'sanityinc-tomorrow-day t))
-
-;; (use-package moe-theme
-;;   :ensure t
-;;   :config
-;;   (moe-light))
 
 ;; (load-theme 'leuven t)
 ;; (use-package spacemacs-theme
@@ -1127,27 +1133,19 @@ mouse-3: go to end")))
 ;;   :config
 ;;   (load-theme 'spacemacs-dark t))
 
-(use-package dracula-theme
-  :ensure t
-  :config
-  (load-theme 'dracula t))
-
-;; (load-theme 'solarized-dark t)
-;; (use-package base16-theme
+;; (use-package dracula-theme
 ;;   :ensure t
 ;;   :config
-;;   (load-theme 'base16-ashes t))
+;;   (load-theme 'dracula t))
+
+;; (load-theme 'solarized-dark t)
+(use-package base16-theme
+  :ensure t
+  :config
+  (load-theme 'base16-solarized-dark t))
 
 ;; (load-theme 'spacemacs-dark t)
 
-;; (use-package tangotango-theme
-;;   :ensure t
-;;   :config
-;;   (load-theme 'tangotango t))
-;; (use-package doom-themes
-;;   :ensure t
-;;   :config
-;;   (load-theme 'doom-one t))
 
 (use-package highlight-symbol
   :ensure t
