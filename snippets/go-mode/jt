@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: json tag
+# name: json tag template
 # key: jt
 # --
 \`json:"$0,omitempty"\`

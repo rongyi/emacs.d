@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
-# name: nil
+# name: nil check
 # key: nil
 # --
-if ${0:err} != nil {
-   $1
+if err != nil {
+   $0
 }

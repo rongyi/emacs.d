@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: tt
-# key: tt
-# --
-func Test$0(t *testing.T) {
-     $1
-}

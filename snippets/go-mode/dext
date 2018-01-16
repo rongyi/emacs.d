@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: device extension
+# key: dext
+# --
+
+// Adxcloud device extendsion
+type DeviceExt struct {
+	IDFA string \`json:"idfa,omitempty"\`
+	AnID string \`json:"anid,omitempty"\`
+	IMEI string \`json:"imei,omitempty"\`
+	MAC  string \`json:"mac,omitempty"\`
+}

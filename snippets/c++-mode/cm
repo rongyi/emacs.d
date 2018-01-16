@@ -2,9 +2,11 @@
 # name: cm
 # key: cm
 # --
+
 #include <vector>
 #include <iostream>
 #include <string>
+#include <bitset>
 
 using std::vector;
 using std::cout;
