@@ -324,17 +324,19 @@
   (ido-everywhere t)
   (global-set-key (kbd "C-x C-f") 'ido-find-file)
   (global-set-key (kbd "C-x C-o") 'ido-find-file-other-window)
+
+  (defun ry/ido-go-straight-home()
+    (interactive)
+    (if (looking-back "/")
+        (insert "~/go/src/")
+      (call-interactively 'self-insert-command)))
+
+  (defun ry/setup-ido ()
+    (define-key ido-file-completion-map (kbd "~") 'ry/ido-go-straight-home)
+    (define-key ido-completion-map (kbd "C-p") 'ido-prev-match)
+    (define-key ido-completion-map (kbd "C-n") 'ido-next-match))
   ;; go straight home by pressing ~
-  (add-hook 'ido-setup-hook (lambda ()
-                              (define-key ido-file-completion-map
-                                (kbd "~")
-                                (lambda ()
-                                  (interactive)
-                                  (if (looking-back "/")
-                                      (insert "~/")
-                                    (call-interactively 'self-insert-command))))
-                              (define-key ido-completion-map (kbd "C-p") 'ido-prev-match)
-                              (define-key ido-completion-map (kbd "C-n") 'ido-next-match)))
+  (add-hook 'ido-setup-hook #'ry/setup-ido)
 
   (defun ido-sort-mtime ()
     "Reorder the IDO file list to sort from most recently modified."
