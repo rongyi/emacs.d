@@ -1,5 +1,6 @@
 ;; basic settings
 
+;; no splash screen
 (setq inhibit-startup-message t)
 (setq initial-scratch-message ";; hack and be merry, ry!")
 (setq inhibit-startup-echo-area-message "rongyi")
@@ -16,8 +17,7 @@
 (setq scroll-margin 5
       scroll-conservatively 9999
       scroll-step 1
-      scroll-preserve-screen-position 1
-      redisplay-dont-pause t)
+      scroll-preserve-screen-position 1)
 ;; mouse scroll
 (setq mouse-wheel-follow-mouse 't)
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
@@ -102,15 +102,6 @@
 ;; Save minibuffer history
 (savehist-mode 1)
 (setq history-length 1000)
-
-;; http://emacsredux.com/blog/2013/05/31/highlight-lines-that-exceed-a-certain-length-limit/
-;; (require 'whitespace)
-;; (setq whitespace-line-column 80)
-;; (setq whitespace-style '(face lines-tail))
-
-;; (add-hook 'prog-mode-hook 'whitespace-mode)
-;; highlight the word under the point
-;;(add-hook 'prog-mode-hook 'idle-highlight-mode)
 
 ;; highlight current line
 (add-hook 'prog-mode-hook 'hl-line-mode)
