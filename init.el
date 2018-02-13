@@ -123,12 +123,14 @@
   (setq evil-operator-state-cursor '("red" hollow))
 
   ;; workaround for some mode
-  (evil-set-initial-state 'text-mode 'emacs)
-  (evil-set-initial-state 'anaconda-mode-view-mode 'emacs)
-  (evil-set-initial-state 'shell-mode 'emacs)
-  (evil-set-initial-state 'lisp-mode 'emacs)
-  (evil-set-initial-state 'gud-mode 'emacs)
-  (evil-set-initial-state 'godoc-mode 'emacs)
+  (dolist (m '(text-mode
+               anaconda-mode-view-mode
+               shell-mode
+               lisp-mode
+               gud-mode
+               godoc-mode
+               haskell-error-mode))
+    (evil-set-initial-state m 'emacs))
   ;; http://emacs.stackexchange.com/questions/9583/how-to-treat-underscore-as-part-of-the-word
   (defalias #'forward-evil-word #'forward-evil-symbol)
   (evil-mode 1)
@@ -409,7 +411,7 @@
   :config
   (setq ag-reuse-buffers t
         ag-highlight-search t
-        ag-ignore-list '("elpa" ".git" ".venv" "venv" "GTAGS" "GPATH" "GRTAGS" "testdata" ".cache")
+        ag-ignore-list '("elpa" ".git" ".venv" "venv" "GTAGS" "GPATH" "GRTAGS")
         ag-project-root-function (lambda (d)
                                    (let ((default-directory d))
                                      (projectile-project-root)))))
@@ -452,6 +454,12 @@ auto-indent."
   :diminish smartparens-mode)
 
 ;; company
+
+;; (use-package company-flx
+;;   :ensure t
+;;   :init
+;;   (with-eval-after-load 'company
+;;     (company-flx-mode +1)))
 
 (use-package company
   :ensure t
@@ -597,6 +605,18 @@ auto-indent."
   :config
   (add-to-list 'company-backends 'company-anaconda))
 
+;; indent guide have some bugs
+;; (use-package indent-guide
+;;   :ensure nil
+;;   :defer t
+;;   :init
+;;   (add-hook 'python-mode-hook 'indent-guide-mode)
+;;   (setq indent-guide-delay 0.3)
+;;   :config
+;;   ;; we only want this in Python mode
+;;   (indent-guide-global-mode -1)
+;;   :diminish indent-guide-mode)
+
 ;; js
 (use-package js2-mode
   :ensure t
@@ -674,6 +694,9 @@ auto-indent."
 (use-package ace-window
   :ensure t
   :config
+  ;; rarely use this key now, spaceline containing alt-1 like key to navigate between windows
+  ;; (global-set-key (kbd "C-x C-o") 'ace-window)
+
   ;; it seems like we dont need swap window frequently
   (global-set-key (kbd "C-x o") 'ace-window)
 
@@ -761,6 +784,7 @@ auto-indent."
     (end-of-line)
     (insert ",")
     (newline-for-code))
+  ;; (add-hook 'before-save-hook 'gofmt-before-save)
   (add-hook 'go-mode-hook #'ry/go-tab-less-evil)
 
   (define-key go-mode-map (kbd "C-c C-f") 'gofmt)
@@ -776,8 +800,8 @@ auto-indent."
                                         (interactive)
                                         (insert ":=")))
   (define-key go-mode-map (kbd "M-<") (lambda ()
-                                       (interactive)
-                                       (insert "<-")))
+                                        (interactive)
+                                        (insert "<-")))
 
   (global-set-key [(control shift return)] #'ry/insert-comma-and-break)
   (setq godoc-at-point-function 'godoc-gogetdoc))
@@ -796,6 +820,8 @@ auto-indent."
 ;; golint
 (use-package golint
   :ensure t)
+
+
 
 (define-key shell-mode-map (kbd "C-n") 'comint-next-input)
 (define-key shell-mode-map (kbd "C-p") 'comint-previous-input)
@@ -848,10 +874,10 @@ mouse-3: go to end")))
 
 (use-package windmove                   ; Move between windows with Shift+Arrow, just like my tmux conf
   :ensure t
-  :bind (("M-h" . windmove-left)
+  :bind (("M-h"  . windmove-left)
          ("M-l" . windmove-right)
-         ("M-k" . windmove-up)
-         ("M-j" . windmove-down)))
+         ("M-k"    . windmove-up)
+         ("M-j"  . windmove-down)))
 
 (use-package winner                     ; Undo and redo window configurations
   :init (winner-mode))
@@ -1094,11 +1120,27 @@ mouse-3: go to end")))
   (dumb-jump-mode)
   :diminish dumb-jump-mode)
 
-;; try to use dracula for a while, don't be a theme slut
+;; I am a theme slut
+
+;; (load-theme 'leuven t)
+;; (use-package spacemacs-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'spacemacs-dark t))
+
 (use-package dracula-theme
   :ensure t
   :config
   (load-theme 'dracula t))
+
+;; (load-theme 'solarized-dark t)
+;; (use-package base16-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'base16-solarized-dark t))
+
+;; (load-theme 'spacemacs-dark t)
+
 
 (use-package highlight-symbol
   :ensure t
