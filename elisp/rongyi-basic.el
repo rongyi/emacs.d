@@ -516,7 +516,11 @@
 (bind-key "C-c f c" 'ry/kill-other-buffers)
 (bind-key "C-c f y" 'ry/copy-all)
 (bind-key "C-c f o" 'ry/find-or-create-file-at-point)
-(bind-key "C-c f l" 'ry/show-and-copy-buffer-filename)
+;; like info in ghci
+(bind-key "C-c f i" 'ry/show-and-copy-buffer-filename)
+;; focus the function we care
+(bind-key "C-c f -" 'narrow-to-defun)
+(bind-key "C-c f >" 'widen)
 (bind-key "M-\\" 'ry/angry-split)
 (bind-key "M-|" 'ry/angry-split-switch)
 
@@ -544,7 +548,7 @@
 (bind-key "C-c w d" 'ry/toggle-current-window-dedication)
 (bind-key "C-c w r" 'ry/rotate-windows)
 
-(bind-key "C-M-y" 'ry/visit-term-buffer-with-current-dir)
+(bind-key "C-M-y" 'ry/eshell-here)
 (bind-key "C-(" (surround-text-with "("))
 (bind-key "C-\"" (surround-text-with "\""))
 

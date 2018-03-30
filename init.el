@@ -123,8 +123,7 @@
   (setq evil-operator-state-cursor '("red" hollow))
 
   ;; workaround for some mode
-  (dolist (m '(text-mode
-               anaconda-mode-view-mode
+  (dolist (m '(anaconda-mode-view-mode
                shell-mode
                lisp-mode
                gud-mode
@@ -139,7 +138,6 @@
 ;; count search number
 (use-package evil-anzu
   :ensure t)
-
 
 ;; avy
 (use-package avy
@@ -1456,6 +1454,7 @@ mouse-3: go to end")))
   :diminish hes-mode)
 
 (use-package adaptive-wrap
+  :ensure t
   :config
   (progn
     (add-hook 'visual-line-mode-hook 'adaptive-wrap-prefix-mode)))

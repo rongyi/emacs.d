@@ -11,6 +11,7 @@
      ,@body))
 
 (global-set-key (kbd "s-l") (λ (insert "\u03bb")))
+(global-set-key (kbd "s-f") (λ (insert "ƒ")))
 
 (defun ry/exec (command)
   "execute a shell command and return its output as a string"
