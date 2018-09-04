@@ -1550,6 +1550,7 @@ mouse-3: go to end")))
          ("C-c r l" . helm-bookmarks)))
 
 (use-package clang-format
+  :ensure t
   :bind (("C-c e f" . clang-format-buffer)))
 
 ;; when everything is set, we make our evil leader bindings
