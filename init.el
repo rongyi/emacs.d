@@ -447,7 +447,8 @@ auto-indent."
   (define-key smartparens-mode-map (kbd "C-S-<right>") 'sp-backward-barf-sexp)
   (setq sp-show-pair-delay 0.2
         sp-show-pair-from-inside t
-        sp-cancel-autoskip-on-backward-movement nil)
+        sp-cancel-autoskip-on-backward-movement nil
+        sp-escape-quotes-after-insert nil)
 
   :diminish smartparens-mode)
 
@@ -587,7 +588,8 @@ auto-indent."
                 #'python-imenu-create-flat-index))
   (add-hook 'post-self-insert-hook
             #'electric-layout-post-self-insert-function nil 'local)
-  (add-hook 'after-save-hook 'prelude-python-mode-set-encoding nil 'local))
+  (add-hook 'after-save-hook 'prelude-python-mode-set-encoding nil 'local)
+  (define-key python-mode-hook (kbd "C-c e f") 'py-yapf-buffer))
 
 (use-package anaconda-mode
   :ensure t
@@ -800,6 +802,7 @@ auto-indent."
   (define-key go-mode-map (kbd "M-<") (lambda ()
                                         (interactive)
                                         (insert "<-")))
+  (define-key go-mode-map (kbd "C-c e i") 'go-import-add)
 
   (global-set-key [(control shift return)] #'ry/insert-comma-and-break)
   (setq godoc-at-point-function 'godoc-gogetdoc))
@@ -1131,7 +1134,7 @@ mouse-3: go to end")))
   :config
   (load-theme 'dracula t))
 
-;; (load-theme 'solarized-dark t)
+;; (load-theme 'solarized-light t)
 ;; (use-package base16-theme
 ;;   :ensure t
 ;;   :config
@@ -1559,32 +1562,32 @@ mouse-3: go to end")))
   :config
   (general-evil-setup)
   (general-nvmap :prefix ","
-                 "," 'goto-last-change
-                 "." 'goto-last-change-reverse
-                 "l" 'linum-mode
-                 "w" 'save-buffer
-                 "q" 'kill-this-buffer
-                 "c SPC" 'comment-or-uncomment-line-or-region
-                 "b" 'helm-bookmarks
-                 "f" 'avy-goto-char
-                 "e" 'helm-semantic-or-imenu
-                 "p" 'projectile-find-file
-                 "g" 'magit-status
-                 "s" 'helm-ag-project-root
-                 "t" 'helm-gtags-select
-                 "SPC" 'ethan-wspace-clean-all
-                 "w" 'ace-window
-                 "K" (lambda ()
-                       (interactive)
-                       (save-excursion
-                         (other-window 1)
-                         (quit-window)
-                         (other-window 1)))
-                 "i" 'ry/find-user-init-file
-                 "r" 'helm-resume
-                 "y" 'ry/copy-whole-buffer-to-clipboard
-                 "?" 'helm-descbinds
-                 "a" 'ido-switch-buffer))
+    "," 'goto-last-change
+    "." 'goto-last-change-reverse
+    "l" 'linum-mode
+    "w" 'save-buffer
+    "q" 'kill-this-buffer
+    "c SPC" 'comment-or-uncomment-line-or-region
+    "b" 'helm-bookmarks
+    "f" 'avy-goto-char
+    "e" 'helm-semantic-or-imenu
+    "p" 'projectile-find-file
+    "g" 'magit-status
+    "s" 'helm-ag-project-root
+    "t" 'helm-gtags-select
+    "SPC" 'ethan-wspace-clean-all
+    "w" 'ace-window
+    "K" (lambda ()
+          (interactive)
+          (save-excursion
+            (other-window 1)
+            (quit-window)
+            (other-window 1)))
+    "i" 'ry/find-user-init-file
+    "r" 'helm-resume
+    "y" 'ry/copy-whole-buffer-to-clipboard
+    "?" 'helm-descbinds
+    "a" 'ido-switch-buffer))
 
 ;; diminish more minor mode
 (eval-after-load "yasnippet" '(diminish 'yas-minor-mode))

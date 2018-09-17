@@ -161,7 +161,7 @@ If arg is not nill or 1, move forward ARG - 1 lines first."
 (defun lint-code ()
   "insert link url for current buffer, the buffer name is the last section of the url"
   (interactive)
-  (insert (format "// http://www.lintcode.com/zh-cn/problem/%s\n" (file-name-sans-extension (buffer-name)))))
+  (insert (format "// http://leetcode.com/problems/%s/description/\n" (file-name-sans-extension (buffer-name)))))
 
 ;; indent utility
 (defun indent-defun()

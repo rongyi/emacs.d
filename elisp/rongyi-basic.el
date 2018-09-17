@@ -328,7 +328,7 @@
   (defun ry/ido-go-straight-home()
     (interactive)
     (if (looking-back "/")
-        (insert "~/go/src/")
+        (insert "~/")
       (call-interactively 'self-insert-command)))
 
   (defun ry/setup-ido ()
@@ -526,7 +526,7 @@
 
 ;; edit section
 (bind-key "C-c e ," 'ry/newline-after-comma)
-(bind-key "C-c e d" 'insert-date)
+(bind-key "C-c e d" 'ry/insert-todays-date)
 (bind-key "C-c e i" 'insert-include-guard)
 (bind-key "C-c e l" 'lint-code)
 (bind-key "C-c e t" 'ry/delete-company-useless-template)
@@ -548,7 +548,7 @@
 (bind-key "C-c w d" 'ry/toggle-current-window-dedication)
 (bind-key "C-c w r" 'ry/rotate-windows)
 
-(bind-key "C-M-y" 'ry/eshell-here)
+(bind-key "C-M-y" 'ry/visit-term-buffer)
 (bind-key "C-(" (surround-text-with "("))
 (bind-key "C-\"" (surround-text-with "\""))
 
