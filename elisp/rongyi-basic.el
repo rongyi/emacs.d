@@ -492,6 +492,9 @@
          (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green"))
          )))
 
+;; make shell open in current buffer after emacs 25
+;; https://github.com/kyagi/shell-pop-el/issues/51
+(push (cons "\\*shell\\*" display-buffer--same-window-action) display-buffer-alist)
 
 ;; global key bindings
 
@@ -548,7 +551,6 @@
 (bind-key "C-c w d" 'ry/toggle-current-window-dedication)
 (bind-key "C-c w r" 'ry/rotate-windows)
 
-(bind-key "C-M-y" 'ry/visit-term-buffer)
 (bind-key "C-(" (surround-text-with "("))
 (bind-key "C-\"" (surround-text-with "\""))
 

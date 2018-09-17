@@ -1553,8 +1553,14 @@ mouse-3: go to end")))
          ("C-c r l" . helm-bookmarks)))
 
 (use-package clang-format
-  :ensure t
   :bind (("C-c e f" . clang-format-buffer)))
+
+(use-package shell-pop
+  :ensure t
+  :bind (("C-M-y" . shell-pop))
+  :config
+  (setq shell-pop-term-shell "/bin/zsh"
+        shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell))))))
 
 ;; when everything is set, we make our evil leader bindings
 (use-package general
