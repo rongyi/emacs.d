@@ -496,6 +496,10 @@
 ;; https://github.com/kyagi/shell-pop-el/issues/51
 (push (cons "\\*shell\\*" display-buffer--same-window-action) display-buffer-alist)
 
+;; don't ask process buffer when quit
+;; https://emacs.stackexchange.com/questions/14509/kill-process-buffer-without-confirmation
+(setq kill-buffer-query-functions (delq 'process-kill-buffer-query-function kill-buffer-query-functions))
+
 ;; global key bindings
 
 ;; file related

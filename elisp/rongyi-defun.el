@@ -359,13 +359,13 @@ buffer"
 (defun ry/angry-split ()
   "Open file after split"
   (interactive)
-  (ry/split-window-horizontally-and-switch)
+  (ry/split-window-vertically-and-switch)
   (ido-find-file))
 
 (defun ry/angry-split-switch ()
   "Switch buffer in another buffer"
   (interactive)
-  (ry/split-window-horizontally-and-switch)
+  (ry/split-window-vertically-and-switch)
   (ido-switch-buffer))
 
 
