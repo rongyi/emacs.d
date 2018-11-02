@@ -788,6 +788,7 @@ auto-indent."
   (add-hook 'go-mode-hook #'ry/go-tab-less-evil)
 
   (define-key go-mode-map (kbd "C-c C-f") 'gofmt)
+  (define-key go-mode-map (kbd "C-c e f") 'gofmt)
   ;; override global intend buffer or region
   (define-key go-mode-map (kbd "C-M-\\") 'gofmt)
   (define-key go-mode-map (kbd "C-c C-c") 'ry/go-test)

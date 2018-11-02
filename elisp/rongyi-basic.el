@@ -139,7 +139,7 @@
 (add-to-list 'default-frame-alist '(font . "Fira Code 10"))
 ;; add some ligture: https://gist.github.com/mordocai/50783defab3c3d1650e068b4d1c91495
 (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol")
-(add-to-list 'default-frame-alist '(width . 110))
+(add-to-list 'default-frame-alist '(width . 120))
 (add-to-list 'default-frame-alist '(height . 50))
 
 (defun ry/configure-fonts (frame)
@@ -528,8 +528,6 @@
 ;; focus the function we care
 (bind-key "C-c f -" 'narrow-to-defun)
 (bind-key "C-c f >" 'widen)
-(bind-key "M-\\" 'ry/angry-split)
-(bind-key "M-|" 'ry/angry-split-switch)
 
 ;; edit section
 (bind-key "C-c e ," 'ry/newline-after-comma)
@@ -550,10 +548,13 @@
 (bind-key "C-c w m" 'ry/toggle-maximize-buffer)
 (bind-key "C-c w =" 'balance-windows)
 (bind-key "C-c w k" 'delete-window)
-(bind-key "C-c w \\" 'split-window-right)
-(bind-key "C-c w -" 'split-window-below)
+;; (bind-key "C-c w \\" 'split-window-right)
+;; (bind-key "C-c w -" 'split-window-below)
 (bind-key "C-c w d" 'ry/toggle-current-window-dedication)
 (bind-key "C-c w r" 'ry/rotate-windows)
+(bind-key "M-\\" 'ry/angry-split)
+(bind-key "M-|" 'ry/angry-split-switch)
+(bind-key "C-c w \\" 'ry/toggle-window-split)
 
 (bind-key "C-(" (surround-text-with "("))
 (bind-key "C-\"" (surround-text-with "\""))
