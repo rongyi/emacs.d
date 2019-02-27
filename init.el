@@ -801,12 +801,19 @@ auto-indent."
                                         (interactive)
                                         (insert ":=")))
   (define-key go-mode-map (kbd "M-<") (lambda ()
-                                        (interactive)
-                                        (insert "<-")))
+                                       (interactive)
+                                       (insert "<-")))
   (define-key go-mode-map (kbd "C-c e i") 'go-import-add)
+  (define-key go-mode-map (kbd "C-c e r") 'go-goto-method-receiver)
 
   (global-set-key [(control shift return)] #'ry/insert-comma-and-break)
-  (setq godoc-at-point-function 'godoc-gogetdoc))
+  (setq godoc-at-point-function 'godoc-gogetdoc)
+  ;; some go function split its args in multiline, so helm-menu can not list thest functions
+  ;; this is a fix
+  (add-hook 'go-mode-hook (lambda ()
+                            (setq imenu-generic-expression
+                                  '(("type" "^[ \t]*type *\\([^ \t\n\r\f]*[ \t]*\\(struct\\|interface\\)\\)" 1)
+                                    ("func" "^func *\\(.*\\)" 1))))))
 
 (use-package go-eldoc
   :ensure t
