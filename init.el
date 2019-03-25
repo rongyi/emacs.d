@@ -801,8 +801,8 @@ auto-indent."
                                         (interactive)
                                         (insert ":=")))
   (define-key go-mode-map (kbd "M-<") (lambda ()
-                                       (interactive)
-                                       (insert "<-")))
+                                        (interactive)
+                                        (insert "<-")))
   (define-key go-mode-map (kbd "C-c e i") 'go-import-add)
   (define-key go-mode-map (kbd "C-c e r") 'go-goto-method-receiver)
 
@@ -1569,6 +1569,16 @@ mouse-3: go to end")))
   :config
   (setq shell-pop-term-shell "/bin/zsh"
         shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell))))))
+
+
+(use-package flymd
+  :ensure t
+  :config
+  (setq flymd-browser-open-function (lambda ()
+                                      (let ((browse-url-browser-function 'browse-url-firefox))
+                                        (browse-url url)))))
+(use-package markdown-mode
+  :ensure t)
 
 ;; when everything is set, we make our evil leader bindings
 (use-package general
