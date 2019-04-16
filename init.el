@@ -569,27 +569,30 @@ auto-indent."
 
 
 ;; python auto complete
-(use-package python-mode
-  :defer t
-  :ensure nil
-  :config
-  (setq
-   python-shell-interpreter "python"
-   python-shell-interpreter-args ""
-   python-indent-offset 4)
+;; (use-package python-mode
+;;   :ensure t
+;;   :config
+;;   (setq
+;;    python-shell-interpreter "python"
+;;    python-shell-interpreter-args ""
+;;    python-indent-offset 4)
 
-  (setq-local electric-layout-rules
-              '((?: . (lambda ()
-                        (and (zerop (first (syntax-ppss)))
-                             (python-info-statement-starts-block-p)
-                             'after)))))
-  (when (fboundp #'python-imenu-create-flat-index)
-    (setq-local imenu-create-index-function
-                #'python-imenu-create-flat-index))
-  (add-hook 'post-self-insert-hook
-            #'electric-layout-post-self-insert-function nil 'local)
-  (add-hook 'after-save-hook 'prelude-python-mode-set-encoding nil 'local)
-  (define-key python-mode-hook (kbd "C-c e f") 'py-yapf-buffer))
+;;   (setq-local electric-layout-rules
+;;               '((?: . (lambda ()
+;;                         (and (zerop (first (syntax-ppss)))
+;;                              (python-info-statement-starts-block-p)
+;;                              'after)))))
+;;   (when (fboundp #'python-imenu-create-flat-index)
+;;     (setq-local imenu-create-index-function
+;;                 #'python-imenu-create-flat-index))
+;;   (add-hook 'post-self-insert-hook
+;;             #'electric-layout-post-self-insert-function nil 'local)
+;;   (add-hook 'after-save-hook 'prelude-python-mode-set-encoding nil 'local))
+
+(use-package py-yapf
+  :ensure t
+  :config
+  (define-key python-mode-map (kbd "C-c e f") 'py-yapf-buffer))
 
 (use-package anaconda-mode
   :ensure t
@@ -808,7 +811,7 @@ auto-indent."
 
   (global-set-key [(control shift return)] #'ry/insert-comma-and-break)
   (setq godoc-at-point-function 'godoc-gogetdoc)
-  ;; some go function split its args in multiline, so helm-menu can not list thest functions
+  ;; some go function split its args in multiline(especially in k8s code), so helm-menu can not list thest functions
   ;; this is a fix
   (add-hook 'go-mode-hook (lambda ()
                             (setq imenu-generic-expression
