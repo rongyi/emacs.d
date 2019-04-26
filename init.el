@@ -395,7 +395,9 @@
       (custom-set-variables
        '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))))
   (setq flycheck-clang-language-standard "c++11")
-  (setq flycheck-flake8-maximum-line-length 160))
+  (setq flycheck-flake8-maximum-line-length 160)
+  ;; disable go-vet, it has bug till date: 20190426
+  (setq-default flycheck-disabled-checkers '(go-vet)))
 
 (use-package flycheck-pos-tip
   :ensure t
