@@ -65,3 +65,4 @@
 **** DONE s (string库)
 **** DONE f (file lib)
 **** DONE dash (functional lib)
+* 完整的emacs历史： https://www.jwz.org/doc/emacs-timeline.html
