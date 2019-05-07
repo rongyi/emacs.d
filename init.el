@@ -1593,30 +1593,30 @@ mouse-3: go to end")))
   (general-nvmap :prefix ","
     "," 'goto-last-change
     "." 'goto-last-change-reverse
-    "l" 'linum-mode
-    "w" 'save-buffer
-    "q" 'kill-this-buffer
-    "c SPC" 'comment-or-uncomment-line-or-region
+    "a" 'ido-switch-buffer
     "b" 'helm-bookmarks
-    "f" 'avy-goto-char
+    "c SPC" 'comment-or-uncomment-line-or-region
     "e" 'helm-semantic-or-imenu
-    "p" 'projectile-find-file
+    "f" 'avy-goto-char
     "g" 'magit-status
+    "i" 'ry/find-user-init-file
+    "l" 'linum-mode
+    "p" 'projectile-find-file
+    "q" 'kill-this-buffer
+    "r" 'helm-resume
     "s" 'helm-ag-project-root
     "t" 'helm-gtags-select
-    "SPC" 'ethan-wspace-clean-all
-    "w" 'ace-window
+    "v" 'avy-goto-line
+    "w" 'save-buffer
+    "y" 'ry/copy-whole-buffer-to-clipboard
     "K" (lambda ()
           (interactive)
           (save-excursion
             (other-window 1)
             (quit-window)
             (other-window 1)))
-    "i" 'ry/find-user-init-file
-    "r" 'helm-resume
-    "y" 'ry/copy-whole-buffer-to-clipboard
     "?" 'helm-descbinds
-    "a" 'ido-switch-buffer))
+    "SPC" 'ethan-wspace-clean-all))
 
 ;; diminish more minor mode
 (eval-after-load "yasnippet" '(diminish 'yas-minor-mode))
