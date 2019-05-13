@@ -4,6 +4,11 @@
 (setq inhibit-startup-message t)
 (setq initial-scratch-message ";; hack and be merry, ry!")
 (setq inhibit-startup-echo-area-message "rongyi")
+(setq-default
+ user-full-name "ry"
+ user-mail-address "hiarongyi@gmail.com")
+;; hightlight current line
+(global-hl-line-mode)
 ;; custom to a seprate file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
