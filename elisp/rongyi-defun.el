@@ -439,18 +439,18 @@ argument takes the kindows rotate backwards."
   "Toggle between horizontal and vertical layout of two windows."
   (interactive)
   (if (= (count-windows) 2)
-    (let* ((window-tree (car (window-tree)))
-           (current-split-vertical-p (car window-tree))
-           (first-window (nth 2 window-tree))
-           (second-window (nth 3 window-tree))
-           (second-window-state (window-state-get second-window))
-           (splitter (if current-split-vertical-p
-                         #'split-window-horizontally
-                       #'split-window-vertically)))
-      (delete-other-windows first-window)
-      ;; `window-state-put' also re-selects the window if needed, so we don't
-      ;; need to call `select-window'
-      (window-state-put second-window-state (funcall splitter)))
+      (let* ((window-tree (car (window-tree)))
+             (current-split-vertical-p (car window-tree))
+             (first-window (nth 2 window-tree))
+             (second-window (nth 3 window-tree))
+             (second-window-state (window-state-get second-window))
+             (splitter (if current-split-vertical-p
+                           #'split-window-horizontally
+                         #'split-window-vertically)))
+        (delete-other-windows first-window)
+        ;; `window-state-put' also re-selects the window if needed, so we don't
+        ;; need to call `select-window'
+        (window-state-put second-window-state (funcall splitter)))
     (error "Can't toggle window layout when the number of windows isn't two.")))
 
 ;; from lunaryorn's emacs.d
@@ -559,5 +559,25 @@ Compare them on count first,and in case of tie sort them alphabetically."
   "Open a terminal in the current buffer's directory"
   (interactive)
   (start-process "gnome-terminal" nil "gnome-terminal"))
+
+
+(defun ry/ipinfo (ip)
+  "Returns the detail of an IP address from a certain IP, using ipinfo.io"
+  (interactive "sEnter IP to query (blank for own IP): ")
+  (request
+   (concat "https://ipinfo.io/" ip)
+   :headers '(("User-Agent" . "Emacs ipinfo.io Client")
+              ("Accept" . "application/json")
+              ("Content-Type" . "application/json;charset=utf-8"))
+   :parser 'json-read
+   :success (cl-function
+             (lambda (&key data &allow-other-keys)
+               (message
+                (mapconcat
+                 (lambda (e)
+                   (format "%10s: %s" (capitalize (symbol-name (car e))) (cdr e)))
+                 data "\n"))))
+   :error (cl-function (lambda (&rest args &key error-thrown &allow-other-keys)
+                         (message "Can't receive ipinfo. Error %S " error-thrown)))))
 
 (provide 'rongyi-defun)

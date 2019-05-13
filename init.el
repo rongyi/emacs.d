@@ -40,7 +40,10 @@
   :ensure t)
 (use-package bind-key
   :ensure t)
-
+(use-package f
+  :ensure t)
+(use-package s
+  :ensure t)
 (use-package dash
   :ensure t)
 
@@ -648,19 +651,22 @@ auto-indent."
 
 (use-package tern
   :ensure t
-  :defer t
   :init (add-hook 'js2-mode-hook 'tern-mode)
   :config
   ;; Don't generate port files
-  (add-to-list 'tern-command "--no-port-file" 'append))
+  (add-to-list 'tern-command "--no-port-file" 'append)
+  :hook ((js2-mode . company-mode)
+         (js2-mode . tern-mode)))
 
 (use-package company-tern
   :ensure t
-  :after company
+  :after (company tern)
   :config
   (add-to-list 'company-backends 'company-tern))
 
 (use-package json-mode
+  :delight "J "
+  :mode "\\.json\\'"
   :ensure t)
 
 ;; org ui candy
