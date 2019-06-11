@@ -69,3 +69,4 @@
 * [[https://https://two-wrongs.com/why-you-should-buy-into-the-emacs-platform][这里]]提到的一些点：
   1. C-x 8 ret ==> insert latin
   2. C-x = ==> show current cursor info
+  3. smerge-mode ==> 冲突merge工具
