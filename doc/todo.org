@@ -3,7 +3,7 @@
 ** DONE 使用use-package而不是自己造的轮子，进而需要对use-package的代码学习
 ** DONE 加入diminish和spaceline来美化modeline
 ** DONE emacs package: ctags-update, 能否配置成Vim一样的键映射
-** TODO 阅读自己关注的一些repo和follow的人的emacs配置，学习elisp [17/18]
+** TODO 阅读自己关注的一些repo和follow的人的emacs配置，学习elisp [18/18]
 *** DONE https://github.com/lunaryorn/.emacs.d.git
     beacon光标定位
 *** DONE https://github.com/howardabrams/dot-files.git
@@ -59,10 +59,13 @@
 
 *** DONE [[http://pragmaticemacs.com/][Emacs Pragmatic]]
 
-*** TODO Write a note about Emacs & Lintcode
+*** DONE Write a note about Emacs & Lintcode & leetcode
 
 *** DONE emacs一些库函数源码阅读 [3/3]
 **** DONE s (string库)
 **** DONE f (file lib)
 **** DONE dash (functional lib)
 * 完整的emacs历史： https://www.jwz.org/doc/emacs-timeline.html
+* [[https://https://two-wrongs.com/why-you-should-buy-into-the-emacs-platform][这里]]提到的一些点：
+  1. C-x 8 ret ==> insert latin
+  2. C-x = ==> show current cursor info
