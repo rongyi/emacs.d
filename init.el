@@ -482,7 +482,8 @@ auto-indent."
         company-transformers '(company-sort-by-occurrence)
         company-global-modes '(not term-mode gud-mode)
         company-dabbrev-downcase nil
-        company-require-match 'never)
+        company-require-match 'never
+        company-tooltip-align-annotations t)
   (add-to-list 'company-backends 'company-capf)
   (add-to-list 'company-backends 'company-files)
   (add-to-list 'company-backends 'company-dabbrev)
@@ -655,6 +656,7 @@ auto-indent."
   :config
   ;; Don't generate port files
   (add-to-list 'tern-command "--no-port-file" 'append)
+  (define-key tern-mode-keymap (kbd "C-c C-c") 'nil)
   :hook ((js2-mode . company-mode)
          (js2-mode . tern-mode)))
 
@@ -663,6 +665,20 @@ auto-indent."
   :after (company tern)
   :config
   (add-to-list 'company-backends 'company-tern))
+
+
+(use-package js-comint
+  :ensure t
+  :config
+  (defun inferior-js-mode-hook-setup ()
+    (add-hook 'comint-output-filter-functions 'js-comint-process-output))
+  (add-hook 'inferior-js-mode-hook 'inferior-js-mode-hook-setup t)
+  (setq js-comint-program-command "node")
+  (setq js-comint-program-arguments '("--interactive"))
+  (add-hook 'js2-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-x C-e") 'js-send-last-sexp)
+              (local-set-key (kbd "C-c C-c") 'js-send-buffer))))
 
 (use-package json-mode
   :delight "J "
@@ -809,10 +825,11 @@ auto-indent."
   ;; the same key as show python function doc in anaconda mode
   (define-key go-mode-map (kbd "M-?") 'godoc-at-point)
   (define-key go-mode-map (kbd "C-c C-r") 'go-remove-unused-imports)
-  ;; semantic unit
+  ;; semantic unit :=
   (define-key go-mode-map (kbd "M-=") (lambda ()
                                         (interactive)
                                         (insert ":=")))
+  ;; semantic  unit: channel <-
   (define-key go-mode-map (kbd "M-<") (lambda ()
                                         (interactive)
                                         (insert "<-")))
@@ -1592,6 +1609,25 @@ mouse-3: go to end")))
                                         (browse-url url)))))
 (use-package markdown-mode
   :ensure t)
+
+
+;; rust
+
+(use-package racer
+  :ensure t
+  :config
+  (add-hook 'racer-mode-hook #'eldoc-mode))
+
+(use-package rust-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+  (add-hook 'rust-mode-hook 'racer-mode)
+
+  ;; just like clang-format and gofmt
+  (define-key rust-mode-map (kbd "C-c e f") 'rustfmt)
+  (define-key rust-mode-map (kbd "C-c C-j") 'racer-find-definition)
+  (define-key rust-mode-map (kbd "TAB") 'company-indent-or-complete-common))
 
 ;; when everything is set, we make our evil leader bindings
 (use-package general
