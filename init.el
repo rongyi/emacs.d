@@ -1613,6 +1613,11 @@ mouse-3: go to end")))
 
 ;; rust
 
+(use-package flycheck-rust
+  :ensure t
+  :config
+  (add-hook 'flycheck-mode-hook 'flycheck-rust-setup))
+
 (use-package racer
   :ensure t
   :config
@@ -1621,12 +1626,27 @@ mouse-3: go to end")))
 (use-package rust-mode
   :ensure t
   :config
-  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
   (add-hook 'rust-mode-hook 'racer-mode)
 
+  (defun ry/rust-test(prefix)
+    "a shortcut to run go demo when learning golang"
+    (interactive "p")
+    (let* ((file (buffer-file-name))
+           (path (file-name-directory file))
+           (output (file-name-nondirectory  (file-name-sans-extension file))))
+      (ry/visit-term-buffer)
+      (insert (format "cd %s && rustc %s" path file))
+      (comint-send-input)
+      (cond
+       ((> prefix 1) (other-window -1))
+       (t (insert (format "./%s" output))
+          (comint-send-input)))
+      (message "current file builded.")))
+
   ;; just like clang-format and gofmt
-  (define-key rust-mode-map (kbd "C-c e f") 'rustfmt)
+  (define-key rust-mode-map (kbd "C-c e f") 'rust-format-buffer)
   (define-key rust-mode-map (kbd "C-c C-j") 'racer-find-definition)
+  (define-key rust-mode-map (kbd "C-c C-c") 'ry/rust-test)
   (define-key rust-mode-map (kbd "TAB") 'company-indent-or-complete-common))
 
 ;; when everything is set, we make our evil leader bindings
