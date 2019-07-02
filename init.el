@@ -831,8 +831,8 @@ auto-indent."
                                         (insert ":=")))
   ;; semantic  unit: channel <-
   (define-key go-mode-map (kbd "M-<") (lambda ()
-                                        (interactive)
-                                        (insert "<-")))
+                                       (interactive)
+                                       (insert "<-")))
   (define-key go-mode-map (kbd "C-c e i") 'go-import-add)
   (define-key go-mode-map (kbd "C-c e r") 'go-goto-method-receiver)
 
@@ -1642,6 +1642,15 @@ mouse-3: go to end")))
        (t (insert (format "./%s" output))
           (comint-send-input)))
       (message "current file builded.")))
+
+  ;; semantic unit =>
+  (define-key rust-mode-map (kbd "M-=") (lambda ()
+                                          (interactive)
+                                          (insert "=>")))
+  ;; semantic  unit: return
+  (define-key rust-mode-map (kbd "M-.") (lambda ()
+                                          (interactive)
+                                          (insert "->")))
 
   ;; just like clang-format and gofmt
   (define-key rust-mode-map (kbd "C-c e f") 'rust-format-buffer)
