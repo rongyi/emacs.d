@@ -36,23 +36,15 @@
   (package-install 'use-package))
 
 (eval-when-compile (require 'use-package))
-(use-package diminish
-  :ensure t)
-(use-package bind-key
-  :ensure t)
-(use-package f
-  :ensure t)
-(use-package s
-  :ensure t)
-(use-package dash
-  :ensure t)
+(use-package diminish :ensure t)
+(use-package bind-key :ensure t)
+(use-package f :ensure t)
+(use-package s :ensure t)
+(use-package dash :ensure t)
 
 ;; RongYi settings
 (require 'rongyi-defun)
-;; in the begnning, all function are defined in rongyi-defun,
-;; editing is the first separated 'module'
 (require 'rongyi-editing)
-
 (require 'rongyi-basic)
 
 (use-package evil
@@ -66,6 +58,8 @@
 
   (setq evil-want-C-i-jump nil)
   (evil-map insert "M-." 'insert-pointer-access)
+  ;; https://statico.github.io/vim.html
+  ;; use ctrl-c for mode switching
   (evil-map insert "C-c" '(lambda ()
                             (interactive)
                             (save-excursion
@@ -141,8 +135,7 @@
   :diminish evil-mode)
 
 ;; count search number
-(use-package evil-anzu
-  :ensure t)
+(use-package evil-anzu :ensure t)
 
 ;; avy
 (use-package avy
@@ -498,13 +491,15 @@ auto-indent."
   (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
   ;; company has tng for ycmd like completion, but I'm fit with tab now
 
+  ;; company will complete arg, set shortcut for this short period mod
+  ;; make tab only has one feature: complete what I want
   (ry/after-load 'company-template
     (define-key company-template-nav-map (kbd "TAB") nil)
     (define-key company-template-nav-map [tab] nil)
     (define-key company-template-field-map (kbd "C-d") 'nil)
     (define-key company-template-nav-map (kbd "M-j") 'company-template-forward-field))
 
-  :diminish company-mode " ⓐ")
+  :diminish company-mode)
 
 ;; from pythonnut
 (use-package hippie-exp
@@ -577,25 +572,25 @@ auto-indent."
 
 
 ;; python auto complete
-;; (use-package python-mode
-;;   :ensure t
-;;   :config
-;;   (setq
-;;    python-shell-interpreter "python"
-;;    python-shell-interpreter-args ""
-;;    python-indent-offset 4)
+(use-package python-mode
+  :ensure t
+  :config
+  (setq
+   python-shell-interpreter "python"
+   python-shell-interpreter-args ""
+   python-indent-offset 4)
 
-;;   (setq-local electric-layout-rules
-;;               '((?: . (lambda ()
-;;                         (and (zerop (first (syntax-ppss)))
-;;                              (python-info-statement-starts-block-p)
-;;                              'after)))))
-;;   (when (fboundp #'python-imenu-create-flat-index)
-;;     (setq-local imenu-create-index-function
-;;                 #'python-imenu-create-flat-index))
-;;   (add-hook 'post-self-insert-hook
-;;             #'electric-layout-post-self-insert-function nil 'local)
-;;   (add-hook 'after-save-hook 'prelude-python-mode-set-encoding nil 'local))
+  (setq-local electric-layout-rules
+              '((?: . (lambda ()
+                        (and (zerop (first (syntax-ppss)))
+                             (python-info-statement-starts-block-p)
+                             'after)))))
+  (when (fboundp #'python-imenu-create-flat-index)
+    (setq-local imenu-create-index-function
+                #'python-imenu-create-flat-index))
+  (add-hook 'post-self-insert-hook
+            #'electric-layout-post-self-insert-function nil 'local)
+  (add-hook 'after-save-hook 'prelude-python-mode-set-encoding nil 'local))
 
 (use-package py-yapf
   :ensure t
@@ -758,9 +753,8 @@ auto-indent."
 (use-package ycmd
   :ensure t
   :config
-  ;; cancel argument
-
-  (dolist (hook '(c-mode-hook c++-mode-hook go-mode-hook cc-mode-hook))
+  ;; only write c++/go now :)
+  (dolist (hook '(c-mode-hook c++-mode-hook cc-mode-hook go-mode-hook))
     (add-hook hook #'ycmd-mode))
   (set-variable 'ycmd-server-command '("python" "/usr/local/ycmd/ycmd"))
   (set-variable 'ycmd-global-config (expand-file-name ".emacs.d/ycm_extra_conf.py" (getenv "HOME")))
@@ -850,24 +844,18 @@ auto-indent."
   :config
   (add-hook 'go-mode-hook 'go-eldoc-setup))
 
-;; go auto complete, give ycmd a try
-(use-package company-go
-  :ensure t
-  :config
-  ;; (add-to-list 'company-backends 'company-go)
-  )
+
 ;; golint
 (use-package golint
   :ensure t)
 
 
-
+;; change shortcut
 (define-key shell-mode-map (kbd "C-n") 'comint-next-input)
 (define-key shell-mode-map (kbd "C-p") 'comint-previous-input)
 (add-hook 'shell-mode-hook (lambda ()
                              (company-mode -1)
                              (yas-minor-mode -1)))
-
 
 ;; from lunaryorn
 (use-package which-func                 ; Current function name
@@ -1459,13 +1447,8 @@ mouse-3: go to end")))
          ("C-c m n" . bm-next)
          ("C-c m p" . bm-previous)))
 
-(use-package tramp
-  :ensure t
-  :config
-  (setq tramp-default-method "ssh"))
-
-(use-package goto-chg
-  :ensure t)
+(use-package tramp :ensure t :config (setq tramp-default-method "ssh"))
+(use-package goto-chg :ensure t)
 
 (use-package visual-fill-column
   :ensure nil
@@ -1481,8 +1464,7 @@ mouse-3: go to end")))
   :config
   (global-set-key (kbd "M-*") 'pop-tag-mark))
 
-(use-package protobuf-mode
-  :ensure t)
+(use-package protobuf-mode :ensure t)
 
 (use-package json-reformat              ; Reformat JSON
   :ensure t
@@ -1572,8 +1554,7 @@ mouse-3: go to end")))
   :init (add-to-list 'auto-mode-alist
                      '("\\(group_vars/.+\\|host_vars/.+\\)" . yaml-mode)))
 
-(use-package ansible-doc
-  :ensure t)
+(use-package ansible-doc :ensure t)
 
 (use-package bookmark
   :init (setq bookmark-save-flag 1)
@@ -1607,8 +1588,7 @@ mouse-3: go to end")))
   (setq flymd-browser-open-function (lambda ()
                                       (let ((browse-url-browser-function 'browse-url-firefox))
                                         (browse-url url)))))
-(use-package markdown-mode
-  :ensure t)
+(use-package markdown-mode :ensure t)
 
 
 ;; rust
@@ -1658,6 +1638,20 @@ mouse-3: go to end")))
   (define-key rust-mode-map (kbd "C-c C-c") 'ry/rust-test)
   (define-key rust-mode-map (kbd "TAB") 'company-indent-or-complete-common))
 
+;; try lsp, not very good
+;; (use-package lsp-mode
+;;   :ensure t
+;;   :hook ((go-mode ) . lsp)
+;;   :commands lsp)
+
+;; very anoying
+;; (use-package lsp-ui
+;;   :commands lsp-ui-mode)
+
+;; (use-package company-lsp
+;;   :ensure t
+;;   :commands company-lsp)
+
 ;; when everything is set, we make our evil leader bindings
 (use-package general
   :ensure t
@@ -1701,3 +1695,4 @@ mouse-3: go to end")))
 (eval-after-load "guide-key" '(diminish 'guide-key-mode))
 (eval-after-load "whitespace-cleanup-mode" '(diminish 'whitespace-cleanup-mode))
 (eval-after-load "subword" '(diminish 'subword-mode))
+(diminish 'global-whitespace-mode)
