@@ -844,6 +844,11 @@ auto-indent."
   :config
   (add-hook 'go-mode-hook 'go-eldoc-setup))
 
+(use-package go-guru
+  :ensure t
+  :config
+  (add-hook 'go-mode-hook 'go-guru-hl-identifier-mode))
+
 
 ;; golint
 (use-package golint
