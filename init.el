@@ -289,7 +289,8 @@
     (delete-other-windows))
 
   (add-hook 'git-commit-mode-hook 'ry/magit-cursor-fix)
-
+  ;; evil often suprise me a lot, in a bad way
+  (add-hook 'git-commit-mode-hook 'evil-emacs-state)
   (global-set-key (kbd "<f2>") 'magit-status)
   (global-set-key (kbd "C-M-g") 'magit-status)
   (setq magit-commit-arguments '("--verbose")
