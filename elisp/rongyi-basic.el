@@ -29,7 +29,7 @@
 
 ;; full screen if needed
 ;;(toggle-frame-fullscreen)
-(toggle-frame-maximized)
+;; (toggle-frame-maximized)
 
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
   (when (fboundp mode)
@@ -511,6 +511,8 @@
 ;; don't ask process buffer when quit
 ;; https://emacs.stackexchange.com/questions/14509/kill-process-buffer-without-confirmation
 (setq kill-buffer-query-functions (delq 'process-kill-buffer-query-function kill-buffer-query-functions))
+
+
 
 
 

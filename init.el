@@ -25,9 +25,12 @@
 
 ;; package initialization
 (require 'package)
-(setq package-archives '(("melpa" . "http://elpa.emacs-china.org/melpa/")
-                         ("org" . "http://elpa.emacs-china.org/org/")
-                         ("gnu" . "http://elpa.emacs-china.org/gnu/")))
+
+(setq package-archives '(("org"       . "http://orgmode.org/elpa/")
+                         ("gnu"       . "http://elpa.gnu.org/packages/")
+                         ("melpa"     . "http://melpa.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")))
+
 (package-initialize)
 
 ;; Bootstrap use-package
@@ -68,9 +71,10 @@
                                 (company-abort))
                               (when (buffer-file-name)
                                 (save-buffer)))))
+  ;; use C-c not ESC: see this page: https://statico.github.io/vim.html
   (evil-map visual "C-c" 'evil-normal-state)
-  (evil-map normal "C-e" 'evil-end-of-line)
-  (evil-map insert "C-e" 'evil-end-of-line)
+  (evil-map normal "C-e" 'move-end-of-line)
+  (evil-map insert "C-e" 'move-end-of-line)
   (evil-map normal "C-a" 'smarter-move-beginning-of-line)
   (evil-map insert "C-a" 'smarter-move-beginning-of-line)
   (evil-map insert "C-k" 'kill-line)
@@ -127,7 +131,8 @@
                lisp-mode
                gud-mode
                godoc-mode
-               haskell-error-mode))
+               haskell-error-mode
+               magit-popup-mode))
     (evil-set-initial-state m 'emacs))
   ;; http://emacs.stackexchange.com/questions/9583/how-to-treat-underscore-as-part-of-the-word
   (defalias #'forward-evil-word #'forward-evil-symbol)
@@ -289,8 +294,8 @@
     (delete-other-windows))
 
   (add-hook 'git-commit-mode-hook 'ry/magit-cursor-fix)
-  ;; evil often suprise me a lot, in a bad way
   (add-hook 'git-commit-mode-hook 'evil-emacs-state)
+
   (global-set-key (kbd "<f2>") 'magit-status)
   (global-set-key (kbd "C-M-g") 'magit-status)
   (setq magit-commit-arguments '("--verbose")
@@ -455,12 +460,6 @@ auto-indent."
 
 ;; company
 
-;; (use-package company-flx
-;;   :ensure t
-;;   :init
-;;   (with-eval-after-load 'company
-;;     (company-flx-mode +1)))
-
 (use-package company
   :ensure t
   :config
@@ -490,7 +489,6 @@ auto-indent."
   (define-key company-active-map [tab] 'company-complete-selection)
   (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
   (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
-  ;; company has tng for ycmd like completion, but I'm fit with tab now
 
   ;; company will complete arg, set shortcut for this short period mod
   ;; make tab only has one feature: complete what I want
@@ -501,6 +499,10 @@ auto-indent."
     (define-key company-template-nav-map (kbd "M-j") 'company-template-forward-field))
 
   :diminish company-mode)
+
+(use-package company-lsp
+  :ensure t
+  :commands company-lsp)
 
 ;; from pythonnut
 (use-package hippie-exp
@@ -590,7 +592,7 @@ auto-indent."
     (setq-local imenu-create-index-function
                 #'python-imenu-create-flat-index))
   (add-hook 'post-self-insert-hook
-            #'electric-layout-post-self-insert-function nil 'local)
+            #'electric-layout-post-self-insert-function nil ' local)
   (add-hook 'after-save-hook 'prelude-python-mode-set-encoding nil 'local))
 
 (use-package py-yapf
@@ -751,30 +753,30 @@ auto-indent."
   :diminish undo-tree-mode)
 
 ;; ycmd for emacs
-(use-package ycmd
-  :ensure t
-  :config
-  ;; only write c++/go now :)
-  (dolist (hook '(c-mode-hook c++-mode-hook cc-mode-hook go-mode-hook))
-    (add-hook hook #'ycmd-mode))
-  (set-variable 'ycmd-server-command '("python" "/usr/local/ycmd/ycmd"))
-  (set-variable 'ycmd-global-config (expand-file-name ".emacs.d/ycm_extra_conf.py" (getenv "HOME")))
-  ;; make it larger
-  (setq ycmd-max-num-identifier-candidates 30
-        ycmd-extra-conf-handler 'load
-        ycmd-force-semantic-completion t)
-  (require 'ycmd-eldoc)
-  (add-hook 'ycmd-mode-hook 'ycmd-eldoc-setup))
+;; (use-package ycmd
+;;   :ensure t
+;;   :config
+;;   ;; only write c++/go now :)
+;;   (dolist (hook '(c-mode-hook c++-mode-hook cc-mode-hook go-mode-hook))
+;;     (add-hook hook #'ycmd-mode))
+;;   (set-variable 'ycmd-server-command '("python" "/usr/local/ycmd/ycmd"))
+;;   ;; (set-variable 'ycmd-global-config (expand-file-name ".emacs.d/global_conf.py" (getenv "HOME")))
+;;   ;; make it larger
+;;   (setq ycmd-max-num-identifier-candidates 30
+;;         ycmd-extra-conf-handler 'load
+;;         ycmd-force-semantic-completion t)
+;;   (require 'ycmd-eldoc)
+;;   (add-hook 'ycmd-mode-hook 'ycmd-eldoc-setup))
 
-(use-package company-ycmd
-  :ensure t
-  :config
-  (company-ycmd-setup))
+;; (use-package company-ycmd
+;;   :ensure t
+;;   :config
+;;   (company-ycmd-setup))
 
-(use-package flycheck-ycmd
-  :ensure t
-  :config
-  (flycheck-ycmd-setup))
+;; (use-package flycheck-ycmd
+;;   :ensure t
+;;   :config
+;;   (flycheck-ycmd-setup))
 
 
 ;; golang config
@@ -818,6 +820,7 @@ auto-indent."
   (define-key go-mode-map (kbd "C-c C-c") 'ry/go-test)
   (define-key go-mode-map (kbd "M-.") 'godef-jump)
   ;; the same key as show python function doc in anaconda mode
+  ;; TODO: CHANGE
   (define-key go-mode-map (kbd "M-?") 'godoc-at-point)
   (define-key go-mode-map (kbd "C-c C-r") 'go-remove-unused-imports)
   ;; semantic unit :=
@@ -833,8 +836,7 @@ auto-indent."
 
   (global-set-key [(control shift return)] #'ry/insert-comma-and-break)
   (setq godoc-at-point-function 'godoc-gogetdoc)
-  ;; some go function split its args in multiline(especially in k8s code), so helm-menu can not list thest functions
-  ;; this is a fix
+  ;; some go function split its args in multiline(especially in k8s code), so helm-menu can not list thest functions this is a fix
   (add-hook 'go-mode-hook (lambda ()
                             (setq imenu-generic-expression
                                   '(("type" "^[ \t]*type *\\([^ \t\n\r\f]*[ \t]*\\(struct\\|interface\\)\\)" 1)
@@ -863,7 +865,7 @@ auto-indent."
                              (company-mode -1)
                              (yas-minor-mode -1)))
 
-;; from lunaryorn
+
 (use-package which-func                 ; Current function name
   :init (which-function-mode)
   :config
@@ -1391,9 +1393,6 @@ mouse-3: go to end")))
 (use-package smart-comment
   :ensure t
   :bind ("M-;" . smart-comment))
-;; (use-package comment-dwim-2
-;;   :ensure t
-;;   :bind (("M-;" . comment-dwim-2)))
 
 (use-package modern-cpp-font-lock
   :ensure t
@@ -1578,7 +1577,8 @@ mouse-3: go to end")))
          ("C-c r l" . helm-bookmarks)))
 
 (use-package clang-format
-  :bind (("C-c e f" . clang-format-buffer)))
+  :config
+  (define-key c++-mode-map (kbd "C-c e f") 'clang-format-buffer))
 
 (use-package shell-pop
   :ensure t
@@ -1604,15 +1604,18 @@ mouse-3: go to end")))
   :config
   (add-hook 'flycheck-mode-hook 'flycheck-rust-setup))
 
-(use-package racer
-  :ensure t
-  :config
-  (add-hook 'racer-mode-hook #'eldoc-mode))
+;; (use-package racer
+;;   :ensure t
+;;   :config
+;;   (add-hook 'racer-mode-hook #'eldoc-mode))
 
 (use-package rust-mode
   :ensure t
   :config
-  (add-hook 'rust-mode-hook 'racer-mode)
+  ;; try not using racer
+  ;; (add-hook 'rust-mode-hook 'racer-mode)
+  (add-hook 'rust-mode-hook
+            (lambda () (setq indent-tabs-mode nil)))
 
   (defun ry/rust-test(prefix)
     "a shortcut to run go demo when learning golang"
@@ -1633,30 +1636,75 @@ mouse-3: go to end")))
   (define-key rust-mode-map (kbd "M-=") (lambda ()
                                           (interactive)
                                           (insert "=>")))
-  ;; semantic  unit: return
+  ;; semantic unit: return
   (define-key rust-mode-map (kbd "M-.") (lambda ()
                                           (interactive)
                                           (insert "->")))
 
   ;; just like clang-format and gofmt
   (define-key rust-mode-map (kbd "C-c e f") 'rust-format-buffer)
-  (define-key rust-mode-map (kbd "C-c C-j") 'racer-find-definition)
-  (define-key rust-mode-map (kbd "C-c C-c") 'ry/rust-test)
+  ;; (define-key rust-mode-map (kbd "C-c C-j") 'racer-find-definition)
+  (define-key rust-mode-map (kbd "C-c C-j") 'xref-find-definitions)
+  (define-key rust-mode-map (kbd "C-c C-c") 'rust-run)
+  (define-key rust-mode-map (kbd "C-u C-c C-c") 'rust-compile)
   (define-key rust-mode-map (kbd "TAB") 'company-indent-or-complete-common))
 
-;; try lsp, not very good
-;; (use-package lsp-mode
-;;   :ensure t
-;;   :hook ((go-mode ) . lsp)
-;;   :commands lsp)
+;; seems like lsp is the future
+;; c++ lsp plugin
+(use-package cquery
+  :ensure t
+  :config
+  (setq cquery-executable "/home/ry/tmp/cquery/build/release/bin/cquery")
+  ;; sorry, cquery, I don't know where to put this config
+  (define-key c++-mode-map (kbd "C-c C-j") 'xref-find-definitions))
 
-;; very anoying
-;; (use-package lsp-ui
-;;   :commands lsp-ui-mode)
+(use-package lsp-mode
+  :ensure t
+  :hook ((go-mode c++-mode rust-mode) . lsp)
+  :commands lsp)
 
-;; (use-package company-lsp
-;;   :ensure t
-;;   :commands company-lsp)
+(use-package lsp-ui
+  :commands lsp-ui-mode)
+
+(use-package company-lsp
+  :ensure t
+  :commands company-lsp)
+
+
+
+;; often move some code from one block to another(e.g. move in a for block)
+;; this may help a little
+(use-package move-text
+  :ensure t
+  :config
+  (move-text-default-bindings))
+
+
+
+(use-package pyim
+  :ensure nil
+  :demand t
+  :config
+  (use-package pyim-basedict
+    :ensure nil
+    :config (pyim-basedict-enable))
+
+  (setq default-input-method "pyim")
+
+
+  (pyim-isearch-mode 1)
+
+  ;; 使用 popup-el 来绘制选词框, 如果用 emacs26, 建议设置
+  ;; 为 'posframe, 速度很快并且菜单不会变形，不过需要用户
+  ;; 手动安装 posframe 包。
+  (setq pyim-page-tooltip 'posframe)
+
+  ;; 选词框显示5个候选词
+  (setq pyim-page-length 9)
+  :diminish pyim-isearch)
+
+
+
 
 ;; when everything is set, we make our evil leader bindings
 (use-package general
