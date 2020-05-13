@@ -29,7 +29,7 @@
 
 ;; full screen if needed
 ;;(toggle-frame-fullscreen)
-;; (toggle-frame-maximized)
+(toggle-frame-maximized)
 
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
   (when (fboundp mode)
@@ -151,8 +151,8 @@
 (add-to-list 'default-frame-alist '(font . "Fira Code 10"))
 ;; add some ligture: https://gist.github.com/mordocai/50783defab3c3d1650e068b4d1c91495
 (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol")
-(add-to-list 'default-frame-alist '(width . 120))
-(add-to-list 'default-frame-alist '(height . 60))
+(add-to-list 'default-frame-alist '(width . 140))
+(add-to-list 'default-frame-alist '(height . 70))
 
 (defun ry/configure-fonts (frame)
   "font configuration"
@@ -515,8 +515,6 @@
 
 
 
-
-
 ;; global key bindings
 
 ;; file related
@@ -575,6 +573,8 @@
 
 (bind-key "C-(" (surround-text-with "("))
 (bind-key "C-\"" (surround-text-with "\""))
+
+(bind-key "C-c p" 'projectile-switch-project)
 
 (define-key process-menu-mode-map (kbd "C-c k") 'ry/delete-process-at-point)
 
