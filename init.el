@@ -26,9 +26,9 @@
 ;; package initialization
 (require 'package)
 
-(setq package-archives '( ("gnu"       . "http://elpa.gnu.org/packages/")
-                          ("melpa"     . "http://melpa.org/packages/")
-                          ("marmalade" . "http://marmalade-repo.org/packages/")))
+(setq package-archives '(("org"       . "http://orgmode.org/elpa/")
+                         ("gnu"       . "http://elpa.gnu.org/packages/")
+                         ("melpa"     . "http://melpa.org/packages/")))
 
 (package-initialize)
 
@@ -651,35 +651,6 @@ auto-indent."
         js2-strict-trailing-comma-warning t)
   :diminish js2-mode "JS")
 
-(use-package tern
-  :ensure t
-  :init (add-hook 'js2-mode-hook 'tern-mode)
-  :config
-  ;; Don't generate port files
-  (add-to-list 'tern-command "--no-port-file" 'append)
-  (define-key tern-mode-keymap (kbd "C-c C-c") 'nil)
-  :hook ((js2-mode . company-mode)
-         (js2-mode . tern-mode)))
-
-(use-package company-tern
-  :ensure t
-  :after (company tern)
-  :config
-  (add-to-list 'company-backends 'company-tern))
-
-
-(use-package js-comint
-  :ensure t
-  :config
-  (defun inferior-js-mode-hook-setup ()
-    (add-hook 'comint-output-filter-functions 'js-comint-process-output))
-  (add-hook 'inferior-js-mode-hook 'inferior-js-mode-hook-setup t)
-  (setq js-comint-program-command "node")
-  (setq js-comint-program-arguments '("--interactive"))
-  (add-hook 'js2-mode-hook
-            (lambda ()
-              (local-set-key (kbd "C-x C-e") 'js-send-last-sexp)
-              (local-set-key (kbd "C-c C-c") 'js-send-buffer))))
 
 (use-package json-mode
   :delight "J "
@@ -1648,11 +1619,22 @@ mouse-3: go to end")))
   (define-key rust-mode-map (kbd "C-c C-c") 'ry/rust-test)
   (define-key rust-mode-map (kbd "TAB") 'company-indent-or-complete-common))
 
-;; try lsp, not very good
-;; (use-package lsp-mode
-;;   :ensure t
-;;   :hook ((go-mode ) . lsp)
-;;   :commands lsp)
+;; seems like lsp is the future
+;; c++ lsp plugin
+(use-package ccls
+  :ensure t
+  :config
+  (setq ccls-executable "/home/ry/tmp/ccls/Release/ccls")
+  ;; sorry, cquery, I don't know where to put this config
+  (define-key c++-mode-map (kbd "C-c C-j") 'xref-find-definitions))
+
+(use-package lsp-mode
+  :ensure t
+  :hook ((c++-mode rust-mode) . lsp)
+  :commands lsp)
+
+(use-package lsp-ui
+  :commands lsp-ui-mode)
 
 ;; very anoying
 ;; (use-package lsp-ui
