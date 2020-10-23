@@ -124,6 +124,8 @@
   (setq evil-replace-state-cursor '("chocolate" bar))
   (setq evil-operator-state-cursor '("red" hollow))
 
+  (evil-set-undo-system 'undo-tree)
+
   ;; workaround for some mode
   (dolist (m '(anaconda-mode-view-mode
                shell-mode
@@ -720,7 +722,9 @@ auto-indent."
 ;; undo-tree (use C-x u to visualize, C-_ to undo, M-_ to redo)
 (use-package undo-tree
   :ensure t
-  :diminish undo-tree-mode)
+  :diminish undo-tree-mode
+  :config
+  (global-undo-tree-mode))
 
 ;; ycmd for emacs
 ;; (use-package ycmd
