@@ -512,8 +512,8 @@
 ;; https://emacs.stackexchange.com/questions/14509/kill-process-buffer-without-confirmation
 (setq kill-buffer-query-functions (delq 'process-kill-buffer-query-function kill-buffer-query-functions))
 
-
-
+;; don't confirm process exit
+(setq confirm-kill-processes nil)
 
 
 
