@@ -92,6 +92,7 @@
   (evil-map visual "C-w" 'ry/kill-region-or-backward-word)
   (evil-map insert "C-o" 'ry/open-line-above)
   (evil-map insert "C-y" 'evil-paste-after)
+  (evil-map normal "u" 'undo-tree-undo)
   ;; dont quite visual mode
   (evil-map visual "<" #'(lambda ()
                            (interactive)
@@ -123,7 +124,6 @@
   (setq evil-insert-state-cursor '("chartreuse3" bar))
   (setq evil-replace-state-cursor '("chocolate" bar))
   (setq evil-operator-state-cursor '("red" hollow))
-
   (evil-set-undo-system 'undo-tree)
 
   ;; workaround for some mode
@@ -138,6 +138,7 @@
   ;; http://emacs.stackexchange.com/questions/9583/how-to-treat-underscore-as-part-of-the-word
   (defalias #'forward-evil-word #'forward-evil-symbol)
   (evil-mode 1)
+
   :diminish evil-mode)
 
 ;; count search number
@@ -792,7 +793,8 @@ auto-indent."
   ;; override global intend buffer or region
   (define-key go-mode-map (kbd "C-M-\\") 'gofmt)
   (define-key go-mode-map (kbd "C-c C-c") 'ry/go-test)
-  (define-key go-mode-map (kbd "M-.") 'godef-jump)
+  (define-key go-mode-map (kbd "M-.") 'lsp-find-definition)
+  (define-key go-mode-map (kbd "C-c C-j") 'lsp-find-definition)
   ;; the same key as show python function doc in anaconda mode
   ;; TODO: CHANGE
   (define-key go-mode-map (kbd "M-?") 'godoc-at-point)
@@ -807,6 +809,7 @@ auto-indent."
                                        (insert "<-")))
   (define-key go-mode-map (kbd "C-c e i") 'go-import-add)
   (define-key go-mode-map (kbd "C-c e r") 'go-goto-method-receiver)
+  (define-key go-mode-map (kbd "M-j") 'yas-next-field-or-maybe-expand)
 
   (global-set-key [(control shift return)] #'ry/insert-comma-and-break)
   (setq godoc-at-point-function 'godoc-gogetdoc)
@@ -1382,6 +1385,7 @@ mouse-3: go to end")))
    ;; Non-nil means display source file containing the main routine at startup
    gdb-show-main t))
 
+
 (use-package cc-mode
   :ensure t
   :config
@@ -1619,31 +1623,38 @@ mouse-3: go to end")))
   ;; just like clang-format and gofmt
   (define-key rust-mode-map (kbd "C-c e f") 'rust-format-buffer)
   ;; (define-key rust-mode-map (kbd "C-c C-j") 'racer-find-definition)
-  (define-key rust-mode-map (kbd "C-c C-j") 'xref-find-definitions)
+  (define-key rust-mode-map (kbd "C-c C-j") 'lsp-find-definition)
   (define-key rust-mode-map (kbd "C-c C-c") 'rust-run)
   (define-key rust-mode-map (kbd "C-u C-c C-c") 'rust-compile)
-  (define-key rust-mode-map (kbd "TAB") 'company-indent-or-complete-common))
+  (define-key rust-mode-map (kbd "TAB") 'company-indent-or-complete-common)
+  (define-key rust-mode-map (kbd "M-j") 'yas-next-field-or-maybe-expand))
 
 ;; seems like lsp is the future
 ;; c++ lsp plugin
 (use-package ccls
   :ensure t
   :config
-  (setq ccls-executable "/home/ry/tmp/ccls/Release/ccls")
+  (setq ccls-executable "/home/coder/tmp/ccls/Release/ccls")
   ;; sorry, cquery, I don't know where to put this config
-  (define-key c++-mode-map (kbd "C-c C-j") 'xref-find-definitions))
+  (define-key c++-mode-map (kbd "C-c C-j") 'lsp-find-definition)
+  (define-key c-mode-map (kbd "C-c C-j") 'lsp-find-definition))
 
 (use-package lsp-mode
   :ensure t
-  :hook ((c++-mode rust-mode go-mode) . lsp)
+  :hook ((c++-mode rust-mode go-mode c-mode) . lsp)
   :config
-  (setq lsp-rust-server 'rust-analyzer)
+  (setq lsp-rust-server 'rust-analyzer
+        lsp-diagnostic-package :none)
   :commands lsp)
 
 (use-package lsp-ui
   :commands lsp-ui-mode
   :config
-  (setq lsp-ui-doc-delay 1))
+  (setq lsp-ui-doc-delay 1
+        lsp-ui-peek-enable t
+        lsp-ui-sideline-enable t
+        lsp-ui-imenu-enable t
+        lsp-ui-flycheck-enable t))
 
 (use-package company-lsp
   :ensure t
@@ -1657,6 +1668,9 @@ mouse-3: go to end")))
   :ensure t
   :config
   (move-text-default-bindings))
+
+(use-package yaml-mode
+  :ensure t)
 
 
 ;; when everything is set, we make our evil leader bindings
