@@ -26,9 +26,13 @@
 ;; package initialization
 (require 'package)
 
-(setq package-archives '(("org"       . "http://orgmode.org/elpa/")
-                         ("gnu"       . "http://elpa.gnu.org/packages/")
-                         ("melpa"     . "http://melpa.org/packages/")))
+(setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
+                         ("melpa" . "http://elpa.emacs-china.org/melpa/")))
+;; (setq package-archives '(("org"       . "http://orgmode.org/elpa/")
+;;                          ("gnu"       . "http://elpa.gnu.org/packages/")
+;;                          ("melpa"     . "http://melpa.org/packages/")
+;;                          ("marmalade" . "http://marmalade-repo.org/packages/")))
+
 
 (package-initialize)
 
@@ -93,6 +97,7 @@
   (evil-map insert "C-o" 'ry/open-line-above)
   (evil-map insert "C-y" 'evil-paste-after)
   (evil-map normal "u" 'undo-tree-undo)
+
   ;; dont quite visual mode
   (evil-map visual "<" #'(lambda ()
                            (interactive)
@@ -400,7 +405,7 @@
     (with-eval-after-load 'flycheck
       (custom-set-variables
        '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))))
-  (setq flycheck-clang-language-standard "c++11")
+  (setq flycheck-clang-language-standard "c++17")
   (setq flycheck-flake8-maximum-line-length 160)
   ;; disable go-vet, it has bug till date: 20190426
   (setq-default flycheck-disabled-checkers '(go-vet)))
@@ -453,6 +458,7 @@ auto-indent."
   ;; and we dont want to change that
   (define-key smartparens-mode-map (kbd "C-S-<left>") 'sp-backward-slurp-sexp)
   (define-key smartparens-mode-map (kbd "C-S-<right>") 'sp-backward-barf-sexp)
+  (define-key smartparens-mode-map (kbd "<M-backspace>") nil) ;pain in the ass
   (setq sp-show-pair-delay 0.2
         sp-show-pair-from-inside t
         sp-cancel-autoskip-on-backward-movement nil
@@ -648,6 +654,7 @@ auto-indent."
         js2-global-externs (list "window" "module" "require" "buster" "sinon" "assert" "refute" "setTimeout" "clearTimeout" "setInterval" "clearInterval" "location" "__dirname" "console" "JSON" "jQuery" "$")
         js2-idle-timer-delay 0.1
         js2-strict-trailing-comma-warning t)
+  (define-key js2-mode-map (kbd "C-c C-j") 'lsp-find-definition)
   :diminish js2-mode "JS")
 
 
@@ -805,8 +812,8 @@ auto-indent."
                                         (insert ":=")))
   ;; semantic  unit: channel <-
   (define-key go-mode-map (kbd "M-<") (lambda ()
-                                       (interactive)
-                                       (insert "<-")))
+                                        (interactive)
+                                        (insert "<-")))
   (define-key go-mode-map (kbd "C-c e i") 'go-import-add)
   (define-key go-mode-map (kbd "C-c e r") 'go-goto-method-receiver)
   (define-key go-mode-map (kbd "M-j") 'yas-next-field-or-maybe-expand)
@@ -1017,7 +1024,7 @@ mouse-3: go to end")))
           ("deletechar"            . "⌦")
           ("RET"                   . "⏎"))
         )
-  (which-key-declare-prefixes
+  (which-key-add-key-based-replacements
     "C-c w" "windows/frames"
     "C-c j" "jump"
     "C-c f" "files/buffers"
@@ -1400,7 +1407,7 @@ mouse-3: go to end")))
            (output (file-name-nondirectory  (file-name-sans-extension file))))
       (ry/visit-term-buffer)
       (end-of-buffer)
-      (insert (format "cd %s && g++ -g --std=c++11 %s -o %s"
+      (insert (format "cd %s && g++ -g --std=c++17 %s -o %s"
                       path
                       (file-name-nondirectory  file)
                       output))
@@ -1641,26 +1648,22 @@ mouse-3: go to end")))
 
 (use-package lsp-mode
   :ensure t
-  :hook ((c++-mode rust-mode go-mode c-mode) . lsp)
+  :hook ((c++-mode rust-mode go-mode c-mode js-mode) . lsp)
   :config
   (setq lsp-rust-server 'rust-analyzer
-        lsp-diagnostic-package :none)
+        lsp-diagnostic-package :none
+        lsp-enable-file-watchers nil    ;don't watch file
+        lsp-file-watch-threshold 100)
   :commands lsp)
 
-(use-package lsp-ui
-  :commands lsp-ui-mode
-  :config
-  (setq lsp-ui-doc-delay 1
-        lsp-ui-peek-enable t
-        lsp-ui-sideline-enable t
-        lsp-ui-imenu-enable t
-        lsp-ui-flycheck-enable t))
-
-(use-package company-lsp
-  :ensure t
-  :commands company-lsp)
-
-
+;; (use-package lsp-ui
+;;   :commands lsp-ui-mode
+;;   :config
+;;   (setq lsp-ui-doc-delay 1
+;;         lsp-ui-peek-enable t
+;;         lsp-ui-sideline-enable t
+;;         lsp-ui-imenu-enable t
+;;         lsp-ui-flycheck-enable t))
 
 ;; often move some code from one block to another(e.g. move in a for block)
 ;; this may help a little
@@ -1671,6 +1674,21 @@ mouse-3: go to end")))
 
 (use-package yaml-mode
   :ensure t)
+
+
+(use-package solidity-mode
+  :ensure t
+  :config
+  (setq solidity-solc-path "/usr/local/bin/solc")
+  (add-hook 'solidity-mode-hook
+            (lambda ()
+              (set (make-local-variable 'company-backends)
+                   (append '((company-solidity company-capf company-dabbrev-code))
+                           company-backends))))
+    ;; semantic unit => used in map
+  (define-key solidity-mode-map (kbd "M-=") (lambda ()
+                                          (interactive)
+                                          (insert "=>"))))
 
 
 ;; when everything is set, we make our evil leader bindings
@@ -1687,7 +1705,7 @@ mouse-3: go to end")))
     "e" 'helm-semantic-or-imenu
     "f" 'avy-goto-char
     "g" 'magit-status
-    "i" 'ry/find-user-init-file
+    "i" 'ry/find-user-worklog
     "l" 'linum-mode
     "p" 'projectile-find-file
     "q" 'kill-this-buffer

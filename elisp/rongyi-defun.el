@@ -91,6 +91,10 @@ directory to make multiple eshell windows easier."
   (interactive)
   (find-file-other-window user-init-file))
 
+(defun ry/find-user-worklog ()
+  "Edit the `worklog', in another window"
+  (interactive)
+  (find-file-other-window "~/Documents/xxxxxxxxxx"))
 
 (defun ry/visit-term-buffer ()
   "Create or visit a terminal buffer,

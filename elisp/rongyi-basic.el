@@ -538,6 +538,7 @@
 (global-set-key [(control return)] 'newline-for-code)
 (global-set-key (kbd "M-RET") 'newline-for-code)
 (global-set-key (kbd "C-<escape>") 'insert-backquote)
+(global-set-key (kbd "<M-backspace>") nil)
 
 (bind-key "C-c f w" 'browse-url)
 (bind-key "C-c f d" 'ry/delete-current-buffer-file)
@@ -552,6 +553,13 @@
 (bind-key "C-c f >" 'widen)
 (bind-key "C-c p" 'projectile-switch-project)
 
+(setq remote-file-name-inhibit-cache nil)
+(setq vc-ignore-dir-regexp
+      (format "%s\\|%s"
+                    vc-ignore-dir-regexp
+                    tramp-file-name-regexp))
+(setq tramp-verbose 1)
+
 ;; edit section
 (bind-key "C-c e ," 'ry/newline-after-comma)
 (bind-key "C-c e d" 'ry/insert-todays-date)
@@ -562,6 +570,7 @@
 (bind-key "C-c e S" 'ry/save-all)
 (bind-key "C-c e w" 'toggle-truncate-lines)
 (bind-key "C-c e T" 'ry/start-tmp-file)
+(bind-key "C-c e m" 'go-remove-unused-imports)
 
 ;; put window command together
 (bind-key "C-c w t" 'ry/toggle-transparency)
@@ -578,6 +587,7 @@
 (bind-key "M-\\" 'ry/angry-split)
 (bind-key "M-|" 'ry/angry-split-switch)
 (bind-key "C-c w \\" 'ry/toggle-window-split)
+(bind-key "C-x =" 'helm-show-kill-ring)
 
 (bind-key "C-(" (surround-text-with "("))
 (bind-key "C-\"" (surround-text-with "\""))
