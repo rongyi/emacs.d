@@ -26,12 +26,12 @@
 ;; package initialization
 (require 'package)
 
-(setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
-                         ("melpa" . "http://elpa.emacs-china.org/melpa/")))
-;; (setq package-archives '(("org"       . "http://orgmode.org/elpa/")
-;;                          ("gnu"       . "http://elpa.gnu.org/packages/")
-;;                          ("melpa"     . "http://melpa.org/packages/")
-;;                          ("marmalade" . "http://marmalade-repo.org/packages/")))
+;; (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
+;;                          ("melpa" . "http://elpa.emacs-china.org/melpa/")))
+(setq package-archives '(("org"       . "http://orgmode.org/elpa/")
+                         ("gnu"       . "http://elpa.gnu.org/packages/")
+                         ("melpa"     . "http://melpa.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")))
 
 
 (package-initialize)
@@ -197,6 +197,7 @@
   (require 'helm-config)
   (require 'helm-misc)
   (require 'helm-locate)
+  (require 'helm-mode)
 
   ;; from https://www.reddit.com/r/emacs/comments/2z7nbv/lean_helm_window/
   (defvar helm-source-header-default-background (face-attribute 'helm-source-header :background))
@@ -1680,12 +1681,17 @@ mouse-3: go to end")))
   :ensure t
   :config
   (setq solidity-solc-path "/usr/local/bin/solc")
+  (setq solidity-solium-path "/opt/node-v16.13.1-linux-x64/bin/solium")
   (add-hook 'solidity-mode-hook
             (lambda ()
               (set (make-local-variable 'company-backends)
                    (append '((company-solidity company-capf company-dabbrev-code))
                            company-backends))))
     ;; semantic unit => used in map
+  ;; i don't like star style
+  (setq solidity-comment-style 'slash)
+  (setq solidity-flycheck-solc-checker-active t)
+  (setq solidity-flycheck-solium-checker-active t)
   (define-key solidity-mode-map (kbd "M-=") (lambda ()
                                           (interactive)
                                           (insert "=>"))))
