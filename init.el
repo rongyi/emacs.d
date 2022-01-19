@@ -409,7 +409,7 @@
   (setq flycheck-clang-language-standard "c++17")
   (setq flycheck-flake8-maximum-line-length 160)
   ;; disable go-vet, it has bug till date: 20190426
-  (setq-default flycheck-disabled-checkers '(go-vet)))
+  )
 
 (use-package flycheck-pos-tip
   :ensure t
@@ -1677,21 +1677,30 @@ mouse-3: go to end")))
   :ensure t)
 
 
+
 (use-package solidity-mode
   :ensure t
   :config
+  (require 'company-solidity)
   (setq solidity-solc-path "/usr/local/bin/solc")
   (setq solidity-solium-path "/opt/node-v16.13.1-linux-x64/bin/solium")
   (add-hook 'solidity-mode-hook
             (lambda ()
               (set (make-local-variable 'company-backends)
                    (append '((company-solidity company-capf company-dabbrev-code))
-                           company-backends))))
+                           company-backends))
+              ;; shutup the solium 2 spaces
+              (setq-local c-basic-offset 2)
+              (setq-local indent-tabs-mode nil)))
     ;; semantic unit => used in map
   ;; i don't like star style
   (setq solidity-comment-style 'slash)
-  (setq solidity-flycheck-solc-checker-active t)
+  ;; turn on flycheck
+  ;; (setq solidity-flycheck-solc-checker-active t)
   (setq solidity-flycheck-solium-checker-active t)
+  ;; steal from OpenZeppelin config: https://raw.githubusercontent.com/OpenZeppelin/code-style/master/.soliumrc.json
+  (setq flycheck-solidity-solium-soliumrcfile "/home/coder/.emacs.d/.soliumrc.json")
+  (require 'solidity-flycheck)
   (define-key solidity-mode-map (kbd "M-=") (lambda ()
                                           (interactive)
                                           (insert "=>"))))
